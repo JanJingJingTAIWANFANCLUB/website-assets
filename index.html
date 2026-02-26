@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JanJingJing TAIWAN FANCLUB</title>
+    <style>
+        :root {
+            --theme-color: #333;
+            --bg-color: #fcfcfc;
+        }
+
+        /* 1. 進場畫面樣式 */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* 將內容推向底部 */
+            align-items: center;
+            color: white;
+            transition: opacity 0.8s ease, visibility 0.8s;
+            overflow: hidden;
+            padding-bottom: 80px; /* 控制按鈕離底部的距離 */
+        }
+
+        #bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3); /* 稍微調淺，讓影片更清晰 */
+            z-index: 0;
+        }
+
+        .splash-content {
+            z-index: 1;
+            text-align: center;
+        }
+
+        #splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .enter-btn {
+            background: white;
+            color: #333;
+            border: none;
+            padding: 16px 60px; /* 稍微加寬更有質感 */
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.5);
+            animation: heartbeat 2s infinite;
+            transition: 0.3s;
+            letter-spacing: 3px;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* 2. 主網頁樣式 */
+        body { font-family: -apple-system, "Noto Sans TC", sans-serif; background: var(--bg-color); margin: 0; padding-top: 70px; color: #333; }
+        .container { max-width: 500px; margin: 0 auto; padding: 0 20px; }
+        .nav-bar { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.95); display: flex; justify-content: space-around; padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 1000; backdrop-filter: blur(5px); }
+        .nav-bar a { text-decoration: none; color: #666; font-size: 14px; font-weight: bold; }
+        
+        h2 { font-size: 1.2rem; margin: 30px 0 15px; border-left: 4px solid #333; padding-left: 10px; }
+        .artist-label { font-weight: bold; color: #555; margin: 15px 0 8px; font-size: 15px; text-align: left; }
+        .trigger-section { text-align: center; }
+        .cover-img-btn { width: 100%; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        #profile-content { display: none; margin-top: 15px; animation: fadeIn 0.4s ease-out; }
+        .profile-card-img { width: 100%; border-radius: 10px; margin-bottom: 12px; }
+        
+        .video-card { background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 15px; position: relative; padding-bottom: 56.25%; height: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .video-card iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        
+        .link-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .link-button { 
+            display: block; 
+            background: white; 
+            color: #333; 
+            text-decoration: none; 
+            padding: 14px; 
+            border-radius: 12px; 
+            text-align: center; 
+            font-weight: 600; 
+            border: 1px solid #eee; 
+            transition: 0.2s; 
+        }
+
+        #backToTop { position: fixed; bottom: 30px; right: 20px; width: 45px; height: 45px; background-color: #333; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; z-index: 2000; border: none; font-size: 20px; }
+        #backToTop.show { opacity: 1; visibility: visible; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* CSS 強力壓制廣告 */
+        #tiiny-host-banner, .tiiny-watermark, iframe[src*="tiiny.site"], .tiiny-branding {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
+    </style>
+</head>
+<body style="overflow: hidden;">
+
+    <div id="splash-screen">
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="https://github.com/JanJingJingTAIWANFANCLUB/website-assets/raw/f5dbef2099d5eae052aa5a3994c24370b1fd3df2/54517.MP4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+        <div class="splash-content">
+            <button class="enter-btn" onclick="enterSite()">Enter</button>
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <a href="#profile">資料卡</a>
+        <a href="#videos">關於Jan和JingJing</a>
+        <a href="#links">社群連結</a>
+    </nav>
+
+    <div class="container">
+        <section id="profile" class="trigger-section">
+            <h2>個人資料卡</h2>
+            <img src="https://i.postimg.cc/Fzs4YF8z/IMG-5618-Coco-AI-20260226-084105-1.png" class="cover-img-btn" onclick="toggleProfile()">
+            <p style="font-size: 12px; color: #999; margin-top: 10px;">↑ 點擊封面展開 ↑</p>
+            <div id="profile-content">
+                <p class="artist-label">Janhae 資料</p>
+                <img src="https://i.postimg.cc/k4pkBYPc/IMG-5354.jpg" class="profile-card-img">
+                <img src="https://i.postimg.cc/gJLPqbsx/IMG-5277.jpg" class="profile-card-img">
+                <p class="artist-label">JingJing 資料</p>
+                <img src="https://i.postimg.cc/MGvkqJhr/IMG-5278.jpg" class="profile-card-img">
+            </div>
+        </section>
+
+        <section id="videos">
+            <h2>小秘密</h2>
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/p8tf3dAkvFc?si=hb1Cv5YQH8axT69l" allowfullscreen></iframe>
+            </div>
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/uLRYn0u8y6o?si=A85HJ-T_fWl64ZJd" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section id="links" style="margin-bottom: 60px;">
+            <h2>社群連結</h2>
+            <p class="artist-label">Janhae</p>
+            <div class="link-list">
+                <a href="https://www.instagram.com/janhae" target="_blank" class="link-button">Instagram</a>
+                <a href="https://x.com/janhae" target="_blank" class="link-button">X (Twitter)</a>
+                <a href="https://youtube.com/@janhae7586" target="_blank" class="link-button">YouTube</a>
+                <a href="https://www.tiktok.com/@janhae" target="_blank" class="link-button">TikTok</a>
+            </div>
+            <p class="artist-label">JingJing</p>
+            <div class="link-list">
+                <a href="https://www.instagram.com/jingjingyu36" target="_blank" class="link-button">Instagram</a>
+                <a href="https://x.com/jingjingyu364" target="_blank" class="link-button">X (Twitter)</a>
+                <a href="https://youtube.com/@jingjingyuofficial" target="_blank" class="link-button">YouTube</a>
+                <a href="https://www.tiktok.com/@jingjingyuofficial" target="_blank" class="link-button">TikTok</a>
+            </div>
+        </section>
+    </div>
+
+    <button id="backToTop" onclick="scrollToTop()">▲</button>
+
+    <script>
+        function enterSite() {
+            const splash = document.getElementById('splash-screen');
+            splash.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            setTimeout(() => {
+                document.getElementById('bg-video').pause();
+            }, 800);
+        }
+
+        function toggleProfile() {
+            const content = document.getElementById("profile-content");
+            content.style.display = (content.style.display === "block") ? "none" : "block";
+            if(content.style.display === "block") {
+                setTimeout(() => { content.scrollIntoView({ behavior: 'smooth' }); }, 100);
+            }
+        }
+
+        // 強力刪除廣告腳本
+        function killAds() {
+            const adIds = ['tiiny-host-banner', 'tiiny-branding', 'plausible-analytics-banner'];
+            adIds.forEach(id => {
+                const el = document.getElementById(id) || document.querySelector('.' + id);
+                if (el) el.remove();
+            });
+        }
+        setInterval(killAds, 500);
+
+        window.onscroll = function() {
+            const btn = document.getElementById("backToTop");
+            if (document.documentElement.scrollTop > 300) btn.classList.add("show");
+            else btn.classList.remove("show");
+        };
+
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
+</body>
+</html>
