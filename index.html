@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>30秒帶你們認識JanJingJing✨</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --theme-color: #333; --bg-color: #fcfcfc; }
+        body { font-family: -apple-system, "Noto Sans TC", sans-serif; background: var(--bg-color); margin: 0; padding-top: 70px; color: #333; }
+        .container { max-width: 500px; margin: 0 auto; padding: 0 20px; }
+        
+        /* 導覽列 */
+        .nav-bar { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.98); display: flex; justify-content: space-around; padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 1000; }
+        .nav-bar button { background: none; border: none; font-size: 13px; font-weight: bold; color: #666; cursor: pointer; }
+        .nav-bar button.active { color: #000; border-bottom: 2px solid #333; }
+        
+        /* 頁面切換系統 */
+        .page-section { display: none; animation: fadeIn 0.4s; }
+        .page-section.active { display: block; }
+        
+        /* 按鈕系統 */
+        .tab-group { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; justify-content: center; }
+        .tab-btn { background: #eee; border: none; padding: 10px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; white-space: nowrap; }
+        .tab-btn.active { background: #333; color: white; }
+        .content-box { display: none; padding: 20px; background: #fff; border-radius: 15px; border: 1px solid #eee; margin-bottom: 20px; }
+        .content-box.active { display: block; }
+
+        /* 進場畫面 */
+        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; color: white; transition: 0.8s; padding-bottom: 80px; }
+        #bg-video { position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translate(-50%, -50%); z-index: -1; object-fit: cover; }
+        .enter-btn { background: white; color: #333; border: none; padding: 16px 40px; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; animation: heartbeat 2s infinite; }
+        @keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* 內容樣式 */
+        h2 { font-size: 1.2rem; margin: 0 0 20px; border-left: 4px solid #333; padding-left: 10px; }
+        .artist-label { font-weight: bold; color: #555; margin: 15px 0 8px; font-size: 15px; }
+        .cover-img-btn { width: 100%; border-radius: 15px; cursor: pointer; margin-bottom: 10px; }
+        .profile-card-img { width: 100%; border-radius: 10px; margin-bottom: 12px; }
+        .video-card { background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 15px; position: relative; padding-bottom: 56.25%; height: 0; }
+        .video-card iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .link-button { display: flex; align-items: center; justify-content: center; background: white; color: #333; text-decoration: none; padding: 14px; border-radius: 12px; font-weight: 600; border: 1px solid #eee; margin-bottom: 10px; }
+        .link-button i { margin-right: 10px; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body style="overflow: hidden;">
+
+    <div id="splash-screen">
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="https://github.com/JanJingJingTAIWANFANCLUB/website-assets/raw/f5dbef2099d5eae052aa5a3994c24370b1fd3df2/54517.MP4" type="video/mp4">
+        </video>
+        <div style="position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.3); z-index:0;"></div>
+        <div style="z-index: 1;"><button class="enter-btn" onclick="enterSite()">🦊🐯歡迎光臨</button></div>
+    </div>
+
+    <nav class="nav-bar">
+        <button onclick="showPage('profile', this)" class="active">資料卡</button>
+        <button onclick="showPage('series', this)">作品集</button>
+        <button onclick="showPage('videos', this)">小秘密</button>
+        <button onclick="showPage('links', this)">社群</button>
+    </nav>
+
+    <div class="container" style="margin-top: 20px;">
+        <section id="profile" class="page-section active">
+            <h2>個人資料卡</h2>
+            <img src="https://i.postimg.cc/Fzs4YF8z/IMG-5618-Coco-AI-20260226-084105-1.png" class="cover-img-btn" onclick="document.getElementById('profile-content').style.display='block'">
+            <div id="profile-content" style="display:none;">
+                <p class="artist-label">Janhae</p>
+                <img src="https://i.postimg.cc/k4pkBYPc/IMG-5354.jpg" class="profile-card-img">
+                <p class="artist-label">JingJing</p>
+                <img src="https://i.postimg.cc/MGvkqJhr/IMG-5278.jpg" class="profile-card-img">
+            </div>
+        </section>
+
+        <section id="series" class="page-section">
+            <h2>🦊Lalalin 🐯Wine</h2>
+            <div class="tab-group">
+                <button class="tab-btn active" onclick="switchTab('muteluv-luck', 'series')">MuTeLuv-Hello,Is This Luck?</button>
+                <button class="tab-btn" onclick="switchTab('enemies', 'series')">Enemies With Benefits</button>
+            </div>
+            <div id="muteluv-luck" class="content-box active">
+                <div class="video-card"><iframe src="https://www.youtube.com/embed/videoseries?list=PLyxduC79I6sNSEsy_5q-k8SC3aUFjHtAu" allowfullscreen></iframe></div>
+            </div>
+            <div id="enemies" class="content-box">
+                <div class="video-card"><iframe src="https://www.youtube.com/embed/Jwv6V3Oo9P4" allowfullscreen></iframe></div>
+            </div>
+        </section>
+
+        <section id="videos" class="page-section">
+            <h2>小秘密</h2>
+            <div class="tab-group">
+                <button class="tab-btn active" onclick="switchTab('janhae-vid', 'videos')">Janhae</button>
+                <button class="tab-btn" onclick="switchTab('jingjing-vid', 'videos')">JingJing</button>
+            </div>
+            <div id="janhae-vid" class="content-box active">
+                <div class="video-card"><iframe src="https://www.youtube.com/embed/p8tf3dAkvFc?si=hb1Cv5YQH8axT69l" allowfullscreen></iframe></div>
+            </div>
+            <div id="jingjing-vid" class="content-box">
+                <div class="video-card"><iframe src="https://www.youtube.com/embed/uLRYn0u8y6o?si=A85HJ-T_fWl64ZJd" allowfullscreen></iframe></div>
+                <div class="video-card"><iframe src="https://www.youtube.com/embed/YwIhG3DQ85o?si=capAnHmUYTDVQzTN" allowfullscreen></iframe></div>
+            </div>
+        </section>
+
+        <section id="links" class="page-section">
+            <h2>社群連結</h2>
+            <p class="artist-label">Janhae</p>
+            <a href="https://www.instagram.com/janhae" target="_blank" class="link-button"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="https://x.com/janhae" target="_blank" class="link-button"><i class="fab fa-x-twitter"></i> X</a>
+            <p class="artist-label">JingJing</p>
+            <a href="https://www.facebook.com/share/18JWWVr3r7/?mibextid=wwXIfr" target="_blank" class="link-button"><i class="fab fa-facebook"></i> Facebook</a>
+            <a href="https://www.instagram.com/jingjingyu36" target="_blank" class="link-button"><i class="fab fa-instagram"></i> Instagram</a>
+        </section>
+    </div>
+
+    <script>
+        function enterSite() {
+            document.getElementById('splash-screen').style.opacity = '0';
+            setTimeout(() => { document.getElementById('splash-screen').style.display = 'none'; document.body.style.overflow = 'auto'; }, 800);
+        }
+        function showPage(pageId, btn) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-bar button').forEach(b => b.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            btn.classList.add('active');
+        }
+        function switchTab(tabId, group) {
+            const buttons = document.querySelectorAll(`section#${group} .tab-btn`);
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            const contents = document.querySelectorAll(`section#${group} .content-box`);
+            contents.forEach(box => box.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
