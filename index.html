@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Jan & JingJing</title>
+    <title>30秒帶你認識JanJingJing✨</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
@@ -60,7 +60,7 @@
     </div>
 
     <nav class="nav-bar">
-        <div style="font-family: var(--serif); font-weight: bold; font-size: 18px;">Jan & JingJing</div>
+        <div style="font-family: var(--serif); font-weight: bold; font-size: 18px;">30秒帶你認識JanJingJing✨</div>
         <div class="nav-links"><a href="#artists">Profiles</a><a href="#portfolio">Videos</a></div>
     </nav>
 
@@ -137,11 +137,27 @@
         const videoIds = ['TEdxkK9XqDM', 'qkqSgFoVilc', 'QffkeNTjV38']; 
         const randomId = videoIds[Math.floor(Math.random() * videoIds.length)];
         function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', { height: '0', width: '0', videoId: randomId, playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': randomId }, events: { 'onReady': onPlayerReady } });
+            player = new YT.Player('player', { 
+                height: '0', 
+                width: '0', 
+                videoId: randomId, 
+                playerVars: { 
+                    'autoplay': 1, 
+                    'loop': 1, 
+                    'playlist': randomId,
+                    'mute': 0 
+                }, 
+                events: { 'onReady': onPlayerReady } 
+            });
         }
-        function onPlayerReady(event) { }
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
         function enterSite() { 
-            if (player && player.playVideo) { player.playVideo(); document.getElementById('music-btn').style.display = 'flex'; }
+            if (player && player.playVideo) { 
+                player.playVideo(); 
+                document.getElementById('music-btn').style.display = 'flex'; 
+            }
             const splash = document.getElementById('splash-screen');
             splash.style.opacity = '0';
             splash.style.pointerEvents = 'none';
@@ -152,7 +168,13 @@
         function toggleMusic() {
             const state = player.getPlayerState();
             const icon = document.getElementById('music-icon');
-            if (state === 1) { player.pauseVideo(); icon.className = 'fas fa-volume-mute'; } else { player.playVideo(); icon.className = 'fas fa-music'; }
+            if (state === 1) { 
+                player.pauseVideo(); 
+                icon.className = 'fas fa-volume-mute'; 
+            } else { 
+                player.playVideo(); 
+                icon.className = 'fas fa-music'; 
+            }
         }
     </script>
 </body>
