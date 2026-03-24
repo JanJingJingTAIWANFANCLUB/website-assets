@@ -34,24 +34,25 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
         .section-title { font-family: var(--serif); font-size: 2.2rem; font-style: italic; text-align: center; margin: 50px 0 30px; letter-spacing: 2px; }
 
-        /* Profile 區塊：自適應三張卡片排列 */
-        .profile-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+        .profile-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 30px; 
             margin-bottom: 60px;
-            align-items: start;
         }
-        .profile-card {
-            width: 100%;
-            background: #fff;
-            border-radius: 8px;
-            padding: 8px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
-        }
-        .profile-card:hover { transform: translateY(-5px); }
-        .profile-card img { width: 100%; height: auto; border-radius: 4px; display: block; }
+        .artist-card { background: transparent; padding: 0; width: 100%; }
+        .image-container { width: 100%; border-radius: 4px; overflow: hidden; background: #fff; padding: 6px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
+        .image-container img { width: 100%; height: auto; display: block; }
+        
+        .artist-name { font-family: var(--serif); font-size: 1.5rem; margin: 10px 0 5px; font-style: italic; }
+        .artist-sub { color: var(--accent-color); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; border-bottom: 1px solid #ddd; padding-bottom: 8px;}
+        
+        .profile-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .profile-table td { padding: 8px 0; font-size: 12px; border-bottom: 1px solid #e0ddd7; }
+        .label { font-weight: 600; text-transform: uppercase; color: var(--accent-color); width: 100px; font-size: 11px; }
+
+        .card-social { display: flex; gap: 12px; margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; flex-wrap: wrap; }
+        .card-social a { color: var(--text-color); font-size: 1.1rem; opacity: 0.6; transition: 0.3s; }
 
         .category-label { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--accent-color); margin: 40px 0 20px; display: block; border-left: 3px solid var(--accent-color); padding-left: 15px; }
         .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 50px; }
@@ -65,7 +66,7 @@
 
         @media (max-width: 600px) {
             .section-title { font-size: 1.8rem; }
-            .profile-section { grid-template-columns: 1fr; } 
+            .profile-grid { grid-template-columns: 1fr; } 
         }
     </style>
 </head>
@@ -97,18 +98,59 @@
     <div class="container">
         <section id="artists">
             <h2 class="section-title">Profiles</h2>
-            <div class="profile-section">
+            <div class="profile-grid">
                 
-                <div class="profile-card">
-                    <img src="https://i.postimg.cc/50g01bgN/2A26EBC1-B57B-48E9-B374-2C3991AB7B95-Coco-AI-20260303-101000-1.png" alt="Janhae Card 1">
+                <div class="artist-card">
+                    <h2 class="artist-name">Janhae</h2>
+                    <p class="artist-sub">ACTOR / HOST / SINGER</p>
+                    <div class="image-container">
+                        <img src="https://i.postimg.cc/50g01bgN/2A26EBC1-B57B-48E9-B374-2C3991AB7B95-Coco-AI-20260303-101000-1.png" alt="Janhae 1">
+                    </div>
+                    <table class="profile-table">
+                        <tr><td class="label">FullName</td><td>Ployshompoo Supasap</td></tr>
+                        <tr><td class="label">Nickname</td><td>Janhae</td></tr>
+                        <tr><td class="label">Birthday</td><td>January 5, 1995</td></tr>
+                    </table>
+                    <div class="card-social">
+                        <a href="https://www.instagram.com/janhae/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/janhae" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.youtube.com/@janhae7586" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.threads.net/@janhae" target="_blank"><i class="fab fa-threads"></i></a>
+                    </div>
                 </div>
 
-                <div class="profile-card">
-                    <img src="https://i.postimg.cc/C1FXygdf/IMG-6020-Coco-AI-20260303-095505-1.png" alt="Janhae Card 2">
+                <div class="artist-card">
+                    <h2 class="artist-name">Janhae</h2>
+                    <p class="artist-sub">ACTOR / HOST / SINGER</p>
+                    <div class="image-container">
+                        <img src="https://i.postimg.cc/dVBWYk20/IMG-5277.jpg" alt="Janhae 2">
+                    </div>
+                    <table class="profile-table">
+                        <tr><td class="label">Education</td><td>Thammasat University</td></tr>
+                        <tr><td class="label">Agency</td><td>GMMTV</td></tr>
+                    </table>
                 </div>
 
-                <div class="profile-card">
-                    <img src="https://i.postimg.cc/brLByFpX/IMG-6019-Coco-AI-20260303-095318-1.png" alt="JingJing Card">
+                <div class="artist-card">
+                    <h2 class="artist-name">JingJing</h2>
+                    <p class="artist-sub">MODEL / DANCER / ACTOR</p>
+                    <div class="image-container">
+                        <img src="https://i.postimg.cc/sXvySRjL/IMG-6020-Coco-AI-20260303-095505-1.jpg" alt="JingJing">
+                    </div>
+                    <table class="profile-table">
+                        <tr><td class="label">FullName</td><td>Prariyapit Yu</td></tr>
+                        <tr><td class="label">Nickname</td><td>JingJing</td></tr>
+                        <tr><td class="label">Birthday</td><td>April 1, 1997</td></tr>
+                        <tr><td class="label">Education</td><td>Assumption University</td></tr>
+                        <tr><td class="label">Agency</td><td>GMMTV</td></tr>
+                    </table>
+                    <div class="card-social">
+                        <a href="https://www.instagram.com/jingjingyu36/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/jingjingyu364" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://youtube.com/@jingjingyuofficial" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.threads.net/@jingjingyu36" target="_blank"><i class="fab fa-threads"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=100044385612856" target="_blank"><i class="fab fa-facebook"></i></a>
+                    </div>
                 </div>
 
             </div>
@@ -116,23 +158,19 @@
 
         <section id="portfolio">
             <h2 class="section-title">Videos</h2>
-            
-            <div class="category-label">JanJingJing Project</div>
+            <div class="category-label">JanJingJing</div>
             <div class="work-grid">
                 <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/Jwv6V3Oo9P4"></iframe></div></div>
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/videoseries?list=PLPkSg-YEP-x4hOCEps9rfVssGqTDCUCPX"></iframe></div></div>
+                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/videoseries?list=PLdxVk2iyDoPz1Q01os2uO_gw_uQL8HViU"></iframe></div></div>
             </div>
-
-            <div class="category-label">Janhae Solo</div>
+            <div class="category-label">Janhae</div>
             <div class="work-grid">
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/fA4e9V_05x4"></iframe></div></div>
                 <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/p8tf3dAkvFc"></iframe></div></div>
             </div>
-
-            <div class="category-label">JingJing Solo</div>
+            <div class="category-label">JingJing</div>
             <div class="work-grid">
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/Z0Xlq8vXk_k"></iframe></div></div>
                 <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/uLRYn0u8y6o"></iframe></div></div>
+                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/YwIhG3DQ85o"></iframe></div></div>
             </div>
         </section>
     </div>
