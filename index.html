@@ -62,7 +62,7 @@
     </style>
 </head>
 <body class="locked">
-    <audio id="bg-music" playsinline></audio>
+    <audio id="bg-music" playsinline preload="auto"></audio>
 
     <div id="music-btn" class="music-control" onclick="toggleMusic()"><i id="music-icon" class="fas fa-music"></i></div>
     
@@ -171,9 +171,9 @@
 
     <script>
         const playlist = [
-            "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/%20เถียงเก่ง%20(Bad%20Mouth)%20.mp3",
-            "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Abracadabra%20จงรัก%2520จงหลง.mp3",
-            "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/หาย%20(Hide)%20Ost.น้องสาวหายนะ%20Hide%20%26%20Sis%20.mp3"
+            "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song1.mp3",
+            "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song2.mp3",
+            "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song3.mp3"
         ];
 
         let currentTrack = Math.floor(Math.random() * playlist.length);
@@ -181,28 +181,28 @@
         const musicBtn = document.getElementById('music-btn');
         const musicIcon = document.getElementById('music-icon');
 
-        // 初始化播放器
         function loadTrack(index) {
             audio.src = playlist[index];
-            audio.load(); // 重要：強制載入
+            audio.load();
         }
 
         loadTrack(currentTrack);
 
-        // 核心修正：監聽播放結束
+        // 當歌曲播完，自動跳下一首
         audio.onended = function() {
             currentTrack = (currentTrack + 1) % playlist.length;
             loadTrack(currentTrack);
-            audio.play().catch(err => console.log("續播失敗:", err));
+            audio.play().catch(e => console.log("續播受阻，等待使用者互動"));
         };
 
         function enterSite() { 
-            // 在使用者點擊按鈕的瞬間，獲取瀏覽器的音訊播放許可權
+            // 進入時啟動播放
             audio.play().then(() => {
                 musicBtn.style.display = 'flex';
                 musicIcon.className = 'fas fa-music';
             }).catch(e => {
-                console.log("需要使用者手動點擊音樂按鈕啟動");
+                console.log("需要手動啟動音樂鈕");
+                musicBtn.style.display = 'flex';
             });
 
             const splash = document.getElementById('splash-screen');
