@@ -11,7 +11,6 @@
         :root { --bg-color: #f2efe9; --text-color: #2c2c2c; --accent-color: #8e7f71; --serif: 'Playfair Display', serif; --sans: 'Inter', "Noto Sans TC", sans-serif; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
-        /* 修正：將底色改為米色，解決黑底問題 */
         html, body { 
             margin: 0; padding: 0; width: 100%; height: 100%; 
             background: var(--bg-color); 
@@ -20,12 +19,11 @@
         }
         
         body.locked { overflow: hidden; position: fixed; width: 100%; height: 100%; }
-        body.unlocked { overflow-x: hidden; overflow-y: auto; background: var(--bg-color); }
+        body.unlocked { overflow-x: hidden; overflow-y: auto; background: var(--bg-color); height: auto; position: relative; }
 
         #youtube-player-container { position: fixed; top: -10px; left: -10px; width: 1px; height: 1px; opacity: 0; pointer-events: none; z-index: -1; }
         
-        /* 歡迎頁面背景也改為米色或透明，避免黑底感 */
-        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; transition: opacity 0.8s ease; padding-bottom: 15vh; background: var(--bg-color); }
+        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; transition: opacity 0.6s ease; padding-bottom: 15vh; background: var(--bg-color); }
         #bg-video { position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; transform: translate(-50%, -50%); z-index: -1; object-fit: cover; opacity: 0.8; }
         .enter-btn { position: relative; z-index: 10001; background: rgba(255,255,255,0.95); border: none; padding: 18px 40px; border-radius: 50px; font-weight: 600; cursor: pointer; letter-spacing: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); font-size: 0.9rem; color: #333; text-transform: uppercase; }
 
@@ -39,29 +37,24 @@
         .ticker span { font-family: var(--serif); font-size: 12px; letter-spacing: 4px; padding: 0 40px; font-style: italic; text-transform: uppercase; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; position: relative; z-index: 1; }
         .section-title { font-family: var(--serif); font-size: 2.2rem; font-style: italic; text-align: center; margin: 50px 0 30px; letter-spacing: 2px; }
 
         .profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 60px; }
         .artist-card { background: transparent; padding: 0; width: 100%; }
         .image-container { width: 100%; border-radius: 4px; overflow: hidden; background: #fff; padding: 6px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
         .image-container img { width: 100%; height: auto; display: block; image-rendering: -webkit-optimize-contrast; }
-        
         .artist-name { font-family: var(--serif); font-size: 1.5rem; margin: 10px 0 5px; font-style: italic; }
         .artist-sub { color: var(--accent-color); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; border-bottom: 1px solid #ddd; padding-bottom: 8px;}
-        
         .profile-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         .profile-table td { padding: 8px 0; font-size: 12px; border-bottom: 1px solid #e0ddd7; }
         .label { font-weight: 600; text-transform: uppercase; color: var(--accent-color); width: 100px; font-size: 11px; }
-
         .card-social { display: flex; gap: 12px; margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; flex-wrap: wrap; }
         .card-social a { color: var(--text-color); font-size: 1.1rem; opacity: 0.6; transition: 0.3s; }
 
         .photo-ticker-wrap { width: 100%; overflow: hidden; background: transparent; padding: 30px 0; margin-bottom: 60px; position: relative; }
-        .photo-ticker-wrap:hover .photo-ticker { animation-play-state: paused; }
         .photo-ticker { display: flex; width: fit-content; animation: photoTicker 110s linear infinite; align-items: center; }
         .photo-ticker img { max-height: 480px; width: auto; margin-right: 25px; border-radius: 0; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; transform: translateZ(0); }
-
         @media (max-width: 600px) { .photo-ticker img { max-height: 320px; } }
         @keyframes photoTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
@@ -74,7 +67,6 @@
 
         footer { margin-top: 80px; padding: 40px 0; border-top: 1px solid #ddd; text-align: center; }
         .footer-text { font-family: var(--serif); font-size: 10px; letter-spacing: 2px; color: var(--accent-color); }
-
         @media (max-width: 600px) { .section-title { font-size: 1.8rem; } .profile-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -110,51 +102,29 @@
                 <div class="artist-card">
                     <h2 class="artist-name">Janhae</h2>
                     <p class="artist-sub">ACTOR / HOST / SINGER</p>
-                    <div class="image-container">
-                        <img src="https://i.postimg.cc/50g01bgN/2A26EBC1-B57B-48E9-B374-2C3991AB7B95-Coco-AI-20260303-101000-1.png" alt="Janhae 1">
-                    </div>
+                    <div class="image-container"><img src="https://i.postimg.cc/50g01bgN/2A26EBC1-B57B-48E9-B374-2C3991AB7B95-Coco-AI-20260303-101000-1.png"></div>
                     <table class="profile-table">
                         <tr><td class="label">FullName</td><td>Ployshompoo Supasap</td></tr>
                         <tr><td class="label">Nickname</td><td>Janhae</td></tr>
                         <tr><td class="label">Birthday</td><td>January 5, 1995</td></tr>
                     </table>
                     <div class="card-social">
-                        <a href="https://www.instagram.com/janhae/" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://x.com/janhae" target="_blank"><i class="fab fa-x-twitter"></i></a>
-                        <a href="https://www.youtube.com/@janhae7586" target="_blank"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.threads.net/@janhae" target="_blank"><i class="fab fa-threads"></i></a>
+                        <a href="https://www.instagram.com/janhae/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/janhae/"><i class="fab fa-x-twitter"></i></a>
                     </div>
-                </div>
-                <div class="artist-card">
-                    <h2 class="artist-name">Janhae</h2>
-                    <p class="artist-sub">ACTOR / HOST / SINGER</p>
-                    <div class="image-container">
-                        <img src="https://i.postimg.cc/dVBWYk20/IMG-5277.jpg" alt="Janhae 2">
-                    </div>
-                    <table class="profile-table">
-                        <tr><td class="label">Education</td><td>Thammasat University</td></tr>
-                        <tr><td class="label">Agency</td><td>GMMTV</td></tr>
-                    </table>
                 </div>
                 <div class="artist-card">
                     <h2 class="artist-name">JingJing</h2>
                     <p class="artist-sub">MODEL / DANCER / ACTOR</p>
-                    <div class="image-container">
-                        <img src="https://i.postimg.cc/sXvySRjL/IMG-6020-Coco-AI-20260303-095505-1.jpg" alt="JingJing">
-                    </div>
+                    <div class="image-container"><img src="https://i.postimg.cc/sXvySRjL/IMG-6020-Coco-AI-20260303-095505-1.jpg"></div>
                     <table class="profile-table">
                         <tr><td class="label">FullName</td><td>Prariyapit Yu</td></tr>
                         <tr><td class="label">Nickname</td><td>JingJing</td></tr>
                         <tr><td class="label">Birthday</td><td>April 1, 1997</td></tr>
-                        <tr><td class="label">Education</td><td>Assumption University</td></tr>
-                        <tr><td class="label">Agency</td><td>GMMTV</td></tr>
                     </table>
                     <div class="card-social">
-                        <a href="https://www.instagram.com/jingjingyu36/" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://x.com/jingjingyu364" target="_blank"><i class="fab fa-x-twitter"></i></a>
-                        <a href="https://youtube.com/@jingjingyuofficial" target="_blank"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.threads.net/@jingjingyu36" target="_blank"><i class="fab fa-threads"></i></a>
-                        <a href="https://www.facebook.com/profile.php?id=100044385612856" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/jingjingyu36/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/jingjingyu364/"><i class="fab fa-x-twitter"></i></a>
                     </div>
                 </div>
             </div>
@@ -164,63 +134,9 @@
             <h2 class="section-title">Photos</h2>
             <div class="photo-ticker-wrap">
                 <div class="photo-ticker">
-                    <img src="https://i.postimg.cc/TLzNhSRS/IMG-2739.jpg">
-                    <img src="https://i.postimg.cc/njySM5HB/IMG-2741.jpg">
-                    <img src="https://i.postimg.cc/302SGBR1/IMG-2773.jpg">
-                    <img src="https://i.postimg.cc/z3hP4JjT/IMG-2782.jpg">
-                    <img src="https://i.postimg.cc/SYcT9rsB/IMG-2805.jpg">
-                    <img src="https://i.postimg.cc/vDnSCQzL/IMG-2808.jpg">
-                    <img src="https://i.postimg.cc/Z0NDXTcx/IMG-2815.jpg">
-                    <img src="https://i.postimg.cc/8svnx1HZ/IMG-3078.jpg">
-                    <img src="https://i.postimg.cc/WtZfx28L/IMG-3468.jpg">
-                    <img src="https://i.postimg.cc/rz4Y78jT/IMG-3523.jpg">
-                    <img src="https://i.postimg.cc/1fZYQLCT/IMG-3555.jpg">
-                    <img src="https://i.postimg.cc/fJhgN626/IMG-3779.jpg">
-                    <img src="https://i.postimg.cc/ppt1HgcR/IMG-4275.jpg">
-                    <img src="https://i.postimg.cc/QHrn3RYV/IMG-4986.jpg">
-                    <img src="https://i.postimg.cc/mtG6s0pP/IMG-5180.jpg">
-                    <img src="https://i.postimg.cc/N5wPcWC2/IMG-6913.jpg">
-                    <img src="https://i.postimg.cc/ppYcXq3V/IMG-7144.jpg">
-                    <img src="https://i.postimg.cc/7fMtYmjh/IMG-7586.jpg">
-                    <img src="https://i.postimg.cc/bsHVN34Z/IMG-7587.jpg">
-                    <img src="https://i.postimg.cc/TLzNhSRS/IMG-2739.jpg">
-                    <img src="https://i.postimg.cc/njySM5HB/IMG-2741.jpg">
-                    <img src="https://i.postimg.cc/302SGBR1/IMG-2773.jpg">
-                    <img src="https://i.postimg.cc/z3hP4JjT/IMG-2782.jpg">
-                    <img src="https://i.postimg.cc/SYcT9rsB/IMG-2805.jpg">
-                    <img src="https://i.postimg.cc/vDnSCQzL/IMG-2808.jpg">
-                    <img src="https://i.postimg.cc/Z0NDXTcx/IMG-2815.jpg">
-                    <img src="https://i.postimg.cc/8svnx1HZ/IMG-3078.jpg">
-                    <img src="https://i.postimg.cc/WtZfx28L/IMG-3468.jpg">
-                    <img src="https://i.postimg.cc/rz4Y78jT/IMG-3523.jpg">
-                    <img src="https://i.postimg.cc/1fZYQLCT/IMG-3555.jpg">
-                    <img src="https://i.postimg.cc/fJhgN626/IMG-3779.jpg">
-                    <img src="https://i.postimg.cc/ppt1HgcR/IMG-4275.jpg">
-                    <img src="https://i.postimg.cc/QHrn3RYV/IMG-4986.jpg">
-                    <img src="https://i.postimg.cc/mtG6s0pP/IMG-5180.jpg">
-                    <img src="https://i.postimg.cc/N5wPcWC2/IMG-6913.jpg">
-                    <img src="https://i.postimg.cc/ppYcXq3V/IMG-7144.jpg">
-                    <img src="https://i.postimg.cc/7fMtYmjh/IMG-7586.jpg">
-                    <img src="https://i.postimg.cc/bsHVN34Z/IMG-7587.jpg">
+                    <img src="https://i.postimg.cc/TLzNhSRS/IMG-2739.jpg"><img src="https://i.postimg.cc/njySM5HB/IMG-2741.jpg"><img src="https://i.postimg.cc/302SGBR1/IMG-2773.jpg"><img src="https://i.postimg.cc/z3hP4JjT/IMG-2782.jpg"><img src="https://i.postimg.cc/SYcT9rsB/IMG-2805.jpg"><img src="https://i.postimg.cc/vDnSCQzL/IMG-2808.jpg"><img src="https://i.postimg.cc/Z0NDXTcx/IMG-2815.jpg"><img src="https://i.postimg.cc/8svnx1HZ/IMG-3078.jpg"><img src="https://i.postimg.cc/WtZfx28L/IMG-3468.jpg"><img src="https://i.postimg.cc/rz4Y78jT/IMG-3523.jpg"><img src="https://i.postimg.cc/1fZYQLCT/IMG-3555.jpg"><img src="https://i.postimg.cc/fJhgN626/IMG-3779.jpg"><img src="https://i.postimg.cc/ppt1HgcR/IMG-4275.jpg"><img src="https://i.postimg.cc/QHrn3RYV/IMG-4986.jpg"><img src="https://i.postimg.cc/mtG6s0pP/IMG-5180.jpg"><img src="https://i.postimg.cc/N5wPcWC2/IMG-6913.jpg"><img src="https://i.postimg.cc/ppYcXq3V/IMG-7144.jpg"><img src="https://i.postimg.cc/7fMtYmjh/IMG-7586.jpg"><img src="https://i.postimg.cc/bsHVN34Z/IMG-7587.jpg">
+                    <img src="https://i.postimg.cc/TLzNhSRS/IMG-2739.jpg"><img src="https://i.postimg.cc/njySM5HB/IMG-2741.jpg"><img src="https://i.postimg.cc/302SGBR1/IMG-2773.jpg"><img src="https://i.postimg.cc/z3hP4JjT/IMG-2782.jpg"><img src="https://i.postimg.cc/SYcT9rsB/IMG-2805.jpg"><img src="https://i.postimg.cc/vDnSCQzL/IMG-2808.jpg"><img src="https://i.postimg.cc/Z0NDXTcx/IMG-2815.jpg"><img src="https://i.postimg.cc/8svnx1HZ/IMG-3078.jpg"><img src="https://i.postimg.cc/WtZfx28L/IMG-3468.jpg"><img src="https://i.postimg.cc/rz4Y78jT/IMG-3523.jpg"><img src="https://i.postimg.cc/1fZYQLCT/IMG-3555.jpg"><img src="https://i.postimg.cc/fJhgN626/IMG-3779.jpg"><img src="https://i.postimg.cc/ppt1HgcR/IMG-4275.jpg"><img src="https://i.postimg.cc/QHrn3RYV/IMG-4986.jpg"><img src="https://i.postimg.cc/mtG6s0pP/IMG-5180.jpg"><img src="https://i.postimg.cc/N5wPcWC2/IMG-6913.jpg"><img src="https://i.postimg.cc/ppYcXq3V/IMG-7144.jpg"><img src="https://i.postimg.cc/7fMtYmjh/IMG-7586.jpg"><img src="https://i.postimg.cc/bsHVN34Z/IMG-7587.jpg">
                 </div>
-            </div>
-        </section>
-
-        <section id="portfolio">
-            <h2 class="section-title">Videos</h2>
-            <div class="category-label">JanJingJing</div>
-            <div class="work-grid">
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/Jwv6V3Oo9P4"></iframe></div></div>
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/videoseries?list=PL_vCrT8PKfW0THj0b21-tIMFAP_3yaWxU"></iframe></div></div>
-            </div>
-            <div class="category-label">Janhae</div>
-            <div class="work-grid">
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/p8tf3dAkvFc"></iframe></div></div>
-            </div>
-            <div class="category-label">JingJing</div>
-            <div class="work-grid">
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/uLRYn0u8y6o"></iframe></div></div>
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/YwIhG3DQ85o"></iframe></div></div>
             </div>
         </section>
     </div>
@@ -231,7 +147,7 @@
     <script>
         let player;
         const videoIds = ['TEdxkK9XqDM', 'qkqSgFoVilc', 'QffkeNTjV38']; 
-        const randomStartIndex = Math.floor(Math.random() * videoIds.length);
+        let currentIdx = Math.floor(Math.random() * videoIds.length);
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', { 
@@ -239,7 +155,7 @@
                 playerVars: { 
                     'autoplay': 1, 
                     'loop': 1, 
-                    'playlist': videoIds.join(','),
+                    'playlist': videoIds.join(','), 
                     'mute': 0,
                     'controls': 0
                 }, 
@@ -251,10 +167,27 @@
         }
 
         function onPlayerReady(event) {
-            player.playVideoAt(randomStartIndex);
+            // 強制重載清單以防單曲循環失效
+            player.loadPlaylist({
+                playlist: videoIds,
+                index: currentIdx,
+                startSeconds: 0
+            });
+            
+            // 加入強制續播定時器：每 1 秒檢查一次狀態
+            setInterval(() => {
+                if (player && player.getPlayerState) {
+                    const state = player.getPlayerState();
+                    // 如果音樂是結束(0)或緩衝中(3)太久，強制切換下一首
+                    if (state === 0) {
+                        player.nextVideo();
+                    }
+                }
+            }, 1000);
         }
 
         function onPlayerStateChange(event) {
+            // 當影片狀態為結束 (0)
             if (event.data === YT.PlayerState.ENDED) {
                 player.nextVideo();
             }
@@ -270,19 +203,16 @@
             splash.style.pointerEvents = 'none';
             document.body.classList.remove('locked');
             document.body.classList.add('unlocked');
-            setTimeout(() => { splash.style.display = 'none'; }, 800); 
+            window.scrollTo(0, 1);
+            setTimeout(() => { window.scrollTo(0, 0); }, 50);
+            setTimeout(() => { splash.style.display = 'none'; }, 600); 
         }
 
         function toggleMusic() {
             const state = player.getPlayerState();
             const icon = document.getElementById('music-icon');
-            if (state === 1) { 
-                player.pauseVideo(); 
-                icon.className = 'fas fa-volume-mute'; 
-            } else { 
-                player.playVideo(); 
-                icon.className = 'fas fa-music'; 
-            }
+            if (state === 1) { player.pauseVideo(); icon.className = 'fas fa-volume-mute'; } 
+            else { player.playVideo(); icon.className = 'fas fa-music'; }
         }
     </script>
 </body>
