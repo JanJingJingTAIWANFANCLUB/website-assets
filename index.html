@@ -10,10 +10,17 @@
     <style>
         :root { --bg-color: #f2efe9; --text-color: #2c2c2c; --accent-color: #8e7f71; --serif: 'Playfair Display', serif; --sans: 'Inter', "Noto Sans TC", sans-serif; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--bg-color); color: var(--text-color); font-family: var(--sans); }
+        
+        /* 防白閃優化：預設背景為黑 */
+        html, body { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            background: #000; 
+            color: var(--text-color); 
+            font-family: var(--sans); 
+        }
         
         body.locked { overflow: hidden; position: fixed; width: 100%; height: 100%; }
-        body.unlocked { overflow-x: hidden; overflow-y: auto; }
+        body.unlocked { overflow-x: hidden; overflow-y: auto; background: var(--bg-color); }
 
         #youtube-player-container { position: fixed; top: -10px; left: -10px; width: 1px; height: 1px; opacity: 0; pointer-events: none; z-index: -1; }
         
@@ -52,19 +59,9 @@
         .photo-ticker-wrap { width: 100%; overflow: hidden; background: transparent; padding: 30px 0; margin-bottom: 60px; position: relative; }
         .photo-ticker-wrap:hover .photo-ticker { animation-play-state: paused; }
         .photo-ticker { display: flex; width: fit-content; animation: photoTicker 110s linear infinite; align-items: center; }
-        
-        .photo-ticker img { 
-            max-height: 480px; 
-            width: auto; 
-            margin-right: 25px; 
-            border-radius: 0; 
-            image-rendering: -webkit-optimize-contrast; 
-            image-rendering: crisp-edges;
-            transform: translateZ(0); 
-        }
+        .photo-ticker img { max-height: 480px; width: auto; margin-right: 25px; border-radius: 0; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; transform: translateZ(0); }
 
         @media (max-width: 600px) { .photo-ticker img { max-height: 320px; } }
-
         @keyframes photoTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         .category-label { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--accent-color); margin: 40px 0 20px; display: block; border-left: 3px solid var(--accent-color); padding-left: 15px; }
@@ -77,10 +74,7 @@
         footer { margin-top: 80px; padding: 40px 0; border-top: 1px solid #ddd; text-align: center; }
         .footer-text { font-family: var(--serif); font-size: 10px; letter-spacing: 2px; color: var(--accent-color); }
 
-        @media (max-width: 600px) {
-            .section-title { font-size: 1.8rem; }
-            .profile-grid { grid-template-columns: 1fr; } 
-        }
+        @media (max-width: 600px) { .section-title { font-size: 1.8rem; } .profile-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body class="locked">
@@ -241,11 +235,32 @@
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', { 
                 height: '0', width: '0', 
-                playerVars: { 'autoplay': 1, 'playlist': videoIds.join(','), 'loop': 1, 'mute': 0 }, 
-                events: { 'onReady': onPlayerReady } 
+                playerVars: { 
+                    'autoplay': 1, 
+                    'loop': 1, 
+                    'playlist': videoIds.join(','), // 核心：必須告訴API這是一個清單
+                    'mute': 0,
+                    'controls': 0
+                }, 
+                events: { 
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange // 核心：監聽狀態改變
+                } 
             });
         }
-        function onPlayerReady(event) { player.playVideoAt(randomStartIndex); }
+
+        function onPlayerReady(event) {
+            // 從隨機的一首開始播放
+            player.playVideoAt(randomStartIndex);
+        }
+
+        function onPlayerStateChange(event) {
+            // 當影片狀態為 0 (ENDED) 時，強制播放下一首
+            if (event.data === YT.PlayerState.ENDED) {
+                player.nextVideo();
+            }
+        }
+
         function enterSite() { 
             if (player && player.playVideo) { 
                 player.playVideo(); 
@@ -258,11 +273,17 @@
             document.body.classList.add('unlocked');
             setTimeout(() => { splash.style.display = 'none'; }, 800); 
         }
+
         function toggleMusic() {
             const state = player.getPlayerState();
             const icon = document.getElementById('music-icon');
-            if (state === 1) { player.pauseVideo(); icon.className = 'fas fa-volume-mute'; } 
-            else { player.playVideo(); icon.className = 'fas fa-music'; }
+            if (state === 1) { 
+                player.pauseVideo(); 
+                icon.className = 'fas fa-volume-mute'; 
+            } else { 
+                player.playVideo(); 
+                icon.className = 'fas fa-music'; 
+            }
         }
     </script>
 </body>
