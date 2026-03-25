@@ -34,12 +34,7 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
         .section-title { font-family: var(--serif); font-size: 2.2rem; font-style: italic; text-align: center; margin: 50px 0 30px; letter-spacing: 2px; }
 
-        .profile-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 30px; 
-            margin-bottom: 60px;
-        }
+        .profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 60px; }
         .artist-card { background: transparent; padding: 0; width: 100%; }
         .image-container { width: 100%; border-radius: 4px; overflow: hidden; background: #fff; padding: 6px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
         .image-container img { width: 100%; height: auto; display: block; }
@@ -53,6 +48,17 @@
 
         .card-social { display: flex; gap: 12px; margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; flex-wrap: wrap; }
         .card-social a { color: var(--text-color); font-size: 1.1rem; opacity: 0.6; transition: 0.3s; }
+
+        /* --- PHOTOS 跑馬燈 Styles --- */
+        .photo-ticker-wrap { width: 100%; overflow: hidden; background: transparent; padding: 20px 0; margin-bottom: 60px; position: relative; }
+        .photo-ticker-wrap:hover .photo-ticker { animation-play-state: paused; }
+        .photo-ticker { display: flex; width: fit-content; animation: photoTicker 100s linear infinite; } /* 增加秒數讓滾動更優雅 */
+        
+        .photo-ticker img { height: 450px; width: auto; margin-right: 15px; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); object-fit: cover; }
+
+        @media (max-width: 600px) { .photo-ticker img { height: 300px; } }
+
+        @keyframes photoTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         .category-label { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--accent-color); margin: 40px 0 20px; display: block; border-left: 3px solid var(--accent-color); padding-left: 15px; }
         .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 50px; }
@@ -83,7 +89,7 @@
 
     <nav class="nav-bar">
         <div class="nav-logo">30秒帶你認識JanJingJing✨</div>
-        <div class="nav-links"><a href="#artists">Profiles</a><a href="#portfolio">Videos</a></div>
+        <div class="nav-links"><a href="#artists">Profiles</a><a href="#photos">Photos</a><a href="#portfolio">Videos</a></div>
     </nav>
 
     <div class="ticker-wrap">
@@ -99,7 +105,6 @@
         <section id="artists">
             <h2 class="section-title">Profiles</h2>
             <div class="profile-grid">
-                
                 <div class="artist-card">
                     <h2 class="artist-name">Janhae</h2>
                     <p class="artist-sub">ACTOR / HOST / SINGER</p>
@@ -118,7 +123,6 @@
                         <a href="https://www.threads.net/@janhae" target="_blank"><i class="fab fa-threads"></i></a>
                     </div>
                 </div>
-
                 <div class="artist-card">
                     <h2 class="artist-name">Janhae</h2>
                     <p class="artist-sub">ACTOR / HOST / SINGER</p>
@@ -130,7 +134,6 @@
                         <tr><td class="label">Agency</td><td>GMMTV</td></tr>
                     </table>
                 </div>
-
                 <div class="artist-card">
                     <h2 class="artist-name">JingJing</h2>
                     <p class="artist-sub">MODEL / DANCER / ACTOR</p>
@@ -152,7 +155,53 @@
                         <a href="https://www.facebook.com/profile.php?id=100044385612856" target="_blank"><i class="fab fa-facebook"></i></a>
                     </div>
                 </div>
+            </div>
+        </section>
 
+        <section id="photos">
+            <h2 class="section-title">Photos</h2>
+            <div class="photo-ticker-wrap">
+                <div class="photo-ticker">
+                    <img src="https://i.postimg.cc/TLzNhSRS/IMG-2739.jpg">
+                    <img src="https://i.postimg.cc/njySM5HB/IMG-2741.jpg">
+                    <img src="https://i.postimg.cc/302SGBR1/IMG-2773.jpg">
+                    <img src="https://i.postimg.cc/z3hP4JjT/IMG-2782.jpg">
+                    <img src="https://i.postimg.cc/SYcT9rsB/IMG-2805.jpg">
+                    <img src="https://i.postimg.cc/vDnSCQzL/IMG-2808.jpg">
+                    <img src="https://i.postimg.cc/Z0NDXTcx/IMG-2815.jpg">
+                    <img src="https://i.postimg.cc/8svnx1HZ/IMG-3078.jpg">
+                    <img src="https://i.postimg.cc/WtZfx28L/IMG-3468.jpg">
+                    <img src="https://i.postimg.cc/rz4Y78jT/IMG-3523.jpg">
+                    <img src="https://i.postimg.cc/1fZYQLCT/IMG-3555.jpg">
+                    <img src="https://i.postimg.cc/fJhgN626/IMG-3779.jpg">
+                    <img src="https://i.postimg.cc/ppt1HgcR/IMG-4275.jpg">
+                    <img src="https://i.postimg.cc/QHrn3RYV/IMG-4986.jpg">
+                    <img src="https://i.postimg.cc/mtG6s0pP/IMG-5180.jpg">
+                    <img src="https://i.postimg.cc/N5wPcWC2/IMG-6913.jpg">
+                    <img src="https://i.postimg.cc/ppYcXq3V/IMG-7144.jpg">
+                    <img src="https://i.postimg.cc/7fMtYmjh/IMG-7586.jpg">
+                    <img src="https://i.postimg.cc/bsHVN34Z/IMG-7587.jpg">
+
+                    <img src="https://i.postimg.cc/TLzNhSRS/IMG-2739.jpg">
+                    <img src="https://i.postimg.cc/njySM5HB/IMG-2741.jpg">
+                    <img src="https://i.postimg.cc/302SGBR1/IMG-2773.jpg">
+                    <img src="https://i.postimg.cc/z3hP4JjT/IMG-2782.jpg">
+                    <img src="https://i.postimg.cc/SYcT9rsB/IMG-2805.jpg">
+                    <img src="https://i.postimg.cc/vDnSCQzL/IMG-2808.jpg">
+                    <img src="https://i.postimg.cc/Z0NDXTcx/IMG-2815.jpg">
+                    <img src="https://i.postimg.cc/8svnx1HZ/IMG-3078.jpg">
+                    <img src="https://i.postimg.cc/WtZfx28L/IMG-3468.jpg">
+                    <img src="https://i.postimg.cc/rz4Y78jT/IMG-3523.jpg">
+                    <img src="https://i.postimg.cc/1fZYQLCT/IMG-3555.jpg">
+                    <img src="https://i.postimg.cc/fJhgN626/IMG-3779.jpg">
+                    <img src="https://i.postimg.cc/ppt1HgcR/IMG-4275.jpg">
+                    <img src="https://i.postimg.cc/QHrn3RYV/IMG-4986.jpg">
+                    <img src="https://i.postimg.cc/mtG6s0pP/IMG-5180.jpg">
+                    <img src="https://i.postimg.cc/N5wPcWC2/IMG-6913.jpg">
+                    <img src="https://i.postimg.cc/ppYcXq3V/IMG-7144.jpg">
+                    <img src="https://i.postimg.cc/7fMtYmjh/IMG-7586.jpg">
+                    <img src="https://i.postimg.cc/bsHVN34Z/IMG-7587.jpg">
+                </div>
             </div>
         </section>
 
@@ -161,7 +210,7 @@
             <div class="category-label">JanJingJing</div>
             <div class="work-grid">
                 <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/Jwv6V3Oo9P4"></iframe></div></div>
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/videoseries?list=PLdxVk2iyDoPz1Q01os2uO_gw_uQL8HViU"></iframe></div></div>
+                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/videoseries?list=PLMv505VyeKuc_Gjjd9_9J8Jo3yspAvohM"></iframe></div></div>
             </div>
             <div class="category-label">Janhae</div>
             <div class="work-grid">
@@ -181,16 +230,16 @@
     <script>
         let player;
         const videoIds = ['TEdxkK9XqDM', 'qkqSgFoVilc', 'QffkeNTjV38', 'Jwv6V3Oo9P4', 'p8tf3dAkvFc']; 
-        const randomId = videoIds[Math.floor(Math.random() * videoIds.length)];
+        const randomStartIndex = Math.floor(Math.random() * videoIds.length);
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', { 
-                height: '0', width: '0', videoId: randomId, 
-                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': randomId, 'mute': 0 }, 
+                height: '0', width: '0', 
+                playerVars: { 'autoplay': 1, 'playlist': videoIds.join(','), 'loop': 1, 'mute': 0 }, 
                 events: { 'onReady': onPlayerReady } 
             });
         }
-        function onPlayerReady(event) { event.target.playVideo(); }
+        function onPlayerReady(event) { player.playVideoAt(randomStartIndex); }
         function enterSite() { 
             if (player && player.playVideo) { 
                 player.playVideo(); 
