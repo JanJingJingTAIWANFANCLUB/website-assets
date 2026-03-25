@@ -15,7 +15,6 @@
         body.locked { overflow: hidden; position: fixed; width: 100%; height: 100%; }
         body.unlocked { overflow-x: hidden; overflow-y: auto; background: var(--bg-color); height: auto; position: relative; }
 
-        #youtube-player-container { position: fixed; top: -10px; left: -10px; width: 1px; height: 1px; opacity: 0; pointer-events: none; z-index: -1; }
         #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; transition: opacity 0.6s ease; padding-bottom: 15vh; background: var(--bg-color); }
         #bg-video { position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; transform: translate(-50%, -50%); z-index: -1; object-fit: cover; opacity: 0.8; }
         .enter-btn { position: relative; z-index: 10001; background: rgba(255,255,255,0.95); border: none; padding: 18px 40px; border-radius: 50px; font-weight: 600; cursor: pointer; letter-spacing: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); font-size: 0.9rem; color: #333; text-transform: uppercase; }
@@ -63,7 +62,8 @@
     </style>
 </head>
 <body class="locked">
-    <div id="youtube-player-container"><div id="player"></div></div>
+    <audio id="bg-music"></audio>
+
     <div id="music-btn" class="music-control" onclick="toggleMusic()"><i id="music-icon" class="fas fa-music"></i></div>
     
     <div id="splash-screen">
@@ -102,7 +102,7 @@
                     </table>
                     <div class="card-social">
                         <a href="https://www.instagram.com/janhae/"><i class="fab fa-instagram"></i></a>
-                        <a href="https://x.com/janhae/"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://x.com/janhae"><i class="fab fa-x-twitter"></i></a>
                         <a href="https://www.youtube.com/@janhae7586"><i class="fab fa-youtube"></i></a>
                         <a href="https://www.threads.net/@janhae"><i class="fab fa-threads"></i></a>
                     </div>
@@ -129,7 +129,7 @@
                     </table>
                     <div class="card-social">
                         <a href="https://www.instagram.com/jingjingyu36/"><i class="fab fa-instagram"></i></a>
-                        <a href="https://x.com/jingjingyu364/"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://x.com/jingjingyu364"><i class="fab fa-x-twitter"></i></a>
                         <a href="https://youtube.com/@jingjingyuofficial"><i class="fab fa-youtube"></i></a>
                         <a href="https://www.threads.net/@jingjingyu36"><i class="fab fa-threads"></i></a>
                         <a href="https://www.facebook.com/profile.php?id=100044385612856"><i class="fab fa-facebook"></i></a>
@@ -169,51 +169,63 @@
 
     <footer><p class="footer-text">Design By：JanJingJing TAIWAN FANCLUB</p></footer>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        let player;
-        const videoIds = ['TEdxkK9XqDM', 'qkqSgFoVilc', 'QffkeNTjV38']; 
-        let currentIdx = Math.floor(Math.random() * videoIds.length);
+        // 音樂網址清單
+        const playlist = [
+            "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/%20เถียงเก่ง%20(Bad%20Mouth)%20.mp3",
+            "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Abracadabra%20จงรัก%2520จงหลง.mp3",
+            "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/หาย%20(Hide)%20Ost.น้องสาวหายนะ%20Hide%20%26%20Sis%20.mp3"
+        ];
 
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', { 
-                height: '0', width: '0', 
-                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': videoIds.join(','), 'mute': 0, 'controls': 0 }, 
-                events: { 'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange } 
-            });
-        }
+        let currentTrack = 0;
+        const audio = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+        const musicIcon = document.getElementById('music-icon');
 
-        function onPlayerReady(event) {
-            player.loadPlaylist({ playlist: videoIds, index: currentIdx, startSeconds: 0 });
-            // 每秒檢查一次，如果音樂停了就強迫播下一首
-            setInterval(() => {
-                if (player && player.getPlayerState) {
-                    if (player.getPlayerState() === 0) { player.nextVideo(); }
-                }
-            }, 1000);
-        }
+        // 初始化播放器
+        audio.src = playlist[currentTrack];
 
-        function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.ENDED) { player.nextVideo(); }
-        }
+        // 當目前歌曲播完，自動換下一首
+        audio.addEventListener('ended', function() {
+            currentTrack++;
+            if (currentTrack >= playlist.length) {
+                currentTrack = 0; // 回到第一首
+            }
+            audio.src = playlist[currentTrack];
+            audio.play();
+        });
 
         function enterSite() { 
-            if (player && player.playVideo) { player.playVideo(); document.getElementById('music-btn').style.display = 'flex'; }
+            // 隨機播放一首開始
+            currentTrack = Math.floor(Math.random() * playlist.length);
+            audio.src = playlist[currentTrack];
+            
+            audio.play().catch(e => {
+                console.log("自動播放被攔截，點擊後啟動");
+            });
+
+            musicBtn.style.display = 'flex';
+
             const splash = document.getElementById('splash-screen');
             splash.style.opacity = '0';
             splash.style.pointerEvents = 'none';
             document.body.classList.remove('locked');
             document.body.classList.add('unlocked');
+            
+            // 強制渲染修正
             window.scrollTo(0, 1);
             setTimeout(() => { window.scrollTo(0, 0); }, 50);
             setTimeout(() => { splash.style.display = 'none'; }, 600); 
         }
 
         function toggleMusic() {
-            const state = player.getPlayerState();
-            const icon = document.getElementById('music-icon');
-            if (state === 1) { player.pauseVideo(); icon.className = 'fas fa-volume-mute'; } 
-            else { player.playVideo(); icon.className = 'fas fa-music'; }
+            if (audio.paused) {
+                audio.play();
+                musicIcon.className = 'fas fa-music';
+            } else {
+                audio.pause();
+                musicIcon.className = 'fas fa-volume-mute';
+            }
         }
     </script>
 </body>
