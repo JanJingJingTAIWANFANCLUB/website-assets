@@ -49,19 +49,18 @@
         .card-social { display: flex; gap: 12px; margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; flex-wrap: wrap; }
         .card-social a { color: var(--text-color); font-size: 1.1rem; opacity: 0.6; transition: 0.3s; }
 
-        /* --- PHOTOS 核心：超清晰、原始比例跑馬燈 --- */
         .photo-ticker-wrap { width: 100%; overflow: hidden; background: transparent; padding: 30px 0; margin-bottom: 60px; position: relative; }
         .photo-ticker-wrap:hover .photo-ticker { animation-play-state: paused; }
         .photo-ticker { display: flex; width: fit-content; animation: photoTicker 110s linear infinite; align-items: center; }
         
         .photo-ticker img { 
-            max-height: 480px; /* 限制最大高度，避免圖片太大撐破頁面 */
+            max-height: 480px; 
             width: auto; 
             margin-right: 25px; 
-            border-radius: 0; /* 取消圓角減少模糊感 */
-            image-rendering: -webkit-optimize-contrast; /* 銳利化渲染 */
+            border-radius: 0; 
+            image-rendering: -webkit-optimize-contrast; 
             image-rendering: crisp-edges;
-            transform: translateZ(0); /* 強制開啟硬體加速提升畫質 */
+            transform: translateZ(0); 
         }
 
         @media (max-width: 600px) { .photo-ticker img { max-height: 320px; } }
@@ -217,7 +216,7 @@
             <div class="category-label">JanJingJing</div>
             <div class="work-grid">
                 <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/Jwv6V3Oo9P4"></iframe></div></div>
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/videoseries?list=PLMv505VyeKuc_Gjjd9_9J8Jo3yspAvohM"></iframe></div></div>
+                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/videoseries?list=PLm8SId3u6fVvMsq07lH6Y4nZ4j7WshvW-"></iframe></div></div>
             </div>
             <div class="category-label">Janhae</div>
             <div class="work-grid">
