@@ -11,10 +11,10 @@
         :root { --bg-color: #f2efe9; --text-color: #2c2c2c; --accent-color: #8e7f71; --serif: 'Playfair Display', serif; --sans: 'Inter', "Noto Sans TC", sans-serif; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
-        /* 防白閃優化：預設背景為黑 */
+        /* 修正：將底色改為米色，解決黑底問題 */
         html, body { 
             margin: 0; padding: 0; width: 100%; height: 100%; 
-            background: #000; 
+            background: var(--bg-color); 
             color: var(--text-color); 
             font-family: var(--sans); 
         }
@@ -24,9 +24,10 @@
 
         #youtube-player-container { position: fixed; top: -10px; left: -10px; width: 1px; height: 1px; opacity: 0; pointer-events: none; z-index: -1; }
         
-        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; transition: opacity 0.8s ease; padding-bottom: 15vh; background: #000; }
+        /* 歡迎頁面背景也改為米色或透明，避免黑底感 */
+        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; transition: opacity 0.8s ease; padding-bottom: 15vh; background: var(--bg-color); }
         #bg-video { position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; transform: translate(-50%, -50%); z-index: -1; object-fit: cover; opacity: 0.8; }
-        .enter-btn { position: relative; z-index: 10001; background: rgba(255,255,255,0.95); border: none; padding: 18px 40px; border-radius: 50px; font-weight: 600; cursor: pointer; letter-spacing: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-size: 0.9rem; color: #333; text-transform: uppercase; }
+        .enter-btn { position: relative; z-index: 10001; background: rgba(255,255,255,0.95); border: none; padding: 18px 40px; border-radius: 50px; font-weight: 600; cursor: pointer; letter-spacing: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); font-size: 0.9rem; color: #333; text-transform: uppercase; }
 
         .nav-bar { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; z-index: 1000; background: rgba(242, 239, 233, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
         .nav-logo { font-family: var(--serif); font-weight: bold; font-size: 1rem; }
@@ -238,24 +239,22 @@
                 playerVars: { 
                     'autoplay': 1, 
                     'loop': 1, 
-                    'playlist': videoIds.join(','), // 核心：必須告訴API這是一個清單
+                    'playlist': videoIds.join(','),
                     'mute': 0,
                     'controls': 0
                 }, 
                 events: { 
                     'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange // 核心：監聽狀態改變
+                    'onStateChange': onPlayerStateChange 
                 } 
             });
         }
 
         function onPlayerReady(event) {
-            // 從隨機的一首開始播放
             player.playVideoAt(randomStartIndex);
         }
 
         function onPlayerStateChange(event) {
-            // 當影片狀態為 0 (ENDED) 時，強制播放下一首
             if (event.data === YT.PlayerState.ENDED) {
                 player.nextVideo();
             }
