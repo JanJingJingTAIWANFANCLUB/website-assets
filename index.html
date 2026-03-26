@@ -32,6 +32,17 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; position: relative; z-index: 1; }
         .section-title { font-family: var(--serif); font-size: 2.2rem; font-style: italic; text-align: center; margin: 50px 0 30px; letter-spacing: 2px; }
 
+        /* 新的按月分組樣式 */
+        .month-group { margin-bottom: 40px; }
+        .month-header { font-family: var(--serif); font-size: 1.4rem; color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; margin-bottom: 15px; font-style: italic; font-weight: bold; }
+        .calendar-wrap { max-width: 700px; margin: 0 auto 60px; padding: 25px; background: #fff; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .calendar-item { display: flex; align-items: center; padding: 18px 0; border-bottom: 1px solid #f0ede8; }
+        .calendar-item:last-child { border-bottom: none; }
+        .cal-date { width: 60px; font-family: var(--serif); font-weight: bold; color: var(--accent-color); font-size: 0.95rem; text-align: left; }
+        .cal-info { flex: 1; padding-left: 10px; }
+        .cal-title { font-size: 13px; font-weight: 600; color: #333; line-height: 1.4; }
+        .cal-icon { width: 35px; text-align: center; color: var(--accent-color); opacity: 0.6; font-size: 1rem; }
+
         .profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 60px; }
         .artist-card { background: transparent; padding: 0; width: 100%; }
         .image-container { width: 100%; border-radius: 4px; overflow: hidden; background: #fff; padding: 6px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
@@ -47,7 +58,6 @@
         .photo-ticker-wrap { width: 100%; overflow: hidden; background: transparent; padding: 30px 0; margin-bottom: 60px; position: relative; }
         .photo-ticker { display: flex; width: fit-content; animation: photoTicker 110s linear infinite; align-items: center; }
         .photo-ticker img { max-height: 480px; width: auto; margin-right: 25px; border-radius: 0; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; transform: translateZ(0); }
-        @media (max-width: 600px) { .photo-ticker img { max-height: 320px; } }
         @keyframes photoTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         .category-label { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--accent-color); margin: 40px 0 20px; display: block; border-left: 3px solid var(--accent-color); padding-left: 15px; }
@@ -63,7 +73,6 @@
 </head>
 <body class="locked">
     <audio id="bg-music" playsinline preload="auto"></audio>
-
     <div id="music-btn" class="music-control" onclick="toggleMusic()"><i id="music-icon" class="fas fa-music"></i></div>
     
     <div id="splash-screen">
@@ -75,15 +84,12 @@
 
     <nav class="nav-bar">
         <div class="nav-logo">30秒帶你認識JanJingJing✨</div>
-        <div class="nav-links"><a href="#artists">Profiles</a><a href="#photos">Photos</a><a href="#portfolio">Videos</a></div>
+        <div class="nav-links"><a href="#artists">Profiles</a><a href="#calendar">Calendar</a><a href="#photos">Photos</a><a href="#portfolio">Videos</a></div>
     </nav>
 
     <div class="ticker-wrap">
         <div class="ticker">
-            <span>Janhae Ployshompoo Supasap</span>
-            <span>JingJing Prariyapit Yu</span>
-            <span>Janhae Ployshompoo Supasap</span>
-            <span>JingJing Prariyapit Yu</span>
+            <span>Janhae Ployshompoo Supasap</span><span>JingJing Prariyapit Yu</span><span>Janhae Ployshompoo Supasap</span><span>JingJing Prariyapit Yu</span>
         </div>
     </div>
 
@@ -138,6 +144,46 @@
             </div>
         </section>
 
+        <section id="calendar">
+            <h2 class="section-title">Calendar</h2>
+            <div class="calendar-wrap">
+                
+                <div class="month-group">
+                    <div class="month-header">March</div>
+                    <div class="calendar-item">
+                        <div class="cal-date">3/26</div>
+                        <div class="cal-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="cal-info"><div class="cal-title">台灣時間19：00 JanJingJing GENTLEWOMAN WOMEN : HER THAI STORY</div></div>
+                    </div>
+                    <div class="calendar-item">
+                        <div class="cal-date">3/27</div>
+                        <div class="cal-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="cal-info"><div class="cal-title">JanJingJing Mediterranean Summer Escape</div></div>
+                    </div>
+                    <div class="calendar-item">
+                        <div class="cal-date">3/31</div>
+                        <div class="cal-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="cal-info"><div class="cal-title">台灣時間21：30 JanJingJing GMMTV Live House on Stage</div></div>
+                    </div>
+                </div>
+
+                <div class="month-group">
+                    <div class="month-header">April</div>
+                    <div class="calendar-item">
+                        <div class="cal-date">4/1</div>
+                        <div class="cal-icon"><i class="fas fa-birthday-cake"></i></div>
+                        <div class="cal-info"><div class="cal-title">JingJing Happy Birthday🎂</div></div>
+                    </div>
+                    <div class="calendar-item">
+                        <div class="cal-date">4/5</div>
+                        <div class="cal-icon"><i class="fas fa-star"></i></div>
+                        <div class="cal-info"><div class="cal-title">台灣時間17：30 𝐽𝑖𝑛𝑔𝑗𝑖𝑛𝑔'𝑠 𝑀𝑎𝑟𝑣𝑒𝑙𝑜𝑢𝑠 𝐷𝑎𝑦</div></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
         <section id="photos">
             <h2 class="section-title">Photos</h2>
             <div class="photo-ticker-wrap">
@@ -156,9 +202,7 @@
                 <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/videoseries?list=PL_vCrT8PKfW0THj0b21-tIMFAP_3yaWxU"></iframe></div></div>
             </div>
             <div class="category-label">Janhae</div>
-            <div class="work-grid">
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/p8tf3dAkvFc"></iframe></div></div>
-            </div>
+            <div class="work-grid"><div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/p8tf3dAkvFc"></iframe></div></div></div>
             <div class="category-label">JingJing</div>
             <div class="work-grid">
                 <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/uLRYn0u8y6o"></iframe></div></div>
@@ -175,56 +219,23 @@
             "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song2.mp3",
             "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song3.mp3"
         ];
-
         let currentTrack = Math.floor(Math.random() * playlist.length);
         const audio = document.getElementById('bg-music');
         const musicBtn = document.getElementById('music-btn');
         const musicIcon = document.getElementById('music-icon');
-
-        function loadTrack(index) {
-            audio.src = playlist[index];
-            audio.load();
-        }
-
+        function loadTrack(index) { audio.src = playlist[index]; audio.load(); }
         loadTrack(currentTrack);
-
-        // 當歌曲播完，自動跳下一首
-        audio.onended = function() {
-            currentTrack = (currentTrack + 1) % playlist.length;
-            loadTrack(currentTrack);
-            audio.play().catch(e => console.log("續播受阻，等待使用者互動"));
-        };
-
+        audio.onended = function() { currentTrack = (currentTrack + 1) % playlist.length; loadTrack(currentTrack); audio.play(); };
         function enterSite() { 
-            // 進入時啟動播放
-            audio.play().then(() => {
-                musicBtn.style.display = 'flex';
-                musicIcon.className = 'fas fa-music';
-            }).catch(e => {
-                console.log("需要手動啟動音樂鈕");
-                musicBtn.style.display = 'flex';
-            });
-
+            audio.play().then(() => { musicBtn.style.display = 'flex'; musicIcon.className = 'fas fa-music'; }).catch(e => { musicBtn.style.display = 'flex'; });
             const splash = document.getElementById('splash-screen');
             splash.style.opacity = '0';
             splash.style.pointerEvents = 'none';
             document.body.classList.remove('locked');
             document.body.classList.add('unlocked');
-            
-            window.scrollTo(0, 1);
-            setTimeout(() => { window.scrollTo(0, 0); }, 50);
             setTimeout(() => { splash.style.display = 'none'; }, 600); 
         }
-
-        function toggleMusic() {
-            if (audio.paused) {
-                audio.play();
-                musicIcon.className = 'fas fa-music';
-            } else {
-                audio.pause();
-                musicIcon.className = 'fas fa-volume-mute';
-            }
-        }
+        function toggleMusic() { if (audio.paused) { audio.play(); musicIcon.className = 'fas fa-music'; } else { audio.pause(); musicIcon.className = 'fas fa-volume-mute'; } }
     </script>
 </body>
 </html>
