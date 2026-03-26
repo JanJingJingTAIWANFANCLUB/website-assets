@@ -210,7 +210,7 @@
     <footer><p class="footer-text">Design By：JanJingJing TAIWAN FANCLUB</p></footer>
 
     <script>
-        // 【修正】確保包含完整的三首歌曲清單
+        // 維持三首 GitHub 音源清單
         const playlist = [
             "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song1.mp3",
             "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song2.mp3",
@@ -222,24 +222,50 @@
         const musicBtn = document.getElementById('music-btn');
         const musicIcon = document.getElementById('music-icon');
 
-        function loadTrack(index) {
+        function loadAndPlay(index) {
             audio.src = playlist[index];
             audio.load();
+            // 增加一段小延遲確保瀏覽器緩衝
+            setTimeout(() => {
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log("Playback failed, trying next track...");
+                        nextTrack(); // 如果這首播放失敗，嘗試下一首
+                    });
+                }
+            }, 150);
         }
 
-        loadTrack(currentTrack);
-
-        audio.onended = function() {
+        function nextTrack() {
             currentTrack = (currentTrack + 1) % playlist.length;
-            loadTrack(currentTrack);
-            audio.play().catch(e => console.log("Next track play"));
+            loadAndPlay(currentTrack);
+        }
+
+        // 初始化
+        audio.src = playlist[currentTrack];
+
+        // 核心播放穩定優化：自動連播
+        audio.onended = function() {
+            nextTrack();
+        };
+
+        // 偵測錯誤，避免播放器卡死
+        audio.onerror = function() {
+            console.log("Audio error, skipping...");
+            nextTrack();
         };
 
         function enterSite() { 
-            audio.play().then(() => { 
-                musicBtn.style.display = 'flex'; 
-                musicIcon.className = 'fas fa-music'; 
-            }).catch(e => { musicBtn.style.display = 'flex'; });
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => { 
+                    musicBtn.style.display = 'flex'; 
+                    musicIcon.className = 'fas fa-music'; 
+                }).catch(e => { 
+                    musicBtn.style.display = 'flex'; 
+                });
+            }
             const splash = document.getElementById('splash-screen');
             splash.style.opacity = '0';
             splash.style.pointerEvents = 'none';
