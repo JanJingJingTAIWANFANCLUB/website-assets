@@ -210,7 +210,7 @@
     <footer><p class="footer-text">Design By：JanJingJing TAIWAN FANCLUB</p></footer>
 
     <script>
-        // 音樂清單完整回歸：Song1, Song2, Song3
+        // 【修正】確保包含完整的三首歌曲清單
         const playlist = [
             "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song1.mp3",
             "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song2.mp3",
@@ -229,11 +229,10 @@
 
         loadTrack(currentTrack);
 
-        // 自動連播邏輯
         audio.onended = function() {
             currentTrack = (currentTrack + 1) % playlist.length;
             loadTrack(currentTrack);
-            audio.play().catch(e => console.log("Auto-play next"));
+            audio.play().catch(e => console.log("Next track play"));
         };
 
         function enterSite() { 
