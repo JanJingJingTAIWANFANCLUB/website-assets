@@ -32,7 +32,6 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; position: relative; z-index: 1; }
         .section-title { font-family: var(--serif); font-size: 2.2rem; font-style: italic; text-align: center; margin: 50px 0 30px; letter-spacing: 2px; }
 
-        /* 新的按月分組樣式 */
         .month-group { margin-bottom: 40px; }
         .month-header { font-family: var(--serif); font-size: 1.4rem; color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; margin-bottom: 15px; font-style: italic; font-weight: bold; }
         .calendar-wrap { max-width: 700px; margin: 0 auto 60px; padding: 25px; background: #fff; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
@@ -147,7 +146,6 @@
         <section id="calendar">
             <h2 class="section-title">Calendar</h2>
             <div class="calendar-wrap">
-                
                 <div class="month-group">
                     <div class="month-header">March</div>
                     <div class="calendar-item">
@@ -166,7 +164,6 @@
                         <div class="cal-info"><div class="cal-title">台灣時間21：30 JanJingJing GMMTV Live House on Stage</div></div>
                     </div>
                 </div>
-
                 <div class="month-group">
                     <div class="month-header">April</div>
                     <div class="calendar-item">
@@ -180,7 +177,6 @@
                         <div class="cal-info"><div class="cal-title">台灣時間17：30 𝐽𝑖𝑛𝑔𝑗𝑖𝑛𝑔'𝑠 𝑀𝑎𝑟𝑣𝑒𝑙𝑜𝑢𝑠 𝐷𝑎𝑦</div></div>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -223,11 +219,28 @@
         const audio = document.getElementById('bg-music');
         const musicBtn = document.getElementById('music-btn');
         const musicIcon = document.getElementById('music-icon');
-        function loadTrack(index) { audio.src = playlist[index]; audio.load(); }
+
+        function loadTrack(index) {
+            audio.src = playlist[index];
+            audio.load();
+        }
+
         loadTrack(currentTrack);
-        audio.onended = function() { currentTrack = (currentTrack + 1) % playlist.length; loadTrack(currentTrack); audio.play(); };
+
+        // 核心修復：確保歌曲結束後會自動切換並播放下一首
+        audio.onended = function() {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            loadTrack(currentTrack);
+            audio.play().catch(e => console.log("Next track play triggered"));
+        };
+
         function enterSite() { 
-            audio.play().then(() => { musicBtn.style.display = 'flex'; musicIcon.className = 'fas fa-music'; }).catch(e => { musicBtn.style.display = 'flex'; });
+            audio.play().then(() => { 
+                musicBtn.style.display = 'flex'; 
+                musicIcon.className = 'fas fa-music'; 
+            }).catch(e => { 
+                musicBtn.style.display = 'flex'; 
+            });
             const splash = document.getElementById('splash-screen');
             splash.style.opacity = '0';
             splash.style.pointerEvents = 'none';
@@ -235,7 +248,16 @@
             document.body.classList.add('unlocked');
             setTimeout(() => { splash.style.display = 'none'; }, 600); 
         }
-        function toggleMusic() { if (audio.paused) { audio.play(); musicIcon.className = 'fas fa-music'; } else { audio.pause(); musicIcon.className = 'fas fa-volume-mute'; } }
+
+        function toggleMusic() { 
+            if (audio.paused) { 
+                audio.play(); 
+                musicIcon.className = 'fas fa-music'; 
+            } else { 
+                audio.pause(); 
+                musicIcon.className = 'fas fa-volume-mute'; 
+            } 
+        }
     </script>
 </body>
 </html>
