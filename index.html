@@ -210,14 +210,13 @@
     <footer><p class="footer-text">Design By：JanJingJing TAIWAN FANCLUB</p></footer>
 
     <script>
-        // 確認三首歌曲清單完整回歸
+        // 音樂清單完整回歸：Song1, Song2, Song3
         const playlist = [
             "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song1.mp3",
             "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song2.mp3",
             "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song3.mp3"
         ];
         
-        // 隨機選一首作為開始
         let currentTrack = Math.floor(Math.random() * playlist.length);
         const audio = document.getElementById('bg-music');
         const musicBtn = document.getElementById('music-btn');
@@ -228,23 +227,20 @@
             audio.load();
         }
 
-        // 初始化播放器
         loadTrack(currentTrack);
 
-        // 自動連播邏輯：播完自動跳下一首
+        // 自動連播邏輯
         audio.onended = function() {
             currentTrack = (currentTrack + 1) % playlist.length;
             loadTrack(currentTrack);
-            audio.play().catch(e => console.log("Auto-play next track"));
+            audio.play().catch(e => console.log("Auto-play next"));
         };
 
         function enterSite() { 
             audio.play().then(() => { 
                 musicBtn.style.display = 'flex'; 
                 musicIcon.className = 'fas fa-music'; 
-            }).catch(e => { 
-                musicBtn.style.display = 'flex'; 
-            });
+            }).catch(e => { musicBtn.style.display = 'flex'; });
             const splash = document.getElementById('splash-screen');
             splash.style.opacity = '0';
             splash.style.pointerEvents = 'none';
