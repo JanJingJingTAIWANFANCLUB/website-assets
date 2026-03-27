@@ -149,14 +149,14 @@
                 <div class="month-group">
                     <div class="month-header">March</div>
                     <div class="calendar-item">
-                        <div class="cal-date">3/26</div>
-                        <div class="cal-icon"><i class="fas fa-calendar-alt"></i></div>
-                        <div class="cal-info"><div class="cal-title">台灣時間19：00 JanJingJing GENTLEWOMAN WOMEN : HER THAI STORY</div></div>
-                    </div>
-                    <div class="calendar-item">
                         <div class="cal-date">3/27</div>
                         <div class="cal-icon"><i class="fas fa-calendar-alt"></i></div>
                         <div class="cal-info"><div class="cal-title">JanJingJing Mediterranean Summer Escape</div></div>
+                    </div>
+                    <div class="calendar-item">
+                        <div class="cal-date">3/28</div>
+                        <div class="cal-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="cal-info"><div class="cal-title">台灣時間早上07:30 The Dove Sun Club</div></div>
                     </div>
                     <div class="calendar-item">
                         <div class="cal-date">3/31</div>
@@ -210,7 +210,6 @@
     <footer><p class="footer-text">Design By：JanJingJing TAIWAN FANCLUB</p></footer>
 
     <script>
-        // 維持三首 GitHub 音源清單
         const playlist = [
             "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song1.mp3",
             "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song2.mp3",
@@ -225,13 +224,14 @@
         function loadAndPlay(index) {
             audio.src = playlist[index];
             audio.load();
-            // 增加一段小延遲確保瀏覽器緩衝
             setTimeout(() => {
                 const playPromise = audio.play();
                 if (playPromise !== undefined) {
-                    playPromise.catch(error => {
+                    playPromise.then(() => {
+                        musicIcon.className = 'fas fa-music';
+                    }).catch(error => {
                         console.log("Playback failed, trying next track...");
-                        nextTrack(); // 如果這首播放失敗，嘗試下一首
+                        nextTrack();
                     });
                 }
             }, 150);
@@ -242,19 +242,9 @@
             loadAndPlay(currentTrack);
         }
 
-        // 初始化
         audio.src = playlist[currentTrack];
-
-        // 核心播放穩定優化：自動連播
-        audio.onended = function() {
-            nextTrack();
-        };
-
-        // 偵測錯誤，避免播放器卡死
-        audio.onerror = function() {
-            console.log("Audio error, skipping...");
-            nextTrack();
-        };
+        audio.onended = function() { nextTrack(); };
+        audio.onerror = function() { nextTrack(); };
 
         function enterSite() { 
             const playPromise = audio.play();
