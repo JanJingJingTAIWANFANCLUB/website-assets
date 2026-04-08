@@ -17,48 +17,47 @@
 
         #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; transition: opacity 0.6s ease; padding-bottom: 15vh; background: #000; overflow: hidden; }
         
-        /* --- 跨裝置影片優化區塊 --- */
+        /* --- 跨裝置影片比例最終優化 --- */
         #bg-video { 
             position: absolute; 
             top: 50%; 
             left: 50%; 
             transform: translate(-50%, -50%); 
             z-index: -1; 
-            
-            /* 基礎設定：確保不留黑邊 */
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            
-            /* 核心重心：30% 確保大部份裝置都能保住人物頭部 */
-            object-position: center 30%; 
+            object-position: center 20%; 
             opacity: 0.8; 
-            transition: all 0.3s ease;
         }
 
-        /* 平板裝置 (iPad 等) 優化：稍微調整縮放，避免人臉在方螢幕中過大 */
+        /* 電腦版：標準比例，完全覆蓋 */
+        @media (min-width: 1025px) {
+            #bg-video {
+                object-position: center center;
+            }
+        }
+
+        /* 平板版：微調避免人物過大 */
         @media (min-width: 601px) and (max-width: 1024px) {
             #bg-video {
-                width: 105vw; /* 微調寬度 */
+                width: 105vw;
                 object-position: center 25%;
             }
         }
 
-        /* 手機裝置優化：增加左右緩衝空間 */
+        /* 手機版核心修改：劇院模式 (解決人擋住的問題) */
         @media (max-width: 600px) {
             #bg-video {
-                width: 115vw; /* 在極窄螢幕增加寬度，避免過度裁切 */
+                /* 關鍵：改為 contain，讓橫式影片完整縮小在螢幕內 */
+                width: 100vw; 
                 height: 100vh;
-                object-position: center 30%;
-            }
-        }
-
-        /* 電腦寬螢幕優化：恢復標準覆蓋 */
-        @media (min-width: 1025px) {
-            #bg-video {
-                width: 100%;
-                height: 100%;
+                object-fit: contain;
+                /* 上下留黑邊，營造劇院感 */
+                background: #000;
+                /* 重心設為正中心 */
                 object-position: center center;
+                opacity: 1; /* 劇院模式影片清晰一點 */
             }
         }
 
@@ -77,7 +76,6 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; position: relative; z-index: 1; }
         .section-title { font-family: var(--serif); font-size: 2.2rem; font-style: italic; text-align: center; margin: 50px 0 30px; letter-spacing: 2px; }
 
-        /* 行事曆格式維持不變 */
         .month-group { margin-bottom: 40px; }
         .month-header { font-family: var(--serif); font-size: 1.4rem; color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; margin-bottom: 15px; font-style: italic; font-weight: bold; }
         .calendar-wrap { max-width: 700px; margin: 0 auto 60px; padding: 25px; background: #fff; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
