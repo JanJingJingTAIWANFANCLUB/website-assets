@@ -294,8 +294,17 @@
             box-shadow: 0 8px 20px rgba(142,127,113,.18);
         }
 
+        .dropbtn i {
+            margin-left: 6px;
+            transition: transform .25s ease;
+        }
+
+        .dropdown.open .dropbtn i:last-child {
+            transform: rotate(180deg);
+        }
+
         .dropdown-content {
-            display: none;
+            display: block;
             position: absolute;
             right: 0;
             min-width: 320px;
@@ -306,26 +315,51 @@
             border: 1px solid rgba(0,0,0,.04);
             box-shadow: 0 14px 28px rgba(0,0,0,.12);
             z-index: 100;
+
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px) scale(.98);
+            transform-origin: top right;
+            transition: opacity .22s ease, transform .22s ease, visibility .22s ease;
+            pointer-events: none;
+        }
+
+        .dropdown-content.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
         }
 
         .dropdown-content div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             padding: 12px 16px;
             font-size: 12px;
             line-height: 1.5;
             color: var(--text-color);
             border-bottom: 1px solid #f0efe9;
             cursor: pointer;
-            transition: background .2s ease;
+            transition: background .2s ease, padding-left .2s ease;
         }
 
-        .dropdown-content div:hover { background: #f7f4ef; }
+        .dropdown-content div:hover {
+            background: #f7f4ef;
+            padding-left: 20px;
+        }
 
         .dropdown-content div.active {
             background: #f2efe9;
             font-weight: 600;
         }
 
-        .show { display: block; }
+        .dropdown-content div i {
+            width: 16px;
+            text-align: center;
+            color: var(--accent-gold);
+            flex-shrink: 0;
+        }
 
         .full-vbox {
             position: relative;
@@ -748,7 +782,6 @@
             transform: scale(1.25);
         }
 
-        /* Story mode */
         .story-viewer {
             position: fixed;
             inset: 0;
@@ -896,7 +929,7 @@
         .music-badge {
             position: fixed;
             right: 20px;
-            bottom: 86px;
+            bottom: 96px;
             z-index: 1999;
             display: none;
             padding: 10px 14px;
@@ -935,22 +968,22 @@
         }
 
         .footer-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: rgba(150, 122, 100, 0.96);
-    font-style: italic;
-    text-align: center;
-    margin-top: 40px;
-    transition: all 0.4s ease;
-}
+            font-family: 'Playfair Display', serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: rgba(150, 122, 100, 0.96);
+            font-style: italic;
+            text-align: center;
+            margin-top: 40px;
+            transition: all 0.4s ease;
+        }
 
         .footer-text:hover {
-    letter-spacing: 3.5px;
-    background: linear-gradient(90deg, #c49a7a, #8a6a56);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+            letter-spacing: 3.5px;
+            background: linear-gradient(90deg, #c49a7a, #8a6a56);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
         .spark {
             display: inline-block;
@@ -1018,6 +1051,7 @@
                 width: 100%;
                 min-width: unset;
                 max-width: unset;
+                transform-origin: top center;
             }
 
             .music-badge {
@@ -1075,7 +1109,7 @@
 
     <div id="music-badge" class="music-badge">
         <i class="fas fa-compact-disc"></i>
-        <span id="music-track-label">Now Playing · หาย（Hide）</span>
+        <span id="music-track-label">Now Playing · Abracadabra จงรัก จงหลง</span>
     </div>
 
     <div id="splash-screen">
@@ -1174,14 +1208,28 @@
                 <div class="category-header">
                     <p class="category-label">Playlist Selection</p>
                     <div class="dropdown">
-                        <button onclick="toggleD('musicD')" class="dropbtn">請點選 <i class="fas fa-chevron-down"></i></button>
+                        <button onclick="toggleD('musicD')" class="dropbtn">
+                            <i class="fas fa-music"></i> SIZZY - JAN <i class="fas fa-chevron-down"></i>
+                        </button>
                         <div id="musicD" class="dropdown-content">
-                            <div class="active" onclick="swV('musicPlayer', 'https://www.youtube.com/embed/WDxMcK0eau0', this)">SIZZY - JAN</div>
-                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/Lx2zTvk6mhI', this)">SINGER - JAN</div>
-                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/_MYQRhTHPh4', this)">JAN COVER</div>
-                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/rVN62lVEOxU', this)">JAN 參與的MV</div>
-                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/3mYVyVY-lU4', this)">JINGJING 參與的MV</div>
-                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/j5f8Z7QW6gg', this)">JINGJING DANCE COVER</div>
+                            <div class="active" onclick="swV('musicPlayer', 'https://www.youtube.com/embed/WDxMcK0eau0', this)">
+                                <i class="fas fa-music"></i><span>SIZZY - JAN</span>
+                            </div>
+                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/Lx2zTvk6mhI', this)">
+                                <i class="fas fa-headphones"></i><span>SINGER - JAN</span>
+                            </div>
+                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/_MYQRhTHPh4', this)">
+                                <i class="fas fa-microphone"></i><span>JAN COVER</span>
+                            </div>
+                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/rVN62lVEOxU', this)">
+                                <i class="fas fa-compact-disc"></i><span>JAN 參與的MV</span>
+                            </div>
+                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/3mYVyVY-lU4', this)">
+                                <i class="fas fa-film"></i><span>JINGJING 參與的MV</span>
+                            </div>
+                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/j5f8Z7QW6gg', this)">
+                                <i class="fas fa-person-dancing"></i><span>JINGJING DANCE COVER</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1224,7 +1272,7 @@
 
                     <div class="calendar-detail-box">
                         <div class="calendar-detail-title">活動詳情</div>
-                        <div class="calendar-detail-content" id="calendar-detail-april">04/21 (TUE.) 泰國時間 21:30 GMMTV LIVE HOUSE</div>
+                        <div class="calendar-detail-content" id="calendar-detail-april">JAN 04/21 (TUE.) 泰國時間 21:30 GMMTV LIVE HOUSE</div>
                     </div>
                 </div>
 
@@ -1248,7 +1296,7 @@
 
                     <div class="calendar-detail-box">
                         <div class="calendar-detail-title">活動詳情</div>
-                        <div class="calendar-detail-content" id="calendar-detail-june">06/13 (SAT.) 17:00 Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE</div>
+                        <div class="calendar-detail-content" id="calendar-detail-june">JANJINGJING 06/13 (SAT.) 17:00 Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE</div>
                     </div>
                 </div>
             </div>
@@ -1288,9 +1336,13 @@
                 <div class="category-header">
                     <p class="category-label">Show Selection</p>
                     <div class="dropdown">
-                        <button onclick="toggleD('showD')" class="dropbtn">請點選 <i class="fas fa-chevron-down"></i></button>
+                        <button onclick="toggleD('showD')" class="dropbtn">
+                            <i class="fas fa-tv"></i> LANEIGE Let it go ทริปป่วน ก๊วนผิวปัง Season 2 <i class="fas fa-chevron-down"></i>
+                        </button>
                         <div id="showD" class="dropdown-content">
-                            <div class="active" onclick="swV('showPlayer', 'https://www.youtube.com/embed/q7-7eKMCa10', this)">LANEIGE Let it go ทริปป่วน ก๊วนผิวปัง Season 2</div>
+                            <div class="active" onclick="swV('showPlayer', 'https://www.youtube.com/embed/q7-7eKMCa10', this)">
+                                <i class="fas fa-tv"></i><span>LANEIGE Let it go ทริปป่วน ก๊วนผิวปัง Season 2</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1313,13 +1365,25 @@
             <div class="category-header">
                 <p class="category-label">Blush Blossom Fan Fest 2026 : Midnight Bloom</p>
                 <div class="dropdown">
-                    <button onclick="toggleD('bbfD')" class="dropbtn">請點選 <i class="fas fa-chevron-down"></i></button>
+                    <button onclick="toggleD('bbfD')" class="dropbtn">
+                        <i class="fas fa-clapperboard"></i> Blush Blossom Fan Fest : Midnight Bloom 預告 1 <i class="fas fa-chevron-down"></i>
+                    </button>
                     <div id="bbfD" class="dropdown-content">
-                        <div class="active" onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/vqbNKArQejI', this)">Blush Blossom Fan Fest : Midnight Bloom 預告 1</div>
-                        <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/XrObJGT_1Co', this)">Blush Blossom Fan Fest : Midnight Bloom 預告 2</div>
-                        <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/IjJ4MTUf2TQ', this)">Blush Blossom Fan Fest : Midnight Bloom 宣傳 1</div>
-                        <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/E0mslaZw5rE', this)">Blush Blossom Fan Fest : Midnight Bloom 宣傳 2</div>
-                        <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/JwocLA1ObCs', this)">Blush Blossom Fan Fest : Midnight Bloom 宣傳 3</div>
+                        <div class="active" onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/vqbNKArQejI', this)">
+                            <i class="fas fa-clapperboard"></i><span>Blush Blossom Fan Fest : Midnight Bloom 預告 1</span>
+                        </div>
+                        <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/XrObJGT_1Co', this)">
+                            <i class="fas fa-video"></i><span>Blush Blossom Fan Fest : Midnight Bloom 預告 2</span>
+                        </div>
+                        <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/IjJ4MTUf2TQ', this)">
+                            <i class="fas fa-bullhorn"></i><span>Blush Blossom Fan Fest : Midnight Bloom 宣傳 1</span>
+                        </div>
+                        <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/E0mslaZw5rE', this)">
+                            <i class="fas fa-bullhorn"></i><span>Blush Blossom Fan Fest : Midnight Bloom 宣傳 2</span>
+                        </div>
+                        <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/JwocLA1ObCs', this)">
+                            <i class="fas fa-star"></i><span>Blush Blossom Fan Fest : Midnight Bloom 宣傳 3</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1337,12 +1401,22 @@
             <div class="category-header">
                 <p class="category-label">JanJingJing</p>
                 <div class="dropdown">
-                    <button onclick="toggleD('jjjD')" class="dropbtn">請點選 <i class="fas fa-chevron-down"></i></button>
+                    <button onclick="toggleD('jjjD')" class="dropbtn">
+                        <i class="fas fa-heart"></i> ลัลล์ไม่ชอบไวน์ (Enemies with Benefits) <i class="fas fa-chevron-down"></i>
+                    </button>
                     <div id="jjjD" class="dropdown-content">
-                        <div class="active" onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/Jwv6V3Oo9P4', this)">ลัลล์ไม่ชอบไวน์ (Enemies with Benefits)</div>
-                        <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/videoseries?list=PL_vCrT8PKfW0THj0b21-tIMFAP_3yaWxU', this)">โปรดใช้วิจารณญาณในการรักเธอ (MuTeLuv)</div>
-                        <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/OGgwnwAocuI', this)">น้องสาวหายนะ (Hide & Sis)</div>
-                        <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/NFFWV0X4i_c', this)">ขนมปังชีสเนย (Bake Love Feeling)</div>
+                        <div class="active" onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/Jwv6V3Oo9P4', this)">
+                            <i class="fas fa-heart"></i><span>ลัลล์ไม่ชอบไวน์ (Enemies with Benefits)</span>
+                        </div>
+                        <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/videoseries?list=PL_vCrT8PKfW0THj0b21-tIMFAP_3yaWxU', this)">
+                            <i class="fas fa-sparkles"></i><span>โปรดใช้วิจารณญาณในการรักเธอ (MuTeLuv)</span>
+                        </div>
+                        <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/OGgwnwAocuI', this)">
+                            <i class="fas fa-mask"></i><span>น้องสาวหายนะ (Hide & Sis)</span>
+                        </div>
+                        <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/NFFWV0X4i_c', this)">
+                            <i class="fas fa-cookie-bite"></i><span>ขนมปังชีสเนย (Bake Love Feeling)</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1360,9 +1434,13 @@
             <div class="category-header">
                 <p class="category-label">Janhae</p>
                 <div class="dropdown">
-                    <button onclick="toggleD('janD')" class="dropbtn">請點選 <i class="fas fa-chevron-down"></i></button>
+                    <button onclick="toggleD('janD')" class="dropbtn">
+                        <i class="fas fa-user"></i> 關於 JAN 的 30 個問題 <i class="fas fa-chevron-down"></i>
+                    </button>
                     <div id="janD" class="dropdown-content">
-                        <div class="active" onclick="swV('janPlayer', 'https://www.youtube.com/embed/p8tf3dAkvFc', this)">關於 JAN 的 30 個問題</div>
+                        <div class="active" onclick="swV('janPlayer', 'https://www.youtube.com/embed/p8tf3dAkvFc', this)">
+                            <i class="fas fa-user"></i><span>關於 JAN 的 30 個問題</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1380,10 +1458,16 @@
             <div class="category-header">
                 <p class="category-label">JingJing</p>
                 <div class="dropdown">
-                    <button onclick="toggleD('jingD')" class="dropbtn">請點選 <i class="fas fa-chevron-down"></i></button>
+                    <button onclick="toggleD('jingD')" class="dropbtn">
+                        <i class="fas fa-user"></i> 關於 JingJing 的 20 個問題 <i class="fas fa-chevron-down"></i>
+                    </button>
                     <div id="jingD" class="dropdown-content">
-                        <div class="active" onclick="swV('jingPlayer', 'https://www.youtube.com/embed/uLRYn0u8y6o', this)">關於 JingJing 的 20 個問題</div>
-                        <div onclick="swV('jingPlayer', 'https://www.youtube.com/embed/YwIhG3DQ85o', this)">Coming of Age</div>
+                        <div class="active" onclick="swV('jingPlayer', 'https://www.youtube.com/embed/uLRYn0u8y6o', this)">
+                            <i class="fas fa-user"></i><span>關於 JingJing 的 20 個問題</span>
+                        </div>
+                        <div onclick="swV('jingPlayer', 'https://www.youtube.com/embed/YwIhG3DQ85o', this)">
+                            <i class="fas fa-film"></i><span>Coming of Age</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1544,26 +1628,46 @@
 
         function toggleD(id) {
             const list = document.getElementById(id);
+            const dropdown = list.parentElement;
             const isShow = list.classList.contains("show");
 
             document.querySelectorAll(".dropdown-content").forEach((d) => {
                 d.classList.remove("show");
+                d.parentElement.classList.remove("open");
             });
 
-            if (!isShow) list.classList.add("show");
+            if (!isShow) {
+                list.classList.add("show");
+                dropdown.classList.add("open");
+            }
         }
 
         function swV(id, url, el) {
             document.getElementById(id).src = url;
+
             const menu = el.parentElement;
-            menu.querySelectorAll("div").forEach((item) => item.classList.remove("active"));
+            const dropdown = menu.parentElement;
+            const button = dropdown.querySelector(".dropbtn");
+            const label = el.querySelector("span") ? el.querySelector("span").textContent : el.textContent.trim();
+            const firstIcon = el.querySelector("i") ? el.querySelector("i").outerHTML : "";
+
+            menu.querySelectorAll("div").forEach((item) => {
+                item.classList.remove("active");
+            });
+
             el.classList.add("active");
+            button.innerHTML = `${firstIcon} ${label} <i class="fas fa-chevron-down"></i>`;
+
             menu.classList.remove("show");
+            dropdown.classList.remove("open");
         }
 
         window.addEventListener("click", (e) => {
             if (!e.target.closest(".dropdown")) {
-                document.querySelectorAll(".dropdown-content").forEach((d) => d.classList.remove("show"));
+                document.querySelectorAll(".dropdown-content").forEach((d) => {
+                    d.classList.remove("show");
+                    d.parentElement.classList.remove("open");
+                });
             }
         });
 
