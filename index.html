@@ -16,8 +16,10 @@
             --accent-color: #8e7f71;
             --accent-soft: #f7f1ea;
             --accent-strong: #c8aa8f;
+            --accent-gold: #b99272;
             --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.06);
             --shadow-medium: 0 14px 38px rgba(0, 0, 0, 0.10);
+            --shadow-strong: 0 24px 60px rgba(0, 0, 0, 0.16);
             --serif: 'Playfair Display', serif;
             --sans: 'Inter', "Noto Sans TC", sans-serif;
         }
@@ -60,8 +62,8 @@
             pointer-events: none;
             z-index: 0;
             background:
-                radial-gradient(circle at top left, rgba(255,255,255,.35), transparent 28%),
-                radial-gradient(circle at bottom right, rgba(142,127,113,.08), transparent 22%);
+                radial-gradient(circle at top left, rgba(255,255,255,.4), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(185,146,114,.10), transparent 24%);
         }
 
         #splash-screen {
@@ -75,12 +77,13 @@
             padding-bottom: 15vh;
             background: #000;
             overflow: hidden;
-            transition: opacity .8s ease, transform .8s ease;
+            transition: opacity .9s ease, transform .9s ease, filter .9s ease;
         }
 
         #splash-screen.fade-out {
             opacity: 0;
-            transform: scale(1.03);
+            transform: scale(1.08);
+            filter: blur(6px);
             pointer-events: none;
         }
 
@@ -100,23 +103,24 @@
         .enter-btn {
             position: relative;
             z-index: 2;
-            background: rgba(255,255,255,.95);
-            border: none;
+            background: rgba(255,255,255,.92);
+            border: 1px solid rgba(255,255,255,.7);
             padding: 18px 40px;
             border-radius: 999px;
-            font-size: .9rem;
+            font-size: .85rem;
             font-weight: 600;
-            letter-spacing: 2px;
-            color: #333;
+            letter-spacing: 2.5px;
+            color: #4a4038;
             cursor: pointer;
             box-shadow: 0 12px 34px rgba(0,0,0,.14);
             transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+            backdrop-filter: blur(8px);
         }
 
         .enter-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 16px 38px rgba(0,0,0,.18);
-            background: #fff;
+            background: rgba(255,255,255,.98);
         }
 
         .nav-bar {
@@ -547,6 +551,12 @@
             background: var(--accent-color);
         }
 
+        .calendar-day.event-day:hover {
+            background: #f5ede3;
+            border-color: #c8aa8f;
+            transform: translateY(-2px);
+        }
+
         .calendar-day.major-event {
             border: 2px solid var(--accent-strong);
             background: #f9f3ec;
@@ -577,216 +587,455 @@
         }
 
         .photos-wrap {
-    margin: 0 auto 62px;
-    position: relative;
-}
+            margin: 0 auto 62px;
+            position: relative;
+        }
 
-.photos-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-}
+        .photos-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
 
-.photos-note {
+        .photos-note {
+            font-size: 10px;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .photos-nav {
+            display: flex;
+            gap: 8px;
+        }
+
+        .photos-nav button {
+            width: 44px;
+            height: 44px;
+            border: 1px solid #d8cdc2;
+            background: rgba(255,255,255,.92);
+            color: var(--accent-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .photos-nav button:hover {
+            transform: translateY(-1px) scale(1.02);
+            background: #fff;
+            box-shadow: 0 8px 18px rgba(0,0,0,.08);
+        }
+
+        .slideshow-wrap {
+            max-width: 1080px;
+        }
+
+        .slideshow-stage {
+            display: grid;
+            grid-template-columns: 0.9fr 1.35fr 0.9fr;
+            gap: 18px;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(252,248,242,.95));
+            border-radius: 28px;
+            padding: 22px;
+            box-shadow: var(--shadow-strong);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slideshow-stage::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at top, rgba(255,255,255,.35), transparent 35%);
+        }
+
+        .slide-hitbox {
+            border: none;
+            padding: 0;
+            background: transparent;
+            cursor: pointer;
+            opacity: 0.62;
+            transform: scale(0.92);
+            transition: transform .42s cubic-bezier(.2,.8,.2,1), opacity .32s ease, filter .32s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-hitbox:hover {
+            opacity: 0.88;
+        }
+
+        .slide-hitbox img {
+            display: block;
+            width: 100%;
+            height: 360px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 22px;
+            box-shadow: 0 10px 26px rgba(0,0,0,.10);
+            transition: transform .45s ease, filter .45s ease;
+        }
+
+        .slide-hitbox:not(.active) img {
+            filter: saturate(.92) brightness(.98);
+        }
+
+        .slide-hitbox.active {
+            opacity: 1;
+            transform: scale(1.04);
+            z-index: 2;
+        }
+
+        .slide-hitbox.active img {
+            height: 560px;
+            box-shadow: 0 20px 40px rgba(0,0,0,.16);
+            filter: saturate(1.04);
+        }
+
+        .slideshow-meta {
+            margin-top: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .slideshow-counter {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+        }
+
+        .slideshow-caption {
+            text-align: center;
+            max-width: 720px;
+            padding: 0 12px;
+        }
+
+        .caption-title {
+            font-family: var(--serif);
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--accent-gold);
+            margin-bottom: 4px;
+        }
+
+        .slideshow-dots {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            max-width: 100%;
+        }
+
+        .slideshow-dots button {
+            width: 8px;
+            height: 8px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(142,127,113,.28);
+            cursor: pointer;
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        .slideshow-dots button.active {
+            background: rgba(142,127,113,.88);
+            transform: scale(1.25);
+        }
+
+        /* Story mode */
+        .story-viewer {
+            position: fixed;
+            inset: 0;
+            z-index: 12000;
+            display: none;
+            flex-direction: column;
+            background: rgba(0,0,0,.96);
+            backdrop-filter: blur(6px);
+        }
+
+        .story-viewer.show {
+            display: flex;
+            animation: fadeInStory .22s ease;
+        }
+
+        @keyframes fadeInStory {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .story-topbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 3;
+            padding: 14px 16px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .story-progress-wrap {
+            flex: 1;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .story-progress {
+            flex: 1;
+            height: 3px;
+            background: rgba(255,255,255,.18);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .story-progress-bar {
+            width: 0%;
+            height: 100%;
+            background: rgba(255,255,255,.95);
+            transition: width .08s linear;
+        }
+
+        .story-close {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255,255,255,.12);
+            color: #fff;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .story-body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr minmax(0, 560px) 1fr;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .story-zone {
+            height: 100%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .story-media-wrap {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            max-height: 100vh;
+            padding: 56px 0 28px;
+        }
+
+        .story-img {
+            width: min(92vw, 560px);
+            height: min(86vh, 860px);
+            object-fit: contain;
+            border-radius: 22px;
+            box-shadow: 0 24px 60px rgba(0,0,0,.35);
+            background: #111;
+        }
+
+        .story-caption {
+            margin-top: 14px;
+            text-align: center;
+            color: rgba(255,255,255,.92);
+        }
+
+        .story-caption .caption-title {
+            color: rgba(255,255,255,.96);
+        }
+
+        .story-counter {
+            margin-top: 8px;
+            font-size: 12px;
+            color: rgba(255,255,255,.72);
+            letter-spacing: 1px;
+        }
+
+        .music-control {
+            position: fixed;
+            right: 20px;
+            bottom: 25px;
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            background: rgba(255,255,255,.96);
+            color: var(--text-color);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 10px 24px rgba(0,0,0,.14);
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+
+        .music-control:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0,0,0,.18);
+        }
+
+        .music-control.playing {
+            animation: pulse 1.5s infinite;
+        }
+
+        .music-badge {
+            position: fixed;
+            right: 20px;
+            bottom: 86px;
+            z-index: 1999;
+            display: none;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.92);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 22px rgba(0,0,0,.10);
+            font-size: 11px;
+            color: #6e5d50;
+            letter-spacing: .5px;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .music-badge i {
+            color: var(--accent-gold);
+            animation: spinSoft 4s linear infinite;
+        }
+
+        @keyframes spinSoft {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        footer {
+            margin-top: 80px;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .footer-text {
+    font-family: 'Playfair Display', serif;
     font-size: 10px;
-    color: var(--accent-color);
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: rgba(150, 122, 100, 0.96);
+    font-style: italic;
+    text-align: center;
+    margin-top: 40px;
+    transition: all 0.4s ease;
 }
 
-.photos-nav {
-    display: flex;
-    gap: 8px;
+        .footer-text:hover {
+    letter-spacing: 3.5px;
+    background: linear-gradient(90deg, #c49a7a, #8a6a56);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.photos-nav button {
-    width: 40px;
-    height: 40px;
-    border: 1px solid #d8cdc2;
-    background: rgba(255,255,255,.82);
-    color: var(--accent-color);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
-    backdrop-filter: blur(4px);
-}
+        .spark {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 8px;
+            opacity: 0.6;
+            animation: sparkle 2.5s infinite ease-in-out;
+        }
 
-.photos-nav button:hover {
-    transform: translateY(-1px);
-    background: #fff;
-    box-shadow: 0 8px 18px rgba(0,0,0,.08);
-}
+        .spark:nth-child(1) { animation-delay: 0s; }
+        .spark:nth-child(2) { animation-delay: 1.2s; }
 
-.photo-rail {
-    display: flex;
-    gap: 16px;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    padding: 8px 2px 12px;
-    scrollbar-width: none;
-    align-items: stretch;
-}
+        @keyframes sparkle {
+            0%   { opacity: 0.3; transform: scale(0.8); }
+            50%  { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.3; transform: scale(0.8); }
+        }
 
-.photo-rail::-webkit-scrollbar {
-    display: none;
-}
+        @media (max-width: 900px) {
+            .slideshow-stage {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                padding: 16px;
+            }
 
-.photo-card {
-    flex: 0 0 clamp(210px, 28vw, 320px);
-    scroll-snap-align: start;
-    border: none;
-    padding: 0;
-    background: transparent;
-    cursor: pointer;
-    perspective: 1000px;
-}
+            .slide-hitbox {
+                opacity: 0.45;
+                transform: scale(0.98);
+            }
 
-.photo-card-inner {
-    position: relative;
-    height: 100%;
-    background: #fff;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: var(--shadow-soft);
-    transition: transform .35s ease, box-shadow .35s ease, filter .35s ease;
-}
+            .slide-hitbox img {
+                height: 330px;
+            }
 
-.photo-card:hover .photo-card-inner {
-    transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 18px 34px rgba(0,0,0,.12);
-    filter: saturate(1.03);
-}
+            .slide-hitbox.active {
+                opacity: 1;
+                transform: scale(1);
+            }
 
-.photo-card:active .photo-card-inner {
-    transform: scale(.985);
-}
+            .slide-hitbox.active img {
+                height: min(72vw, 480px);
+            }
 
-.photo-card img {
-    display: block;
-    width: 100%;
-    height: clamp(280px, 38vw, 430px);
-    object-fit: cover;
-    object-position: center;
-    transition: transform .45s ease;
-}
+            .slideshow-stage .slide-hitbox:not(.active) {
+                display: none;
+            }
 
-.photo-card:hover img {
-    transform: scale(1.04);
-}
+            .story-body {
+                grid-template-columns: 18vw minmax(0, 1fr) 18vw;
+            }
+        }
 
-.lightbox {
-    position: fixed;
-    inset: 0;
-    z-index: 12000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,.92);
-    padding: 28px;
-}
+        @media (max-width: 768px) {
+            .category-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
-.lightbox.show {
-    display: flex;
-    animation: fadeInLightbox .22s ease;
-}
+            .dropdown { width: 100%; }
+            .dropbtn { width: 100%; }
 
-@keyframes fadeInLightbox {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+            .dropdown-content {
+                left: 0;
+                right: auto;
+                width: 100%;
+                min-width: unset;
+                max-width: unset;
+            }
 
-.lightbox-img {
-    max-width: min(96vw, 1600px);
-    max-height: 92vh;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    border-radius: 14px;
-    box-shadow: 0 18px 44px rgba(0,0,0,.38);
-    transform: scale(.96);
-    animation: zoomInLightbox .22s ease forwards;
-}
+            .music-badge {
+                right: 20px;
+                bottom: 96px;
+                max-width: calc(100vw - 32px);
+            }
 
-@keyframes zoomInLightbox {
-    from { opacity: .6; transform: scale(.96); }
-    to { opacity: 1; transform: scale(1); }
-}
+            .story-topbar {
+                padding: 12px 12px 0;
+            }
 
-.lightbox-close,
-.lightbox-prev,
-.lightbox-next {
-    position: absolute;
-    background: rgba(255,255,255,.14);
-    border: 1px solid rgba(255,255,255,.18);
-    color: #fff;
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    backdrop-filter: blur(6px);
-    transition: transform .2s ease, background .2s ease;
-}
-
-.lightbox-close:hover,
-.lightbox-prev:hover,
-.lightbox-next:hover {
-    transform: scale(1.05);
-    background: rgba(255,255,255,.22);
-}
-
-.lightbox-close {
-    top: 22px;
-    right: 22px;
-}
-
-.lightbox-prev {
-    left: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.lightbox-next {
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.lightbox-prev:hover,
-.lightbox-next:hover {
-    transform: translateY(-50%) scale(1.05);
-}
-
-.lightbox-counter {
-    position: absolute;
-    bottom: 22px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: rgba(255,255,255,.88);
-    font-size: 12px;
-    letter-spacing: 1px;
-}
-
-@media (max-width: 768px) {
-    .photo-card {
-        flex: 0 0 72vw;
-    }
-
-    .photo-card img {
-        height: 62vw;
-    }
-
-    .lightbox {
-        padding: 18px;
-    }
-}
-
+            .story-img {
+                width: min(94vw, 460px);
+                height: min(78vh, 760px);
+                border-radius: 18px;
+            }
+        }
 
         @media (max-width: 600px) {
             .section-title { font-size: 1.8rem; }
@@ -798,30 +1047,21 @@
             }
 
             .nav-logo { font-size: .84rem; }
-            .nav-links { gap: 8px 10px; }
-            .nav-links a { font-size: 9px; }
+            .nav-links { gap: 6px 8px; }
+            .nav-links a { font-size: 8px; letter-spacing: .8px; }
 
             .calendar-day { min-height: 82px; }
-
-            .lightbox-prev,
-            .lightbox-next,
-            .lightbox-close {
-                width: 42px;
-                height: 42px;
-            }
-
-            .lightbox-prev { left: 12px; }
-            .lightbox-next { right: 12px; }
-            .lightbox-close { top: 12px; right: 12px; }
-
-            .lightbox-img {
-                max-width: 98vw;
-                max-height: 88vh;
-            }
 
             .photos-nav button {
                 width: 38px;
                 height: 38px;
+            }
+
+            .music-control {
+                width: 48px;
+                height: 48px;
+                right: 16px;
+                bottom: 20px;
             }
         }
     </style>
@@ -831,6 +1071,11 @@
 
     <div id="music-btn" class="music-control" onclick="toggleMusic()" aria-label="切換背景音樂">
         <i id="music-icon" class="fas fa-music"></i>
+    </div>
+
+    <div id="music-badge" class="music-badge">
+        <i class="fas fa-compact-disc"></i>
+        <span id="music-track-label">Now Playing · หาย（Hide）</span>
     </div>
 
     <div id="splash-screen">
@@ -1012,16 +1257,28 @@
         <section id="photos" class="reveal">
             <h2 class="section-title">Photos</h2>
 
-            <div class="photos-wrap">
+            <div class="photos-wrap slideshow-wrap">
                 <div class="photos-header">
-                    <span class="photos-note">Original ratio gallery</span>
+                    <span class="photos-note">IG style gallery</span>
                     <div class="photos-nav">
-                        <button type="button" id="photosPrev" aria-label="Previous photos"><i class="fas fa-chevron-left"></i></button>
-                        <button type="button" id="photosNext" aria-label="Next photos"><i class="fas fa-chevron-right"></i></button>
+                        <button type="button" id="photosPrev" aria-label="Previous photo">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button type="button" id="photosNext" aria-label="Next photo">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
 
-                <div class="photo-rail" id="photoRail"></div>
+                <div class="slideshow-stage" id="slideshowStage"></div>
+
+                <div class="slideshow-meta">
+                    <div class="slideshow-counter" id="slideshowCounter">1 / 1</div>
+                    <div class="slideshow-caption">
+                        <div class="caption-title" id="slideshowCaptionTitle">JanJingJing ✨</div>
+                    </div>
+                    <div class="slideshow-dots" id="slideshowDots"></div>
+                </div>
             </div>
         </section>
 
@@ -1143,305 +1400,482 @@
         </section>
     </div>
 
-    <div class="lightbox" id="lightbox">
-        <button class="lightbox-close" id="lightboxClose" aria-label="Close"><i class="fas fa-xmark"></i></button>
-        <button class="lightbox-prev" id="lightboxPrev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
-        <img class="lightbox-img" id="lightboxImg" src="" alt="Preview" />
-        <button class="lightbox-next" id="lightboxNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
-        <div class="lightbox-counter" id="lightboxCounter"></div>
+    <div class="story-viewer" id="lightbox">
+        <div class="story-topbar">
+            <div class="story-progress-wrap" id="storyProgressWrap"></div>
+            <button class="story-close" id="lightboxClose" aria-label="Close">
+                <i class="fas fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="story-body" id="storyBody">
+            <button class="story-zone story-zone-left" id="lightboxPrev" aria-label="Previous"></button>
+
+            <div class="story-media-wrap">
+                <img class="story-img" id="lightboxImg" src="" alt="Preview" />
+                <div class="story-caption">
+                    <div class="caption-title" id="lightboxCaptionTitle">JanJingJing ✨</div>
+                </div>
+                <div class="story-counter" id="lightboxCounter"></div>
+            </div>
+
+            <button class="story-zone story-zone-right" id="lightboxNext" aria-label="Next"></button>
+        </div>
     </div>
 
     <footer>
-        <p class="footer-text">Design By：JanJingJing TAIWAN FANCLUB</p>
+        <p class="footer-text">
+            <span class="spark">✦</span>
+            Design By：JanJingJing TAIWAN FANCLUB
+            <span class="spark">✦</span>
+        </p>
     </footer>
 
     <script>
-    const YOUR_GITHUB_USERNAME = "JanJingJingTAIWANFANCLUB";
-    const SPLASH_FILENAME = "nlCTnKDA1rGosPoy.mp4";
+        const YOUR_GITHUB_USERNAME = "JanJingJingTAIWANFANCLUB";
+        const SPLASH_FILENAME = "nlCTnKDA1rGosPoy.mp4";
 
-    const RAW_BASE = `https://raw.githubusercontent.com/${YOUR_GITHUB_USERNAME}/website-assets/main`;
-    const PHOTO_BASE = `${RAW_BASE}/`;
-    const PHOTO_EXT = ".JPG";
-    const MAX_PHOTO_SCAN = 100;
+        const RAW_BASE = `https://raw.githubusercontent.com/${YOUR_GITHUB_USERNAME}/website-assets/main`;
+        const PHOTO_BASE = `${RAW_BASE}/`;
+        const PHOTO_EXT = ".JPG";
+        const TOTAL_PHOTOS = 27;
+        const AUTO_SLIDE_INTERVAL = 4500;
+        const STORY_INTERVAL = 4500;
 
-    document.getElementById("bg-video-source").src = `${RAW_BASE}/${SPLASH_FILENAME}`;
-    document.getElementById("bg-video").load();
+        document.getElementById("bg-video-source").src = `${RAW_BASE}/${SPLASH_FILENAME}`;
+        document.getElementById("bg-video").load();
 
-    const playlist = [
-        `${RAW_BASE}/Song1.mp3`,
-        `${RAW_BASE}/Song2.mp3`,
-        `${RAW_BASE}/Song3.mp3`
-    ];
+        const playlist = [
+            { file: "Song1.mp3", title: "Abracadabra จงรัก จงหลง" },
+            { file: "Song2.mp3", title: "เถียงเก่ง (Bad Mouth)" },
+            { file: "Song3.mp3", title: "หาย（Hide）" }
+        ];
 
-    const calendarEventMap = {
-        april: {
-            21: "04/21 (TUE.) 泰國時間 21:30 GMMTV LIVE HOUSE",
-            28: "04/28 (TUE.) 泰國時間 21:30 GMMTV LIVE HOUSE"
-        },
-        june: {
-            13: "06/13 (SAT.) 17:00 Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE",
-            14: "06/14 (SUN.) 17:00 Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE"
+        const calendarEventMap = {
+            april: {
+                21: "JAN 04/21 (TUE.) 泰國時間 21:30 GMMTV LIVE HOUSE",
+                28: "JAN 04/28 (TUE.) 泰國時間 21:30 GMMTV LIVE HOUSE"
+            },
+            june: {
+                13: "JANJINGJING 06/13 (SAT.) 17:00 Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE",
+                14: "JANJINGJING 06/14 (SUN.) 17:00 Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE"
+            }
+        };
+
+        let currentTrack = Math.floor(Math.random() * playlist.length);
+
+        const audio = document.getElementById("bg-music");
+        const musicBtn = document.getElementById("music-btn");
+        const musicIcon = document.getElementById("music-icon");
+        const musicBadge = document.getElementById("music-badge");
+        const musicTrackLabel = document.getElementById("music-track-label");
+        const splash = document.getElementById("splash-screen");
+        const navBar = document.getElementById("nav-bar");
+
+        function updateMusicUI(isPlaying) {
+            musicIcon.className = isPlaying ? "fas fa-music" : "fas fa-volume-mute";
+            musicBtn.classList.toggle("playing", isPlaying);
         }
-    };
 
-    let currentTrack = Math.floor(Math.random() * playlist.length);
-
-    const audio = document.getElementById("bg-music");
-    const musicBtn = document.getElementById("music-btn");
-    const musicIcon = document.getElementById("music-icon");
-    const splash = document.getElementById("splash-screen");
-    const navBar = document.getElementById("nav-bar");
-
-    function updateMusicUI(isPlaying) {
-        if (isPlaying) {
-            musicIcon.className = "fas fa-music";
-            musicBtn.classList.add("playing");
-        } else {
-            musicIcon.className = "fas fa-volume-mute";
-            musicBtn.classList.remove("playing");
+        function updateTrackLabel() {
+            musicTrackLabel.textContent = `Now Playing · ${playlist[currentTrack].title}`;
         }
-    }
 
-    function loadTrack(index) {
-        audio.src = playlist[index];
-        audio.load();
-    }
-
-    function playCurrentTrack() {
-        const p = audio.play();
-        if (p !== undefined) {
-            p.then(() => updateMusicUI(true)).catch(() => updateMusicUI(false));
+        function loadTrack(index) {
+            audio.src = `${RAW_BASE}/${playlist[index].file}`;
+            audio.load();
+            updateTrackLabel();
         }
-    }
 
-    function nextTrack() {
-        currentTrack = (currentTrack + 1) % playlist.length;
-        loadTrack(currentTrack);
-        playCurrentTrack();
-    }
+        function fadeInAudio() {
+            audio.volume = 0;
+            const fade = setInterval(() => {
+                if (audio.volume < 0.95) {
+                    audio.volume = Math.min(1, audio.volume + 0.05);
+                } else {
+                    clearInterval(fade);
+                }
+            }, 100);
+        }
 
-    audio.onended = nextTrack;
-    audio.onerror = nextTrack;
+        function playCurrentTrack() {
+            const p = audio.play();
+            if (p !== undefined) {
+                p.then(() => {
+                    updateMusicUI(true);
+                    fadeInAudio();
+                }).catch(() => updateMusicUI(false));
+            }
+        }
 
-    function enterSite() {
-        loadTrack(currentTrack);
-        playCurrentTrack();
-        musicBtn.style.display = "flex";
-
-        splash.classList.add("fade-out");
-        document.body.classList.remove("locked");
-        document.body.classList.add("unlocked");
-
-        setTimeout(() => {
-            splash.style.display = "none";
-            window.scrollTo(0, 0);
-        }, 700);
-    }
-
-    function toggleMusic() {
-        if (audio.paused) {
+        function nextTrack() {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            loadTrack(currentTrack);
             playCurrentTrack();
-        } else {
-            audio.pause();
-            updateMusicUI(false);
         }
-    }
 
-    function toggleD(id) {
-        const list = document.getElementById(id);
-        const isShow = list.classList.contains("show");
+        audio.onended = nextTrack;
+        audio.onerror = nextTrack;
 
-        document.querySelectorAll(".dropdown-content").forEach((d) => {
-            d.classList.remove("show");
+        function enterSite() {
+            loadTrack(currentTrack);
+            playCurrentTrack();
+            musicBtn.style.display = "flex";
+            musicBadge.style.display = "flex";
+
+            splash.classList.add("fade-out");
+            document.body.classList.remove("locked");
+            document.body.classList.add("unlocked");
+
+            setTimeout(() => {
+                splash.style.display = "none";
+                window.scrollTo(0, 0);
+            }, 800);
+        }
+
+        function toggleMusic() {
+            if (audio.paused) {
+                playCurrentTrack();
+            } else {
+                audio.pause();
+                updateMusicUI(false);
+            }
+        }
+
+        function toggleD(id) {
+            const list = document.getElementById(id);
+            const isShow = list.classList.contains("show");
+
+            document.querySelectorAll(".dropdown-content").forEach((d) => {
+                d.classList.remove("show");
+            });
+
+            if (!isShow) list.classList.add("show");
+        }
+
+        function swV(id, url, el) {
+            document.getElementById(id).src = url;
+            const menu = el.parentElement;
+            menu.querySelectorAll("div").forEach((item) => item.classList.remove("active"));
+            el.classList.add("active");
+            menu.classList.remove("show");
+        }
+
+        window.addEventListener("click", (e) => {
+            if (!e.target.closest(".dropdown")) {
+                document.querySelectorAll(".dropdown-content").forEach((d) => d.classList.remove("show"));
+            }
         });
 
-        if (!isShow) list.classList.add("show");
-    }
-
-    function swV(id, url, el) {
-        document.getElementById(id).src = url;
-        const menu = el.parentElement;
-        menu.querySelectorAll("div").forEach((item) => item.classList.remove("active"));
-        el.classList.add("active");
-        menu.classList.remove("show");
-    }
-
-    window.addEventListener("click", (e) => {
-        if (!e.target.closest(".dropdown")) {
-            document.querySelectorAll(".dropdown-content").forEach((d) => d.classList.remove("show"));
-        }
-    });
-
-    window.addEventListener("scroll", () => {
-        navBar.classList.toggle("scrolled", window.scrollY > 40);
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) entry.target.classList.add("show");
+        window.addEventListener("scroll", () => {
+            navBar.classList.toggle("scrolled", window.scrollY > 40);
         });
-    }, { threshold: 0.12 });
 
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) entry.target.classList.add("show");
+            });
+        }, { threshold: 0.12 });
 
-    document.querySelectorAll(".calendar-day.event-day").forEach((day) => {
-        day.addEventListener("click", () => {
-            const month = day.dataset.month;
-            const date = day.dataset.date;
-            const detail = document.getElementById(`calendar-detail-${month}`);
-            const content = calendarEventMap[month]?.[date];
-            if (detail && content) detail.textContent = content;
+        document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+        document.querySelectorAll(".calendar-day.event-day").forEach((day) => {
+            day.addEventListener("click", () => {
+                const month = day.dataset.month;
+                const date = day.dataset.date;
+                const detail = document.getElementById(`calendar-detail-${month}`);
+                const content = calendarEventMap[month]?.[date];
+                if (detail && content) detail.textContent = content;
+            });
         });
-    });
 
-    const rail = document.getElementById("photoRail");
-    const photosPrev = document.getElementById("photosPrev");
-    const photosNext = document.getElementById("photosNext");
+        const stage = document.getElementById("slideshowStage");
+        const photosPrev = document.getElementById("photosPrev");
+        const photosNext = document.getElementById("photosNext");
+        const slideshowCounter = document.getElementById("slideshowCounter");
+        const slideshowDots = document.getElementById("slideshowDots");
+        const slideshowCaptionTitle = document.getElementById("slideshowCaptionTitle");
 
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightboxImg");
-    const lightboxClose = document.getElementById("lightboxClose");
-    const lightboxPrev = document.getElementById("lightboxPrev");
-    const lightboxNext = document.getElementById("lightboxNext");
-    const lightboxCounter = document.getElementById("lightboxCounter");
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightboxImg");
+        const lightboxClose = document.getElementById("lightboxClose");
+        const lightboxPrev = document.getElementById("lightboxPrev");
+        const lightboxNext = document.getElementById("lightboxNext");
+        const lightboxCounter = document.getElementById("lightboxCounter");
+        const lightboxCaptionTitle = document.getElementById("lightboxCaptionTitle");
+        const storyProgressWrap = document.getElementById("storyProgressWrap");
+        const storyBody = document.getElementById("storyBody");
 
-    let images = [];
-    let currentLightboxIndex = 0;
-    let touchStartX = 0;
-    let touchEndX = 0;
+        let images = [];
+        let currentIndex = 0;
+        let currentLightboxIndex = 0;
+        let autoSlideTimer = null;
+        let storyTimer = null;
+        let storyProgressTimer = null;
+        let touchStartX = 0;
+        let touchEndX = 0;
 
-    function padPhotoNumber(num) {
-        return String(num).padStart(2, "0");
-    }
+        function padPhotoNumber(num) {
+            return String(num).padStart(2, "0");
+        }
 
-    function buildPhotoUrl(index) {
-        return `${PHOTO_BASE}photo${padPhotoNumber(index)}${PHOTO_EXT}`;
-    }
+        function buildPhotoUrl(index) {
+            return `${PHOTO_BASE}photo${padPhotoNumber(index)}${PHOTO_EXT}`;
+        }
 
-    function checkImage(url) {
-        return new Promise((resolve) => {
-            const img = new Image();
-            img.onload = () => resolve(true);
-            img.onerror = () => resolve(false);
-            img.src = url;
+        function buildCaptionTitle() {
+            return "JanJingJing ✨";
+        }
+
+        function preloadImages() {
+            images = [];
+            for (let i = 1; i <= TOTAL_PHOTOS; i++) {
+                images.push(buildPhotoUrl(i));
+            }
+        }
+
+        function updateDots() {
+            slideshowDots.innerHTML = "";
+            images.forEach((_, index) => {
+                const dot = document.createElement("button");
+                if (index === currentIndex) dot.classList.add("active");
+                dot.addEventListener("click", () => {
+                    currentIndex = index;
+                    renderSlides();
+                    restartAutoSlide();
+                });
+                slideshowDots.appendChild(dot);
+            });
+        }
+
+        function renderSlides() {
+            stage.innerHTML = "";
+            if (!images.length) return;
+
+            const left = (currentIndex - 1 + images.length) % images.length;
+            const center = currentIndex;
+            const right = (currentIndex + 1) % images.length;
+            const displayIndexes = [left, center, right];
+
+            displayIndexes.forEach((idx, position) => {
+                const button = document.createElement("button");
+                button.className = "slide-hitbox";
+                if (position === 1) button.classList.add("active");
+
+                button.innerHTML = `<img src="${images[idx]}" alt="photo ${idx + 1}" loading="eager" decoding="async">`;
+
+                button.addEventListener("click", () => {
+                    if (position === 1) {
+                        openLightbox(idx);
+                    } else {
+                        currentIndex = idx;
+                        renderSlides();
+                        restartAutoSlide();
+                    }
+                });
+
+                stage.appendChild(button);
+            });
+
+            slideshowCounter.textContent = `${currentIndex + 1} / ${images.length}`;
+            updateDots();
+            slideshowCaptionTitle.textContent = buildCaptionTitle();
+        }
+
+        function renderPhotos() {
+            preloadImages();
+            renderSlides();
+            startAutoSlide();
+        }
+
+        function showPrevSlide() {
+            if (!images.length) return;
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            renderSlides();
+        }
+
+        function showNextSlide() {
+            if (!images.length) return;
+            currentIndex = (currentIndex + 1) % images.length;
+            renderSlides();
+        }
+
+        function startAutoSlide() {
+            clearInterval(autoSlideTimer);
+            autoSlideTimer = setInterval(() => {
+                showNextSlide();
+            }, AUTO_SLIDE_INTERVAL);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlideTimer);
+        }
+
+        function restartAutoSlide() {
+            startAutoSlide();
+        }
+
+        photosPrev.addEventListener("click", () => {
+            showPrevSlide();
+            restartAutoSlide();
         });
-    }
 
-    function createPhotoCard(src, index) {
-        const button = document.createElement("button");
-        button.className = "photo-card";
-        button.type = "button";
-        button.setAttribute("aria-label", `Open photo ${index + 1}`);
+        photosNext.addEventListener("click", () => {
+            showNextSlide();
+            restartAutoSlide();
+        });
 
-        button.innerHTML = `
-            <div class="photo-card-inner">
-                <img src="${src}" alt="photo ${index + 1}" loading="lazy" decoding="async">
-            </div>
-        `;
+        stage.addEventListener("mouseenter", () => {
+            stopAutoSlide();
+        });
 
-        button.addEventListener("click", () => openLightbox(index));
-        rail.appendChild(button);
-    }
+        stage.addEventListener("mouseleave", () => {
+            startAutoSlide();
+        });
 
-    async function renderPhotos() {
-        rail.innerHTML = "";
-        images = [];
+        function renderStoryProgress() {
+            storyProgressWrap.innerHTML = "";
+            images.forEach((_, index) => {
+                const item = document.createElement("div");
+                item.className = "story-progress";
 
-        for (let i = 1; i <= MAX_PHOTO_SCAN; i++) {
-            const src = buildPhotoUrl(i);
-            const exists = await checkImage(src);
+                const bar = document.createElement("div");
+                bar.className = "story-progress-bar";
 
-            if (!exists) break;
+                if (index < currentLightboxIndex) bar.style.width = "100%";
+                if (index > currentLightboxIndex) bar.style.width = "0%";
 
-            images.push(src);
-            createPhotoCard(src, images.length - 1);
+                item.appendChild(bar);
+                storyProgressWrap.appendChild(item);
+            });
         }
 
-        if (images.length === 0) {
-            rail.innerHTML = `
-                <div style="padding:20px;font-size:14px;color:#8e7f71;">
-                    找不到照片，請確認你的檔名是不是 photo01.JPG、photo02.JPG，
-                    而且檔案是直接放在 website-assets 的 main 根目錄。
-                </div>
-            `;
+        function animateCurrentStoryBar() {
+            clearInterval(storyProgressTimer);
+            const bars = storyProgressWrap.querySelectorAll(".story-progress-bar");
+            const currentBar = bars[currentLightboxIndex];
+            if (!currentBar) return;
+
+            let progress = 0;
+            currentBar.style.width = "0%";
+
+            storyProgressTimer = setInterval(() => {
+                progress += 100 / (STORY_INTERVAL / 80);
+                currentBar.style.width = `${Math.min(progress, 100)}%`;
+
+                if (progress >= 100) {
+                    clearInterval(storyProgressTimer);
+                }
+            }, 80);
         }
-    }
 
-    function getScrollAmount() {
-        return Math.min(rail.clientWidth * 0.88, 620);
-    }
+        function startStoryAuto() {
+            clearTimeout(storyTimer);
+            animateCurrentStoryBar();
 
-    photosPrev.addEventListener("click", () => {
-        rail.scrollBy({ left: -getScrollAmount(), behavior: "smooth" });
-    });
-
-    photosNext.addEventListener("click", () => {
-        rail.scrollBy({ left: getScrollAmount(), behavior: "smooth" });
-    });
-
-    function updateLightbox() {
-        if (!images.length) return;
-        lightboxImg.src = images[currentLightboxIndex];
-        lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${images.length}`;
-    }
-
-    function openLightbox(index) {
-        currentLightboxIndex = index;
-        updateLightbox();
-        lightbox.classList.add("show");
-        document.body.style.overflow = "hidden";
-    }
-
-    function closeLightbox() {
-        lightbox.classList.remove("show");
-        document.body.style.overflow = "";
-    }
-
-    function showPrevImage() {
-        if (!images.length) return;
-        currentLightboxIndex = (currentLightboxIndex - 1 + images.length) % images.length;
-        updateLightbox();
-    }
-
-    function showNextImage() {
-        if (!images.length) return;
-        currentLightboxIndex = (currentLightboxIndex + 1) % images.length;
-        updateLightbox();
-    }
-
-    lightboxClose.addEventListener("click", closeLightbox);
-    lightboxPrev.addEventListener("click", showPrevImage);
-    lightboxNext.addEventListener("click", showNextImage);
-
-    lightbox.addEventListener("click", (e) => {
-        if (e.target === lightbox) closeLightbox();
-    });
-
-    document.addEventListener("keydown", (e) => {
-        if (!lightbox.classList.contains("show")) return;
-        if (e.key === "Escape") closeLightbox();
-        if (e.key === "ArrowLeft") showPrevImage();
-        if (e.key === "ArrowRight") showNextImage();
-    });
-
-    lightbox.addEventListener("touchstart", (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    lightbox.addEventListener("touchend", (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        const diff = touchEndX - touchStartX;
-
-        if (Math.abs(diff) > 40) {
-            if (diff > 0) showPrevImage();
-            else showNextImage();
+            storyTimer = setTimeout(() => {
+                if (currentLightboxIndex >= images.length - 1) {
+                    closeLightbox();
+                } else {
+                    showNextImage();
+                }
+            }, STORY_INTERVAL);
         }
-    }, { passive: true });
 
-    renderPhotos();
-</script>
+        function stopStoryAuto() {
+            clearTimeout(storyTimer);
+            clearInterval(storyProgressTimer);
+        }
 
+        function updateLightbox() {
+            if (!images.length) return;
+            lightboxImg.src = images[currentLightboxIndex];
+            lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${images.length}`;
+            lightboxCaptionTitle.textContent = buildCaptionTitle();
+            renderStoryProgress();
+            startStoryAuto();
+        }
 
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            updateLightbox();
+            lightbox.classList.add("show");
+            document.body.style.overflow = "hidden";
+            stopAutoSlide();
+        }
 
+        function closeLightbox() {
+            lightbox.classList.remove("show");
+            document.body.style.overflow = "";
+            stopStoryAuto();
+            startAutoSlide();
+        }
+
+        function showPrevImage() {
+            if (!images.length) return;
+            currentLightboxIndex = (currentLightboxIndex - 1 + images.length) % images.length;
+            updateLightbox();
+        }
+
+        function showNextImage() {
+            if (!images.length) return;
+            currentLightboxIndex = (currentLightboxIndex + 1) % images.length;
+            updateLightbox();
+        }
+
+        lightboxClose.addEventListener("click", closeLightbox);
+        lightboxPrev.addEventListener("click", showPrevImage);
+        lightboxNext.addEventListener("click", showNextImage);
+
+        document.addEventListener("keydown", (e) => {
+            if (lightbox.classList.contains("show")) {
+                if (e.key === "Escape") closeLightbox();
+                if (e.key === "ArrowLeft") showPrevImage();
+                if (e.key === "ArrowRight") showNextImage();
+                return;
+            }
+
+            if (e.key === "ArrowLeft") {
+                showPrevSlide();
+                restartAutoSlide();
+            }
+
+            if (e.key === "ArrowRight") {
+                showNextSlide();
+                restartAutoSlide();
+            }
+        });
+
+        storyBody.addEventListener("touchstart", (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        storyBody.addEventListener("touchend", (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchEndX - touchStartX;
+
+            if (Math.abs(diff) > 40) {
+                if (diff > 0) showPrevImage();
+                else showNextImage();
+            }
+        }, { passive: true });
+
+        stage.addEventListener("touchstart", (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        stage.addEventListener("touchend", (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchEndX - touchStartX;
+
+            if (Math.abs(diff) > 40) {
+                if (diff > 0) showPrevSlide();
+                else showNextSlide();
+                restartAutoSlide();
+            }
+        }, { passive: true });
+
+        renderPhotos();
+    </script>
 </body>
 </html>
