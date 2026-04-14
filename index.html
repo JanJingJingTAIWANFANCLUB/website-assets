@@ -1,174 +1,909 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>30秒帶你認識JanJingJing✨</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <style>
-        :root { --bg-color: #f2efe9; --text-color: #2c2c2c; --accent-color: #8e7f71; --serif: 'Playfair Display', serif; --sans: 'Inter', "Noto Sans TC", sans-serif; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--bg-color); color: var(--text-color); font-family: var(--sans); }
-        body.locked { overflow: hidden; position: fixed; width: 100%; height: 100%; }
-        body.unlocked { overflow-x: hidden; overflow-y: auto; background: var(--bg-color); height: auto; position: relative; }
 
-        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; transition: opacity 0.6s ease; padding-bottom: 15vh; background: #000; overflow: hidden; }
-        
-        /* --- 跨裝置影片比例最終優化 --- */
-        #bg-video { 
-            position: absolute; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
-            z-index: -1; 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg-color: #f2efe9;
+            --card-color: #fff;
+            --text-color: #2c2c2c;
+            --accent-color: #8e7f71;
+            --accent-soft: #f7f1ea;
+            --accent-strong: #c8aa8f;
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.06);
+            --shadow-medium: 0 14px 38px rgba(0, 0, 0, 0.10);
+            --serif: 'Playfair Display', serif;
+            --sans: 'Inter', "Noto Sans TC", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--sans);
+        }
+
+        body.locked {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        body.unlocked {
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: auto;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(circle at top left, rgba(255,255,255,.35), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(142,127,113,.08), transparent 22%);
+        }
+
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 15vh;
+            background: #000;
+            overflow: hidden;
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        #splash-screen.fade-out {
+            opacity: 0;
+            transform: scale(1.03);
+            pointer-events: none;
+        }
+
+        #bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 20%; 
-            opacity: 0.8; 
+            object-position: center 20%;
+            opacity: .84;
         }
 
-        /* 電腦版：標準比例，完全覆蓋 */
-        @media (min-width: 1025px) {
-            #bg-video {
-                object-position: center center;
-            }
+        .enter-btn {
+            position: relative;
+            z-index: 2;
+            background: rgba(255,255,255,.95);
+            border: none;
+            padding: 18px 40px;
+            border-radius: 999px;
+            font-size: .9rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 12px 34px rgba(0,0,0,.14);
+            transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
         }
 
-        /* 平板版：微調避免人物過大 */
-        @media (min-width: 601px) and (max-width: 1024px) {
-            #bg-video {
-                width: 105vw;
-                object-position: center 25%;
-            }
+        .enter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 38px rgba(0,0,0,.18);
+            background: #fff;
         }
 
-        /* 手機版核心修改：劇院模式 (解決人擋住的問題) */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(242,239,233,.84);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(0,0,0,.05);
+            transition: box-shadow .3s ease, background .3s ease, padding .3s ease;
+        }
+
+        .nav-bar.scrolled {
+            background: rgba(242,239,233,.94);
+            box-shadow: 0 8px 24px rgba(0,0,0,.08);
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        .nav-logo {
+            font-family: var(--serif);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: .3px;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            position: relative;
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 1px;
+            background: var(--accent-color);
+            transition: width .25s ease;
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        .ticker-wrap {
+            width: 100%;
+            margin-top: 70px;
+            padding: 12px 0;
+            overflow: hidden;
+            background: rgba(255,255,255,.85);
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            backdrop-filter: blur(6px);
+        }
+
+        .ticker {
+            display: flex;
+            width: max-content;
+            white-space: nowrap;
+            animation: ticker 40s linear infinite;
+        }
+
+        .ticker span {
+            padding: 0 40px;
+            font-family: var(--serif);
+            font-size: 12px;
+            font-style: italic;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            margin: 58px 0 34px;
+            text-align: center;
+            font-family: var(--serif);
+            font-size: 2.2rem;
+            font-style: italic;
+            letter-spacing: 2px;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(34px) scale(.985);
+            transition: opacity .9s ease, transform .9s ease;
+        }
+
+        .reveal.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .feature-wrap {
+            max-width: 1000px;
+            margin: 0 auto 60px;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin: 42px 0 16px;
+            padding-left: 16px;
+            border-left: 2px solid var(--accent-color);
+        }
+
+        .category-label {
+            margin: 0;
+            display: block;
+            font-family: var(--serif);
+            font-size: 1.15rem;
+            font-style: italic;
+            color: var(--accent-color);
+            line-height: 1.35;
+        }
+
+        .dropdown {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .dropbtn {
+            min-width: 148px;
+            background: transparent;
+            color: var(--accent-color);
+            padding: 10px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid var(--accent-color);
+            border-radius: 999px;
+            cursor: pointer;
+            text-align: center;
+            transition: background .25s ease, color .25s ease, transform .2s ease, box-shadow .2s ease;
+        }
+
+        .dropbtn:hover {
+            background: var(--accent-color);
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(142,127,113,.18);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            min-width: 320px;
+            max-width: 420px;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,.04);
+            box-shadow: 0 14px 28px rgba(0,0,0,.12);
+            z-index: 100;
+        }
+
+        .dropdown-content div {
+            padding: 12px 16px;
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--text-color);
+            border-bottom: 1px solid #f0efe9;
+            cursor: pointer;
+            transition: background .2s ease;
+        }
+
+        .dropdown-content div:hover { background: #f7f4ef; }
+
+        .dropdown-content div.active {
+            background: #f2efe9;
+            font-weight: 600;
+        }
+
+        .show { display: block; }
+
+        .full-vbox {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+            padding-bottom: 56.25%;
+            background: #000;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+
+        .full-vbox:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 42px rgba(0,0,0,.13);
+        }
+
+        .full-vbox iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .artist-card { transition: transform .28s ease; }
+        .artist-card:hover { transform: translateY(-3px); }
+
+        .image-container {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 6px;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .image-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .artist-name {
+            margin: 10px 0 5px;
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .artist-sub {
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #ddd;
+            color: var(--accent-color);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .profile-table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+
+        .profile-table td {
+            padding: 8px 0;
+            font-size: 12px;
+            border-bottom: 1px solid #e0ddd7;
+        }
+
+        .label {
+            width: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--accent-color);
+        }
+
+        .card-social {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        .card-social a {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            opacity: .68;
+            transition: transform .25s ease, opacity .25s ease;
+        }
+
+        .card-social a:hover {
+            opacity: 1;
+            transform: translateY(-2px) scale(1.04);
+        }
+
+        .calendar-months {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 28px;
+            margin: 0 auto 60px;
+        }
+
+        .calendar-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: var(--shadow-soft);
+            transition: transform .28s ease, box-shadow .28s ease;
+        }
+
+        .calendar-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 34px rgba(0,0,0,.08);
+        }
+
+        .calendar-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e8e3dc;
+        }
+
+        .calendar-card-header h3 {
+            margin: 0;
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--accent-color);
+        }
+
+        .calendar-card-header span {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-color);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .calendar-weekday {
+            text-align: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+            padding: 6px 0;
+        }
+
+        .calendar-day {
+            position: relative;
+            min-height: 74px;
+            border: 1px solid #eee6dd;
+            border-radius: 10px;
+            padding: 8px 6px;
+            background: #fcfbf8;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+        }
+
+        .calendar-day:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(0,0,0,.05);
+        }
+
+        .calendar-day span {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .calendar-day small {
+            margin-top: 6px;
+            font-size: 9px;
+            line-height: 1.25;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .calendar-day.empty {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+
+        .calendar-day.event-day {
+            background: var(--accent-soft);
+            border: 1px solid #d8c7b6;
+            cursor: pointer;
+        }
+
+        .calendar-day.event-day::after {
+            content: "";
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent-color);
+        }
+
+        .calendar-day.major-event {
+            border: 2px solid var(--accent-strong);
+            background: #f9f3ec;
+        }
+
+        .calendar-detail-box {
+            margin-top: 18px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: #fbf8f3;
+            border: 1px solid #eadfd3;
+            min-height: 82px;
+        }
+
+        .calendar-detail-title {
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .calendar-detail-content {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #3a3a3a;
+        }
+
+        .photos-wrap {
+    margin: 0 auto 62px;
+    position: relative;
+}
+
+.photos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.photos-note {
+    font-size: 10px;
+    color: var(--accent-color);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.photos-nav {
+    display: flex;
+    gap: 8px;
+}
+
+.photos-nav button {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #d8cdc2;
+    background: rgba(255,255,255,.82);
+    color: var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    backdrop-filter: blur(4px);
+}
+
+.photos-nav button:hover {
+    transform: translateY(-1px);
+    background: #fff;
+    box-shadow: 0 8px 18px rgba(0,0,0,.08);
+}
+
+.photo-rail {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 8px 2px 12px;
+    scrollbar-width: none;
+    align-items: stretch;
+}
+
+.photo-rail::-webkit-scrollbar {
+    display: none;
+}
+
+.photo-card {
+    flex: 0 0 clamp(210px, 28vw, 320px);
+    scroll-snap-align: start;
+    border: none;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    perspective: 1000px;
+}
+
+.photo-card-inner {
+    position: relative;
+    height: 100%;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition: transform .35s ease, box-shadow .35s ease, filter .35s ease;
+}
+
+.photo-card:hover .photo-card-inner {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 18px 34px rgba(0,0,0,.12);
+    filter: saturate(1.03);
+}
+
+.photo-card:active .photo-card-inner {
+    transform: scale(.985);
+}
+
+.photo-card img {
+    display: block;
+    width: 100%;
+    height: clamp(280px, 38vw, 430px);
+    object-fit: cover;
+    object-position: center;
+    transition: transform .45s ease;
+}
+
+.photo-card:hover img {
+    transform: scale(1.04);
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,.92);
+    padding: 28px;
+}
+
+.lightbox.show {
+    display: flex;
+    animation: fadeInLightbox .22s ease;
+}
+
+@keyframes fadeInLightbox {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.lightbox-img {
+    max-width: min(96vw, 1600px);
+    max-height: 92vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 14px;
+    box-shadow: 0 18px 44px rgba(0,0,0,.38);
+    transform: scale(.96);
+    animation: zoomInLightbox .22s ease forwards;
+}
+
+@keyframes zoomInLightbox {
+    from { opacity: .6; transform: scale(.96); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.18);
+    color: #fff;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: transform .2s ease, background .2s ease;
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    transform: scale(1.05);
+    background: rgba(255,255,255,.22);
+}
+
+.lightbox-close {
+    top: 22px;
+    right: 22px;
+}
+
+.lightbox-prev {
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.lightbox-next {
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    transform: translateY(-50%) scale(1.05);
+}
+
+.lightbox-counter {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,.88);
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .photo-card {
+        flex: 0 0 72vw;
+    }
+
+    .photo-card img {
+        height: 62vw;
+    }
+
+    .lightbox {
+        padding: 18px;
+    }
+}
+
+
         @media (max-width: 600px) {
-            #bg-video {
-                /* 關鍵：改為 contain，讓橫式影片完整縮小在螢幕內 */
-                width: 100vw; 
-                height: 100vh;
-                object-fit: contain;
-                /* 上下留黑邊，營造劇院感 */
-                background: #000;
-                /* 重心設為正中心 */
-                object-position: center center;
-                opacity: 1; /* 劇院模式影片清晰一點 */
+            .section-title { font-size: 1.8rem; }
+            .profile-grid { grid-template-columns: 1fr; }
+
+            .nav-bar {
+                padding-left: 4%;
+                padding-right: 4%;
+            }
+
+            .nav-logo { font-size: .84rem; }
+            .nav-links { gap: 8px 10px; }
+            .nav-links a { font-size: 9px; }
+
+            .calendar-day { min-height: 82px; }
+
+            .lightbox-prev,
+            .lightbox-next,
+            .lightbox-close {
+                width: 42px;
+                height: 42px;
+            }
+
+            .lightbox-prev { left: 12px; }
+            .lightbox-next { right: 12px; }
+            .lightbox-close { top: 12px; right: 12px; }
+
+            .lightbox-img {
+                max-width: 98vw;
+                max-height: 88vh;
+            }
+
+            .photos-nav button {
+                width: 38px;
+                height: 38px;
             }
         }
-
-        .enter-btn { position: relative; z-index: 10001; background: rgba(255,255,255,0.95); border: none; padding: 18px 40px; border-radius: 50px; font-weight: 600; cursor: pointer; letter-spacing: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); font-size: 0.9rem; color: #333; text-transform: uppercase; }
-
-        .nav-bar { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; z-index: 1000; background: rgba(242, 239, 233, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .nav-logo { font-family: var(--serif); font-weight: bold; font-size: 1rem; }
-        .nav-links { display: flex; gap: 15px; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-size: 10px; letter-spacing: 1px; font-weight: 600; text-transform: uppercase; }
-
-        .ticker-wrap { width: 100%; overflow: hidden; background: #fff; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 12px 0; margin-top: 70px; }
-        .ticker { display: flex; white-space: nowrap; animation: ticker 40s linear infinite; width: fit-content; }
-        .ticker span { font-family: var(--serif); font-size: 12px; letter-spacing: 4px; padding: 0 40px; font-style: italic; text-transform: uppercase; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; position: relative; z-index: 1; }
-        .section-title { font-family: var(--serif); font-size: 2.2rem; font-style: italic; text-align: center; margin: 50px 0 30px; letter-spacing: 2px; }
-
-        .month-group { margin-bottom: 40px; }
-        .month-header { font-family: var(--serif); font-size: 1.4rem; color: var(--accent-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; margin-bottom: 15px; font-style: italic; font-weight: bold; }
-        .calendar-wrap { max-width: 700px; margin: 0 auto 60px; padding: 25px; background: #fff; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
-        .calendar-item { display: flex; align-items: center; padding: 18px 0; border-bottom: 1px solid #f0ede8; }
-        .calendar-item:last-child { border-bottom: none; }
-        .cal-date { width: 60px; font-family: var(--serif); font-weight: bold; color: var(--accent-color); font-size: 0.95rem; text-align: left; }
-        .cal-info { flex: 1; padding-left: 10px; }
-        .cal-title { font-size: 13px; font-weight: 600; color: #333; line-height: 1.4; }
-        .cal-icon { width: 35px; text-align: center; color: var(--accent-color); opacity: 0.6; font-size: 1rem; }
-
-        .profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 60px; }
-        .artist-card { background: transparent; padding: 0; width: 100%; }
-        .image-container { width: 100%; border-radius: 4px; overflow: hidden; background: #fff; padding: 6px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
-        .image-container img { width: 100%; height: auto; display: block; image-rendering: -webkit-optimize-contrast; }
-        .artist-name { font-family: var(--serif); font-size: 1.5rem; margin: 10px 0 5px; font-style: italic; }
-        .artist-sub { color: var(--accent-color); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; border-bottom: 1px solid #ddd; padding-bottom: 8px;}
-        .profile-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        .profile-table td { padding: 8px 0; font-size: 12px; border-bottom: 1px solid #e0ddd7; }
-        .label { font-weight: 600; text-transform: uppercase; color: var(--accent-color); width: 100px; font-size: 11px; }
-        .card-social { display: flex; gap: 12px; margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; flex-wrap: wrap; }
-        .card-social a { color: var(--text-color); font-size: 1.1rem; opacity: 0.6; transition: 0.3s; }
-
-        .photo-ticker-wrap { width: 100%; overflow: hidden; background: transparent; padding: 30px 0; margin-bottom: 60px; position: relative; }
-        .photo-ticker { display: flex; width: fit-content; animation: photoTicker 110s linear infinite; align-items: center; }
-        .photo-ticker img { max-height: 480px; width: auto; margin-right: 25px; border-radius: 0; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; transform: translateZ(0); }
-        @keyframes photoTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        .category-label { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--accent-color); margin: 40px 0 20px; display: block; border-left: 3px solid var(--accent-color); padding-left: 15px; }
-        .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 50px; }
-        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 4px; overflow: hidden; }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-
-        .music-control { position: fixed; bottom: 25px; right: 20px; z-index: 2000; cursor: pointer; width: 45px; height: 45px; display: none; align-items: center; justify-content: center; background: white; color: var(--text-color); border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
-        footer { margin-top: 80px; padding: 40px 0; border-top: 1px solid #ddd; text-align: center; }
-        .footer-text { font-family: var(--serif); font-size: 10px; letter-spacing: 2px; color: var(--accent-color); }
-        @media (max-width: 600px) { .section-title { font-size: 1.8rem; } .profile-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body class="locked">
     <audio id="bg-music" playsinline preload="auto"></audio>
-    <div id="music-btn" class="music-control" onclick="toggleMusic()"><i id="music-icon" class="fas fa-music"></i></div>
-    
+
+    <div id="music-btn" class="music-control" onclick="toggleMusic()" aria-label="切換背景音樂">
+        <i id="music-icon" class="fas fa-music"></i>
+    </div>
+
     <div id="splash-screen">
         <video autoplay muted loop playsinline id="bg-video">
-            <source src="https://github.com/JanJingJingTAIWANFANCLUB/website-assets/raw/refs/heads/main/nlCTnKDA1rGosPoy.mp4" type="video/mp4">
+            <source id="bg-video-source" src="" type="video/mp4" />
         </video>
         <button class="enter-btn" onclick="enterSite()">歡迎進入 🦊🐯 的世界</button>
     </div>
 
-    <nav class="nav-bar">
+    <nav class="nav-bar" id="nav-bar">
         <div class="nav-logo">30秒帶你認識JanJingJing✨</div>
-        <div class="nav-links"><a href="#artists">Profiles</a><a href="#calendar">Calendar</a><a href="#photos">Photos</a><a href="#portfolio">Videos</a></div>
+        <div class="nav-links">
+            <a href="#artists">Profiles</a>
+            <a href="#music">Music</a>
+            <a href="#calendar">Calendar</a>
+            <a href="#photos">Photos</a>
+            <a href="#show">Show</a>
+            <a href="#portfolio">Videos</a>
+        </div>
     </nav>
 
     <div class="ticker-wrap">
         <div class="ticker">
-            <span>Janhae Ployshompoo Supasap</span><span>JingJing Prariyapit Yu</span><span>Janhae Ployshompoo Supasap</span><span>JingJing Prariyapit Yu</span>
+            <span>Janhae Ployshompoo Supasap</span>
+            <span>JingJing Prariyapit Yu</span>
+            <span>Janhae Ployshompoo Supasap</span>
+            <span>JingJing Prariyapit Yu</span>
         </div>
     </div>
 
     <div class="container">
-        <section id="artists">
+        <section id="artists" class="reveal">
             <h2 class="section-title">Profiles</h2>
+
             <div class="profile-grid">
                 <div class="artist-card">
                     <h2 class="artist-name">Janhae</h2>
                     <p class="artist-sub">ACTOR / HOST / SINGER</p>
-                    <div class="image-container"><img src="https://i.postimg.cc/50g01bgN/2A26EBC1-B57B-48E9-B374-2C3991AB7B95-Coco-AI-20260303-101000-1.png"></div>
+                    <div class="image-container">
+                        <img src="https://i.postimg.cc/50g01bgN/2A26EBC1-B57B-48E9-B374-2C3991AB7B95-Coco-AI-20260303-101000-1.png" alt="Janhae" loading="lazy" />
+                    </div>
                     <table class="profile-table">
                         <tr><td class="label">FullName</td><td>Ployshompoo Supasap</td></tr>
                         <tr><td class="label">Nickname</td><td>Janhae</td></tr>
                         <tr><td class="label">Birthday</td><td>January 5, 1995</td></tr>
                     </table>
                     <div class="card-social">
-                        <a href="https://www.instagram.com/janhae/"><i class="fab fa-instagram"></i></a>
-                        <a href="https://x.com/janhae"><i class="fab fa-x-twitter"></i></a>
-                        <a href="https://www.youtube.com/@janhae7586"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.threads.net/@janhae"><i class="fab fa-threads"></i></a>
+                        <a href="https://www.instagram.com/janhae/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/janhae" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.youtube.com/@janhae7586" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.threads.net/@janhae" target="_blank" rel="noopener noreferrer"><i class="fab fa-threads"></i></a>
+                        <a href="https://www.tiktok.com/@janhae" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
                     </div>
                 </div>
+
                 <div class="artist-card">
                     <h2 class="artist-name">Janhae</h2>
                     <p class="artist-sub">ACTOR / HOST / SINGER</p>
-                    <div class="image-container"><img src="https://i.postimg.cc/dVBWYk20/IMG-5277.jpg"></div>
+                    <div class="image-container">
+                        <img src="https://i.postimg.cc/dVBWYk20/IMG-5277.jpg" alt="Janhae portrait" loading="lazy" />
+                    </div>
                     <table class="profile-table">
                         <tr><td class="label">Education</td><td>Thammasat University</td></tr>
                         <tr><td class="label">Agency</td><td>GMMTV</td></tr>
                     </table>
                 </div>
+
                 <div class="artist-card">
                     <h2 class="artist-name">JingJing</h2>
                     <p class="artist-sub">MODEL / DANCER / ACTOR</p>
-                    <div class="image-container"><img src="https://i.postimg.cc/sXvySRjL/IMG-6020-Coco-AI-20260303-095505-1.jpg"></div>
+                    <div class="image-container">
+                        <img src="https://i.postimg.cc/sXvySRjL/IMG-6020-Coco-AI-20260303-095505-1.jpg" alt="JingJing" loading="lazy" />
+                    </div>
                     <table class="profile-table">
                         <tr><td class="label">FullName</td><td>Prariyapit Yu</td></tr>
                         <tr><td class="label">Nickname</td><td>JingJing</td></tr>
@@ -177,133 +912,536 @@
                         <tr><td class="label">Agency</td><td>GMMTV</td></tr>
                     </table>
                     <div class="card-social">
-                        <a href="https://www.instagram.com/jingjingyu36/"><i class="fab fa-instagram"></i></a>
-                        <a href="https://x.com/jingjingyu364"><i class="fab fa-x-twitter"></i></a>
-                        <a href="https://youtube.com/@jingjingyuofficial"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.threads.net/@jingjingyu36"><i class="fab fa-threads"></i></a>
-                        <a href="https://www.facebook.com/profile.php?id=100044385612856"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/jingjingyu36/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/jingjingyu364" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://youtube.com/@jingjingyuofficial" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.threads.net/@jingjingyu36" target="_blank" rel="noopener noreferrer"><i class="fab fa-threads"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=100044385612856" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.tiktok.com/@jingjingyuofficial" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="calendar">
+        <section id="music" class="reveal">
+            <h2 class="section-title">Music</h2>
+            <div class="feature-wrap">
+                <div class="category-header">
+                    <p class="category-label">Playlist Selection</p>
+                    <div class="dropdown">
+                        <button onclick="toggleD('musicD')" class="dropbtn">請點選 <i class="fas fa-chevron-down"></i></button>
+                        <div id="musicD" class="dropdown-content">
+                            <div class="active" onclick="swV('musicPlayer', 'https://www.youtube.com/embed/WDxMcK0eau0', this)">SIZZY - JAN</div>
+                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/Lx2zTvk6mhI', this)">SINGER - JAN</div>
+                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/_MYQRhTHPh4', this)">JAN COVER</div>
+                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/rVN62lVEOxU', this)">JAN 參與的MV</div>
+                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/3mYVyVY-lU4', this)">JINGJING 參與的MV</div>
+                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/j5f8Z7QW6gg', this)">JINGJING DANCE COVER</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="full-vbox">
+                    <iframe
+                        id="musicPlayer"
+                        src="https://www.youtube.com/embed/WDxMcK0eau0"
+                        loading="lazy"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="calendar" class="reveal">
             <h2 class="section-title">Calendar</h2>
-            <div class="calendar-wrap">
-                <div class="month-group">
-                    <div class="month-header">April</div>
-                    <div class="calendar-item">
-                        <div class="cal-date">4/8</div>
-                        <div class="cal-icon"><i class="fas fa-bullhorn"></i></div>
-                        <div class="cal-info"><div class="cal-title">04/08（WED.) 泰國時間15：00 Blush Blossom Fan Fest 2026 : Midnight Bloom 宣傳</div></div>
+
+            <div class="calendar-months">
+                <div class="calendar-card">
+                    <div class="calendar-card-header">
+                        <h3>April 2026</h3>
+                        <span>活動月曆</span>
                     </div>
-                    <div class="calendar-item">
-                        <div class="cal-date">4/21</div>
-                        <div class="cal-icon"><i class="fas fa-video"></i></div>
-                        <div class="cal-info"><div class="cal-title">04/21(TUE.）泰國時間21：30 GMMTV LIVE HOUSE</div></div>
+
+                    <div class="calendar-grid">
+                        <div class="calendar-weekday">SUN</div><div class="calendar-weekday">MON</div><div class="calendar-weekday">TUE</div><div class="calendar-weekday">WED</div><div class="calendar-weekday">THU</div><div class="calendar-weekday">FRI</div><div class="calendar-weekday">SAT</div>
+                        <div class="calendar-day empty"></div><div class="calendar-day empty"></div><div class="calendar-day empty"></div>
+                        <div class="calendar-day"><span>1</span></div><div class="calendar-day"><span>2</span></div><div class="calendar-day"><span>3</span></div><div class="calendar-day"><span>4</span></div>
+                        <div class="calendar-day"><span>5</span></div><div class="calendar-day"><span>6</span></div><div class="calendar-day"><span>7</span></div><div class="calendar-day"><span>8</span></div><div class="calendar-day"><span>9</span></div><div class="calendar-day"><span>10</span></div><div class="calendar-day"><span>11</span></div>
+                        <div class="calendar-day"><span>12</span></div><div class="calendar-day"><span>13</span></div><div class="calendar-day"><span>14</span></div><div class="calendar-day"><span>15</span></div><div class="calendar-day"><span>16</span></div><div class="calendar-day"><span>17</span></div><div class="calendar-day"><span>18</span></div>
+                        <div class="calendar-day"><span>19</span></div><div class="calendar-day"><span>20</span></div>
+                        <div class="calendar-day event-day" data-month="april" data-date="21"><span>21</span><small>LIVE HOUSE</small></div>
+                        <div class="calendar-day"><span>22</span></div><div class="calendar-day"><span>23</span></div><div class="calendar-day"><span>24</span></div><div class="calendar-day"><span>25</span></div>
+                        <div class="calendar-day"><span>26</span></div><div class="calendar-day"><span>27</span></div>
+                        <div class="calendar-day event-day" data-month="april" data-date="28"><span>28</span><small>LIVE HOUSE</small></div>
+                        <div class="calendar-day"><span>29</span></div><div class="calendar-day"><span>30</span></div>
                     </div>
-                    <div class="calendar-item">
-                        <div class="cal-date">4/28</div>
-                        <div class="cal-icon"><i class="fas fa-video"></i></div>
-                        <div class="cal-info"><div class="cal-title">04/28(TUE.）泰國時間21：30 GMMTV LIVE HOUSE</div></div>
+
+                    <div class="calendar-detail-box">
+                        <div class="calendar-detail-title">活動詳情</div>
+                        <div class="calendar-detail-content" id="calendar-detail-april">04/21 (TUE.) 泰國時間 21:30 GMMTV LIVE HOUSE</div>
+                    </div>
+                </div>
+
+                <div class="calendar-card">
+                    <div class="calendar-card-header">
+                        <h3>June 2026</h3>
+                        <span>活動月曆</span>
+                    </div>
+
+                    <div class="calendar-grid">
+                        <div class="calendar-weekday">SUN</div><div class="calendar-weekday">MON</div><div class="calendar-weekday">TUE</div><div class="calendar-weekday">WED</div><div class="calendar-weekday">THU</div><div class="calendar-weekday">FRI</div><div class="calendar-weekday">SAT</div>
+                        <div class="calendar-day empty"></div>
+                        <div class="calendar-day"><span>1</span></div><div class="calendar-day"><span>2</span></div><div class="calendar-day"><span>3</span></div><div class="calendar-day"><span>4</span></div><div class="calendar-day"><span>5</span></div><div class="calendar-day"><span>6</span></div>
+                        <div class="calendar-day"><span>7</span></div><div class="calendar-day"><span>8</span></div><div class="calendar-day"><span>9</span></div><div class="calendar-day"><span>10</span></div><div class="calendar-day"><span>11</span></div><div class="calendar-day"><span>12</span></div>
+                        <div class="calendar-day event-day major-event" data-month="june" data-date="13"><span>13</span><small>Fan Fest</small></div>
+                        <div class="calendar-day event-day major-event" data-month="june" data-date="14"><span>14</span><small>Fan Fest</small></div>
+                        <div class="calendar-day"><span>15</span></div><div class="calendar-day"><span>16</span></div><div class="calendar-day"><span>17</span></div><div class="calendar-day"><span>18</span></div><div class="calendar-day"><span>19</span></div><div class="calendar-day"><span>20</span></div>
+                        <div class="calendar-day"><span>21</span></div><div class="calendar-day"><span>22</span></div><div class="calendar-day"><span>23</span></div><div class="calendar-day"><span>24</span></div><div class="calendar-day"><span>25</span></div><div class="calendar-day"><span>26</span></div><div class="calendar-day"><span>27</span></div>
+                        <div class="calendar-day"><span>28</span></div><div class="calendar-day"><span>29</span></div><div class="calendar-day"><span>30</span></div>
+                    </div>
+
+                    <div class="calendar-detail-box">
+                        <div class="calendar-detail-title">活動詳情</div>
+                        <div class="calendar-detail-content" id="calendar-detail-june">06/13 (SAT.) 17:00 Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="photos">
+        <section id="photos" class="reveal">
             <h2 class="section-title">Photos</h2>
-            <div class="photo-ticker-wrap">
-                <div class="photo-ticker">
-                    <img src="https://i.postimg.cc/TLzNhSRS/IMG-2739.jpg"><img src="https://i.postimg.cc/njySM5HB/IMG-2741.jpg"><img src="https://i.postimg.cc/302SGBR1/IMG-2773.jpg"><img src="https://i.postimg.cc/z3hP4JjT/IMG-2782.jpg"><img src="https://i.postimg.cc/SYcT9rsB/IMG-2805.jpg"><img src="https://i.postimg.cc/vDnSCQzL/IMG-2808.jpg"><img src="https://i.postimg.cc/Z0NDXTcx/IMG-2815.jpg"><img src="https://i.postimg.cc/8svnx1HZ/IMG-3078.jpg"><img src="https://i.postimg.cc/WtZfx28L/IMG-3468.jpg"><img src="https://i.postimg.cc/rz4Y78jT/IMG-3523.jpg"><img src="https://i.postimg.cc/1fZYQLCT/IMG-3555.jpg"><img src="https://i.postimg.cc/fJhgN626/IMG-3779.jpg"><img src="https://i.postimg.cc/ppt1HgcR/IMG-4275.jpg"><img src="https://i.postimg.cc/QHrn3RYV/IMG-4986.jpg"><img src="https://i.postimg.cc/mtG6s0pP/IMG-5180.jpg"><img src="https://i.postimg.cc/N5wPcWC2/IMG-6913.jpg"><img src="https://i.postimg.cc/ppYcXq3V/IMG-7144.jpg"><img src="https://i.postimg.cc/7fMtYmjh/IMG-7586.jpg"><img src="https://i.postimg.cc/bsHVN34Z/IMG-7587.jpg">
-                    <img src="https://i.postimg.cc/TLzNhSRS/IMG-2739.jpg"><img src="https://i.postimg.cc/njySM5HB/IMG-2741.jpg"><img src="https://i.postimg.cc/302SGBR1/IMG-2773.jpg"><img src="https://i.postimg.cc/z3hP4JjT/IMG-2782.jpg"><img src="https://i.postimg.cc/SYcT9rsB/IMG-2805.jpg"><img src="https://i.postimg.cc/vDnSCQzL/IMG-2808.jpg"><img src="https://i.postimg.cc/Z0NDXTcx/IMG-2815.jpg"><img src="https://i.postimg.cc/8svnx1HZ/IMG-3078.jpg"><img src="https://i.postimg.cc/WtZfx28L/IMG-3468.jpg"><img src="https://i.postimg.cc/rz4Y78jT/IMG-3523.jpg"><img src="https://i.postimg.cc/1fZYQLCT/IMG-3555.jpg"><img src="https://i.postimg.cc/fJhgN626/IMG-3779.jpg"><img src="https://i.postimg.cc/ppt1HgcR/IMG-4275.jpg"><img src="https://i.postimg.cc/QHrn3RYV/IMG-4986.jpg"><img src="https://i.postimg.cc/mtG6s0pP/IMG-5180.jpg"><img src="https://i.postimg.cc/N5wPcWC2/IMG-6913.jpg"><img src="https://i.postimg.cc/ppYcXq3V/IMG-7144.jpg"><img src="https://i.postimg.cc/7fMtYmjh/IMG-7586.jpg"><img src="https://i.postimg.cc/bsHVN34Z/IMG-7587.jpg">
+
+            <div class="photos-wrap">
+                <div class="photos-header">
+                    <span class="photos-note">Original ratio gallery</span>
+                    <div class="photos-nav">
+                        <button type="button" id="photosPrev" aria-label="Previous photos"><i class="fas fa-chevron-left"></i></button>
+                        <button type="button" id="photosNext" aria-label="Next photos"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="photo-rail" id="photoRail"></div>
+            </div>
+        </section>
+
+        <section id="show" class="reveal">
+            <h2 class="section-title">Show</h2>
+            <div class="feature-wrap">
+                <div class="category-header">
+                    <p class="category-label">Show Selection</p>
+                    <div class="dropdown">
+                        <button onclick="toggleD('showD')" class="dropbtn">請點選 <i class="fas fa-chevron-down"></i></button>
+                        <div id="showD" class="dropdown-content">
+                            <div class="active" onclick="swV('showPlayer', 'https://www.youtube.com/embed/q7-7eKMCa10', this)">LANEIGE Let it go ทริปป่วน ก๊วนผิวปัง Season 2</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="full-vbox">
+                    <iframe
+                        id="showPlayer"
+                        src="https://www.youtube.com/embed/q7-7eKMCa10"
+                        loading="lazy"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
                 </div>
             </div>
         </section>
 
-        <section id="portfolio">
+        <section id="portfolio" class="reveal">
             <h2 class="section-title">Videos</h2>
-            <div class="category-label">JanJingJing</div>
-            <div class="work-grid">
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/Jwv6V3Oo9P4"></iframe></div></div>
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/videoseries?list=PL_vCrT8PKfW0THj0b21-tIMFAP_3yaWxU"></iframe></div></div>
+
+            <div class="category-header">
+                <p class="category-label">Blush Blossom Fan Fest 2026 : Midnight Bloom</p>
+                <div class="dropdown">
+                    <button onclick="toggleD('bbfD')" class="dropbtn">請點選 <i class="fas fa-chevron-down"></i></button>
+                    <div id="bbfD" class="dropdown-content">
+                        <div class="active" onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/vqbNKArQejI', this)">Blush Blossom Fan Fest : Midnight Bloom 預告 1</div>
+                        <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/XrObJGT_1Co', this)">Blush Blossom Fan Fest : Midnight Bloom 預告 2</div>
+                        <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/IjJ4MTUf2TQ', this)">Blush Blossom Fan Fest : Midnight Bloom 宣傳 1</div>
+                        <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/E0mslaZw5rE', this)">Blush Blossom Fan Fest : Midnight Bloom 宣傳 2</div>
+                        <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/JwocLA1ObCs', this)">Blush Blossom Fan Fest : Midnight Bloom 宣傳 3</div>
+                    </div>
+                </div>
             </div>
-            <div class="category-label">Janhae</div>
-            <div class="work-grid"><div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/p8tf3dAkvFc"></iframe></div></div></div>
-            <div class="category-label">JingJing</div>
-            <div class="work-grid">
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/uLRYn0u8y6o"></iframe></div></div>
-                <div class="work-item"><div class="video-container"><iframe src="https://www.youtube.com/embed/YwIhG3DQ85o"></iframe></div></div>
+
+            <div class="full-vbox">
+                <iframe
+                    id="bbfPlayer"
+                    src="https://www.youtube.com/embed/vqbNKArQejI"
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+            </div>
+
+            <div class="category-header">
+                <p class="category-label">JanJingJing</p>
+                <div class="dropdown">
+                    <button onclick="toggleD('jjjD')" class="dropbtn">請點選 <i class="fas fa-chevron-down"></i></button>
+                    <div id="jjjD" class="dropdown-content">
+                        <div class="active" onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/Jwv6V3Oo9P4', this)">ลัลล์ไม่ชอบไวน์ (Enemies with Benefits)</div>
+                        <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/videoseries?list=PL_vCrT8PKfW0THj0b21-tIMFAP_3yaWxU', this)">โปรดใช้วิจารณญาณในการรักเธอ (MuTeLuv)</div>
+                        <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/OGgwnwAocuI', this)">น้องสาวหายนะ (Hide & Sis)</div>
+                        <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/NFFWV0X4i_c', this)">ขนมปังชีสเนย (Bake Love Feeling)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="full-vbox">
+                <iframe
+                    id="jjjPlayer"
+                    src="https://www.youtube.com/embed/Jwv6V3Oo9P4"
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+            </div>
+
+            <div class="category-header">
+                <p class="category-label">Janhae</p>
+                <div class="dropdown">
+                    <button onclick="toggleD('janD')" class="dropbtn">請點選 <i class="fas fa-chevron-down"></i></button>
+                    <div id="janD" class="dropdown-content">
+                        <div class="active" onclick="swV('janPlayer', 'https://www.youtube.com/embed/p8tf3dAkvFc', this)">關於 JAN 的 30 個問題</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="full-vbox">
+                <iframe
+                    id="janPlayer"
+                    src="https://www.youtube.com/embed/p8tf3dAkvFc"
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+            </div>
+
+            <div class="category-header">
+                <p class="category-label">JingJing</p>
+                <div class="dropdown">
+                    <button onclick="toggleD('jingD')" class="dropbtn">請點選 <i class="fas fa-chevron-down"></i></button>
+                    <div id="jingD" class="dropdown-content">
+                        <div class="active" onclick="swV('jingPlayer', 'https://www.youtube.com/embed/uLRYn0u8y6o', this)">關於 JingJing 的 20 個問題</div>
+                        <div onclick="swV('jingPlayer', 'https://www.youtube.com/embed/YwIhG3DQ85o', this)">Coming of Age</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="full-vbox">
+                <iframe
+                    id="jingPlayer"
+                    src="https://www.youtube.com/embed/uLRYn0u8y6o"
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
             </div>
         </section>
     </div>
 
-    <footer><p class="footer-text">Design By：JanJingJing TAIWAN FANCLUB</p></footer>
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close"><i class="fas fa-xmark"></i></button>
+        <button class="lightbox-prev" id="lightboxPrev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="Preview" />
+        <button class="lightbox-next" id="lightboxNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <footer>
+        <p class="footer-text">Design By：JanJingJing TAIWAN FANCLUB</p>
+    </footer>
 
     <script>
-        const playlist = [
-            "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song1.mp3",
-            "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song2.mp3",
-            "https://raw.githubusercontent.com/JanJingJingTAIWANFANCLUB/website-assets/refs/heads/main/Song3.mp3"
-        ];
-        
-        let currentTrack = Math.floor(Math.random() * playlist.length);
-        const audio = document.getElementById('bg-music');
-        const musicBtn = document.getElementById('music-btn');
-        const musicIcon = document.getElementById('music-icon');
+    const YOUR_GITHUB_USERNAME = "JanJingJingTAIWANFANCLUB";
+    const SPLASH_FILENAME = "nlCTnKDA1rGosPoy.mp4";
 
-        function loadAndPlay(index) {
-            audio.src = playlist[index];
-            audio.load();
-            setTimeout(() => {
-                const playPromise = audio.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        musicIcon.className = 'fas fa-music';
-                    }).catch(error => {
-                        console.log("Playback failed, trying next track...");
-                        nextTrack();
-                    });
-                }
-            }, 150);
+    const RAW_BASE = `https://raw.githubusercontent.com/${YOUR_GITHUB_USERNAME}/website-assets/main`;
+    const PHOTO_BASE = `${RAW_BASE}/`;
+    const PHOTO_EXT = ".JPG";
+    const MAX_PHOTO_SCAN = 100;
+
+    document.getElementById("bg-video-source").src = `${RAW_BASE}/${SPLASH_FILENAME}`;
+    document.getElementById("bg-video").load();
+
+    const playlist = [
+        `${RAW_BASE}/Song1.mp3`,
+        `${RAW_BASE}/Song2.mp3`,
+        `${RAW_BASE}/Song3.mp3`
+    ];
+
+    const calendarEventMap = {
+        april: {
+            21: "04/21 (TUE.) 泰國時間 21:30 GMMTV LIVE HOUSE",
+            28: "04/28 (TUE.) 泰國時間 21:30 GMMTV LIVE HOUSE"
+        },
+        june: {
+            13: "06/13 (SAT.) 17:00 Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE",
+            14: "06/14 (SUN.) 17:00 Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE"
+        }
+    };
+
+    let currentTrack = Math.floor(Math.random() * playlist.length);
+
+    const audio = document.getElementById("bg-music");
+    const musicBtn = document.getElementById("music-btn");
+    const musicIcon = document.getElementById("music-icon");
+    const splash = document.getElementById("splash-screen");
+    const navBar = document.getElementById("nav-bar");
+
+    function updateMusicUI(isPlaying) {
+        if (isPlaying) {
+            musicIcon.className = "fas fa-music";
+            musicBtn.classList.add("playing");
+        } else {
+            musicIcon.className = "fas fa-volume-mute";
+            musicBtn.classList.remove("playing");
+        }
+    }
+
+    function loadTrack(index) {
+        audio.src = playlist[index];
+        audio.load();
+    }
+
+    function playCurrentTrack() {
+        const p = audio.play();
+        if (p !== undefined) {
+            p.then(() => updateMusicUI(true)).catch(() => updateMusicUI(false));
+        }
+    }
+
+    function nextTrack() {
+        currentTrack = (currentTrack + 1) % playlist.length;
+        loadTrack(currentTrack);
+        playCurrentTrack();
+    }
+
+    audio.onended = nextTrack;
+    audio.onerror = nextTrack;
+
+    function enterSite() {
+        loadTrack(currentTrack);
+        playCurrentTrack();
+        musicBtn.style.display = "flex";
+
+        splash.classList.add("fade-out");
+        document.body.classList.remove("locked");
+        document.body.classList.add("unlocked");
+
+        setTimeout(() => {
+            splash.style.display = "none";
+            window.scrollTo(0, 0);
+        }, 700);
+    }
+
+    function toggleMusic() {
+        if (audio.paused) {
+            playCurrentTrack();
+        } else {
+            audio.pause();
+            updateMusicUI(false);
+        }
+    }
+
+    function toggleD(id) {
+        const list = document.getElementById(id);
+        const isShow = list.classList.contains("show");
+
+        document.querySelectorAll(".dropdown-content").forEach((d) => {
+            d.classList.remove("show");
+        });
+
+        if (!isShow) list.classList.add("show");
+    }
+
+    function swV(id, url, el) {
+        document.getElementById(id).src = url;
+        const menu = el.parentElement;
+        menu.querySelectorAll("div").forEach((item) => item.classList.remove("active"));
+        el.classList.add("active");
+        menu.classList.remove("show");
+    }
+
+    window.addEventListener("click", (e) => {
+        if (!e.target.closest(".dropdown")) {
+            document.querySelectorAll(".dropdown-content").forEach((d) => d.classList.remove("show"));
+        }
+    });
+
+    window.addEventListener("scroll", () => {
+        navBar.classList.toggle("scrolled", window.scrollY > 40);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("show");
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    document.querySelectorAll(".calendar-day.event-day").forEach((day) => {
+        day.addEventListener("click", () => {
+            const month = day.dataset.month;
+            const date = day.dataset.date;
+            const detail = document.getElementById(`calendar-detail-${month}`);
+            const content = calendarEventMap[month]?.[date];
+            if (detail && content) detail.textContent = content;
+        });
+    });
+
+    const rail = document.getElementById("photoRail");
+    const photosPrev = document.getElementById("photosPrev");
+    const photosNext = document.getElementById("photosNext");
+
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    const lightboxClose = document.getElementById("lightboxClose");
+    const lightboxPrev = document.getElementById("lightboxPrev");
+    const lightboxNext = document.getElementById("lightboxNext");
+    const lightboxCounter = document.getElementById("lightboxCounter");
+
+    let images = [];
+    let currentLightboxIndex = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    function padPhotoNumber(num) {
+        return String(num).padStart(2, "0");
+    }
+
+    function buildPhotoUrl(index) {
+        return `${PHOTO_BASE}photo${padPhotoNumber(index)}${PHOTO_EXT}`;
+    }
+
+    function checkImage(url) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve(true);
+            img.onerror = () => resolve(false);
+            img.src = url;
+        });
+    }
+
+    function createPhotoCard(src, index) {
+        const button = document.createElement("button");
+        button.className = "photo-card";
+        button.type = "button";
+        button.setAttribute("aria-label", `Open photo ${index + 1}`);
+
+        button.innerHTML = `
+            <div class="photo-card-inner">
+                <img src="${src}" alt="photo ${index + 1}" loading="lazy" decoding="async">
+            </div>
+        `;
+
+        button.addEventListener("click", () => openLightbox(index));
+        rail.appendChild(button);
+    }
+
+    async function renderPhotos() {
+        rail.innerHTML = "";
+        images = [];
+
+        for (let i = 1; i <= MAX_PHOTO_SCAN; i++) {
+            const src = buildPhotoUrl(i);
+            const exists = await checkImage(src);
+
+            if (!exists) break;
+
+            images.push(src);
+            createPhotoCard(src, images.length - 1);
         }
 
-        function nextTrack() {
-            currentTrack = (currentTrack + 1) % playlist.length;
-            loadAndPlay(currentTrack);
+        if (images.length === 0) {
+            rail.innerHTML = `
+                <div style="padding:20px;font-size:14px;color:#8e7f71;">
+                    找不到照片，請確認你的檔名是不是 photo01.JPG、photo02.JPG，
+                    而且檔案是直接放在 website-assets 的 main 根目錄。
+                </div>
+            `;
         }
+    }
 
-        audio.src = playlist[currentTrack];
-        audio.onended = function() { nextTrack(); };
-        audio.onerror = function() { nextTrack(); };
+    function getScrollAmount() {
+        return Math.min(rail.clientWidth * 0.88, 620);
+    }
 
-        function enterSite() { 
-            const playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => { 
-                    musicBtn.style.display = 'flex'; 
-                    musicIcon.className = 'fas fa-music'; 
-                }).catch(e => { 
-                    musicBtn.style.display = 'flex'; 
-                });
-            }
-            const splash = document.getElementById('splash-screen');
-            splash.style.opacity = '0';
-            splash.style.pointerEvents = 'none';
-            document.body.classList.remove('locked');
-            document.body.classList.add('unlocked');
-            setTimeout(() => { splash.style.display = 'none'; }, 600); 
+    photosPrev.addEventListener("click", () => {
+        rail.scrollBy({ left: -getScrollAmount(), behavior: "smooth" });
+    });
+
+    photosNext.addEventListener("click", () => {
+        rail.scrollBy({ left: getScrollAmount(), behavior: "smooth" });
+    });
+
+    function updateLightbox() {
+        if (!images.length) return;
+        lightboxImg.src = images[currentLightboxIndex];
+        lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${images.length}`;
+    }
+
+    function openLightbox(index) {
+        currentLightboxIndex = index;
+        updateLightbox();
+        lightbox.classList.add("show");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove("show");
+        document.body.style.overflow = "";
+    }
+
+    function showPrevImage() {
+        if (!images.length) return;
+        currentLightboxIndex = (currentLightboxIndex - 1 + images.length) % images.length;
+        updateLightbox();
+    }
+
+    function showNextImage() {
+        if (!images.length) return;
+        currentLightboxIndex = (currentLightboxIndex + 1) % images.length;
+        updateLightbox();
+    }
+
+    lightboxClose.addEventListener("click", closeLightbox);
+    lightboxPrev.addEventListener("click", showPrevImage);
+    lightboxNext.addEventListener("click", showNextImage);
+
+    lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (!lightbox.classList.contains("show")) return;
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowLeft") showPrevImage();
+        if (e.key === "ArrowRight") showNextImage();
+    });
+
+    lightbox.addEventListener("touchstart", (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    lightbox.addEventListener("touchend", (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchEndX - touchStartX;
+
+        if (Math.abs(diff) > 40) {
+            if (diff > 0) showPrevImage();
+            else showNextImage();
         }
+    }, { passive: true });
 
-        function toggleMusic() { 
-            if (audio.paused) { 
-                audio.play(); 
-                musicIcon.className = 'fas fa-music'; 
-            } else { 
-                audio.pause(); 
-                musicIcon.className = 'fas fa-volume-mute'; 
-            } 
-        }
-    </script>
+    renderPhotos();
+</script>
+
+
+
 </body>
 </html>
