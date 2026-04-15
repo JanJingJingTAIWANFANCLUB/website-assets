@@ -315,7 +315,6 @@
             border: 1px solid rgba(0,0,0,.04);
             box-shadow: 0 14px 28px rgba(0,0,0,.12);
             z-index: 100;
-
             opacity: 0;
             visibility: hidden;
             transform: translateY(10px) scale(.98);
@@ -616,8 +615,59 @@
 
         .calendar-detail-content {
             font-size: 13px;
-            line-height: 1.6;
+            line-height: 1.7;
             color: #3a3a3a;
+        }
+
+        .event-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            margin-right: 6px;
+            font-size: 10px;
+            border-radius: 999px;
+            letter-spacing: 0.5px;
+            vertical-align: middle;
+            font-weight: 700;
+        }
+
+        .event-tag.jan {
+            background: #f3ecff;
+            color: #7b5cff;
+        }
+
+        .event-tag.jj {
+            background: #ffeaf3;
+            color: #e26a9b;
+        }
+
+        .event-tag.janjingjing {
+            background: linear-gradient(90deg, #f3ecff, #ffeaf3);
+            color: #8e5aa8;
+        }
+
+        .event-tag.jan::before {
+            content: "💜";
+            margin-right: 2px;
+        }
+
+        .event-tag.jj::before {
+            content: "🎀";
+            margin-right: 2px;
+        }
+
+        .event-tag.janjingjing::before {
+            content: "💜🎀 ";
+        }
+
+        .calendar-detail-box.featured {
+            background: linear-gradient(180deg, #f9f3ec, #fbf7f2);
+            border: 1.5px solid #d8b79a;
+            box-shadow: 0 10px 24px rgba(185,146,114,.12);
+        }
+
+        .calendar-detail-title.featured-title {
+            color: #b07f5d;
+            letter-spacing: 1.5px;
         }
 
         .photos-wrap {
@@ -698,13 +748,21 @@
             transition: transform .42s cubic-bezier(.2,.8,.2,1), opacity .32s ease, filter .32s ease;
             position: relative;
             z-index: 1;
+            overflow: hidden;
         }
 
         .slide-hitbox:hover {
             opacity: 0.88;
         }
 
-        .slide-hitbox img {
+        .slide-card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide-hitbox img,
+        .slide-card img {
             display: block;
             width: 100%;
             height: 360px;
@@ -729,6 +787,26 @@
             height: 560px;
             box-shadow: 0 20px 40px rgba(0,0,0,.16);
             filter: saturate(1.04);
+        }
+
+        .slide-caption-overlay {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 18px 14px 12px;
+            background: linear-gradient(to top, rgba(0,0,0,.52), rgba(0,0,0,0));
+            color: rgba(255,255,255,.96);
+            text-align: left;
+            pointer-events: none;
+            border-radius: 0 0 22px 22px;
+        }
+
+        .slide-caption-overlay span {
+            display: inline-block;
+            font-size: 11px;
+            letter-spacing: .8px;
+            line-height: 1.45;
         }
 
         .slideshow-meta {
@@ -757,6 +835,15 @@
             font-style: italic;
             color: var(--accent-gold);
             margin-bottom: 4px;
+        }
+
+        .caption-sub {
+            font-size: 12px;
+            color: #8e7f71;
+            letter-spacing: .6px;
+            text-align: center;
+            max-width: 720px;
+            line-height: 1.6;
         }
 
         .slideshow-dots {
@@ -892,6 +979,16 @@
             color: rgba(255,255,255,.96);
         }
 
+        .story-caption-text {
+            margin-top: 6px;
+            font-size: 12px;
+            color: rgba(255,255,255,.82);
+            letter-spacing: .6px;
+            line-height: 1.6;
+            text-align: center;
+            max-width: min(88vw, 520px);
+        }
+
         .story-counter {
             margin-top: 8px;
             font-size: 12px;
@@ -1014,7 +1111,8 @@
                 transform: scale(0.98);
             }
 
-            .slide-hitbox img {
+            .slide-hitbox img,
+            .slide-card img {
                 height: 330px;
             }
 
@@ -1068,6 +1166,18 @@
                 width: min(94vw, 460px);
                 height: min(78vh, 760px);
                 border-radius: 18px;
+            }
+
+            .slide-caption-overlay {
+                padding: 16px 12px 10px;
+            }
+
+            .slide-caption-overlay span {
+                font-size: 10px;
+            }
+
+            .story-caption-text {
+                font-size: 11px;
             }
         }
 
@@ -1209,10 +1319,10 @@
                     <p class="category-label">Playlist Selection</p>
                     <div class="dropdown">
                         <button onclick="toggleD('musicD')" class="dropbtn">
-    請選擇 <i class="fas fa-chevron-down"></i>
-</button>
+                            請選擇 <i class="fas fa-chevron-down"></i>
+                        </button>
                         <div id="musicD" class="dropdown-content">
-                            <div class="active" onclick="swV('musicPlayer', 'https://www.youtube.com/embed/WDxMcK0eau0', this)">
+                            <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/WDxMcK0eau0', this)">
                                 <i class="fas fa-music"></i><span>SIZZY - JAN</span>
                             </div>
                             <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/Lx2zTvk6mhI', this)">
@@ -1271,8 +1381,39 @@
                     </div>
 
                     <div class="calendar-detail-box">
-                        <div class="calendar-detail-title">活動詳情</div>
-                        <div class="calendar-detail-content" id="calendar-detail-april">JAN 04/21 (TUE.) 泰國時間 21:30 GMMTV LIVE HOUSE</div>
+                        <div class="calendar-detail-title">本月首個活動</div>
+                        <div class="calendar-detail-content" id="calendar-detail-april">
+                            <span class="event-tag jan">JAN</span>04/21 (TUE.) 泰國時間 21:30｜GMMTV LIVE HOUSE
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calendar-card">
+                    <div class="calendar-card-header">
+                        <h3>May 2026</h3>
+                        <span>活動月曆</span>
+                    </div>
+
+                    <div class="calendar-grid">
+                        <div class="calendar-weekday">SUN</div><div class="calendar-weekday">MON</div><div class="calendar-weekday">TUE</div><div class="calendar-weekday">WED</div><div class="calendar-weekday">THU</div><div class="calendar-weekday">FRI</div><div class="calendar-weekday">SAT</div>
+                        <div class="calendar-day empty"></div><div class="calendar-day empty"></div><div class="calendar-day empty"></div><div class="calendar-day empty"></div><div class="calendar-day empty"></div>
+                        <div class="calendar-day"><span>1</span></div><div class="calendar-day"><span>2</span></div>
+                        <div class="calendar-day event-day major-event" data-month="may" data-date="3"><span>3</span><small>PREMIERE</small></div>
+                        <div class="calendar-day"><span>4</span></div><div class="calendar-day"><span>5</span></div><div class="calendar-day"><span>6</span></div><div class="calendar-day"><span>7</span></div><div class="calendar-day"><span>8</span></div><div class="calendar-day"><span>9</span></div>
+                        <div class="calendar-day event-day" data-month="may" data-date="10"><span>10</span><small>ON AIR</small></div>
+                        <div class="calendar-day"><span>11</span></div><div class="calendar-day"><span>12</span></div><div class="calendar-day"><span>13</span></div><div class="calendar-day"><span>14</span></div><div class="calendar-day"><span>15</span></div><div class="calendar-day"><span>16</span></div>
+                        <div class="calendar-day event-day" data-month="may" data-date="17"><span>17</span><small>ON AIR</small></div>
+                        <div class="calendar-day"><span>18</span></div><div class="calendar-day"><span>19</span></div><div class="calendar-day"><span>20</span></div><div class="calendar-day"><span>21</span></div><div class="calendar-day"><span>22</span></div><div class="calendar-day"><span>23</span></div>
+                        <div class="calendar-day event-day" data-month="may" data-date="24"><span>24</span><small>ON AIR</small></div>
+                        <div class="calendar-day"><span>25</span></div><div class="calendar-day"><span>26</span></div><div class="calendar-day"><span>27</span></div><div class="calendar-day"><span>28</span></div><div class="calendar-day"><span>29</span></div><div class="calendar-day"><span>30</span></div>
+                        <div class="calendar-day event-day" data-month="may" data-date="31"><span>31</span><small>ON AIR</small></div>
+                    </div>
+
+                    <div class="calendar-detail-box featured">
+                        <div class="calendar-detail-title featured-title">Featured Event</div>
+                        <div class="calendar-detail-content" id="calendar-detail-may">
+                            <span class="event-tag janjingjing">JANJINGJING</span>05/03 (SUN.) 泰國時間 18:30｜Enemies With Benefits 首映會
+                        </div>
                     </div>
                 </div>
 
@@ -1286,17 +1427,47 @@
                         <div class="calendar-weekday">SUN</div><div class="calendar-weekday">MON</div><div class="calendar-weekday">TUE</div><div class="calendar-weekday">WED</div><div class="calendar-weekday">THU</div><div class="calendar-weekday">FRI</div><div class="calendar-weekday">SAT</div>
                         <div class="calendar-day empty"></div>
                         <div class="calendar-day"><span>1</span></div><div class="calendar-day"><span>2</span></div><div class="calendar-day"><span>3</span></div><div class="calendar-day"><span>4</span></div><div class="calendar-day"><span>5</span></div><div class="calendar-day"><span>6</span></div>
-                        <div class="calendar-day"><span>7</span></div><div class="calendar-day"><span>8</span></div><div class="calendar-day"><span>9</span></div><div class="calendar-day"><span>10</span></div><div class="calendar-day"><span>11</span></div><div class="calendar-day"><span>12</span></div>
-                        <div class="calendar-day event-day major-event" data-month="june" data-date="13"><span>13</span><small>Fan Fest</small></div>
-                        <div class="calendar-day event-day major-event" data-month="june" data-date="14"><span>14</span><small>Fan Fest</small></div>
+                        <div class="calendar-day event-day" data-month="june" data-date="7"><span>7</span><small>ON AIR</small></div>
+                        <div class="calendar-day"><span>8</span></div><div class="calendar-day"><span>9</span></div><div class="calendar-day"><span>10</span></div><div class="calendar-day"><span>11</span></div><div class="calendar-day"><span>12</span></div>
+                        <div class="calendar-day event-day major-event" data-month="june" data-date="13"><span>13</span><small>FAN FEST</small></div>
+                        <div class="calendar-day event-day major-event" data-month="june" data-date="14"><span>14</span><small>FAN FEST</small></div>
                         <div class="calendar-day"><span>15</span></div><div class="calendar-day"><span>16</span></div><div class="calendar-day"><span>17</span></div><div class="calendar-day"><span>18</span></div><div class="calendar-day"><span>19</span></div><div class="calendar-day"><span>20</span></div>
-                        <div class="calendar-day"><span>21</span></div><div class="calendar-day"><span>22</span></div><div class="calendar-day"><span>23</span></div><div class="calendar-day"><span>24</span></div><div class="calendar-day"><span>25</span></div><div class="calendar-day"><span>26</span></div><div class="calendar-day"><span>27</span></div>
-                        <div class="calendar-day"><span>28</span></div><div class="calendar-day"><span>29</span></div><div class="calendar-day"><span>30</span></div>
+                        <div class="calendar-day event-day" data-month="june" data-date="21"><span>21</span><small>ON AIR</small></div>
+                        <div class="calendar-day"><span>22</span></div><div class="calendar-day"><span>23</span></div><div class="calendar-day"><span>24</span></div><div class="calendar-day"><span>25</span></div><div class="calendar-day"><span>26</span></div><div class="calendar-day"><span>27</span></div>
+                        <div class="calendar-day event-day" data-month="june" data-date="28"><span>28</span><small>ON AIR</small></div>
+                        <div class="calendar-day"><span>29</span></div><div class="calendar-day"><span>30</span></div>
                     </div>
 
-                    <div class="calendar-detail-box">
-                        <div class="calendar-detail-title">活動詳情</div>
-                        <div class="calendar-detail-content" id="calendar-detail-june">JANJINGJING 06/13 (SAT.) 17:00 Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE</div>
+                    <div class="calendar-detail-box featured">
+                        <div class="calendar-detail-title featured-title">Featured Event</div>
+                        <div class="calendar-detail-content" id="calendar-detail-june">
+                            <span class="event-tag janjingjing">JANJINGJING</span>06/07 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.6 GMMTV 首播
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calendar-card">
+                    <div class="calendar-card-header">
+                        <h3>July 2026</h3>
+                        <span>活動月曆</span>
+                    </div>
+
+                    <div class="calendar-grid">
+                        <div class="calendar-weekday">SUN</div><div class="calendar-weekday">MON</div><div class="calendar-weekday">TUE</div><div class="calendar-weekday">WED</div><div class="calendar-weekday">THU</div><div class="calendar-weekday">FRI</div><div class="calendar-weekday">SAT</div>
+                        <div class="calendar-day empty"></div><div class="calendar-day empty"></div><div class="calendar-day empty"></div>
+                        <div class="calendar-day"><span>1</span></div><div class="calendar-day"><span>2</span></div><div class="calendar-day"><span>3</span></div><div class="calendar-day"><span>4</span></div>
+                        <div class="calendar-day event-day major-event" data-month="july" data-date="5"><span>5</span><small>FINAL EP</small></div>
+                        <div class="calendar-day"><span>6</span></div><div class="calendar-day"><span>7</span></div><div class="calendar-day"><span>8</span></div><div class="calendar-day"><span>9</span></div><div class="calendar-day"><span>10</span></div><div class="calendar-day"><span>11</span></div>
+                        <div class="calendar-day"><span>12</span></div><div class="calendar-day"><span>13</span></div><div class="calendar-day"><span>14</span></div><div class="calendar-day"><span>15</span></div><div class="calendar-day"><span>16</span></div><div class="calendar-day"><span>17</span></div><div class="calendar-day"><span>18</span></div>
+                        <div class="calendar-day"><span>19</span></div><div class="calendar-day"><span>20</span></div><div class="calendar-day"><span>21</span></div><div class="calendar-day"><span>22</span></div><div class="calendar-day"><span>23</span></div><div class="calendar-day"><span>24</span></div><div class="calendar-day"><span>25</span></div>
+                        <div class="calendar-day"><span>26</span></div><div class="calendar-day"><span>27</span></div><div class="calendar-day"><span>28</span></div><div class="calendar-day"><span>29</span></div><div class="calendar-day"><span>30</span></div><div class="calendar-day"><span>31</span></div>
+                    </div>
+
+                    <div class="calendar-detail-box featured">
+                        <div class="calendar-detail-title featured-title">Final Episode</div>
+                        <div class="calendar-detail-content" id="calendar-detail-july">
+                            <span class="event-tag janjingjing">JANJINGJING</span>07/05 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.10 GMMTV 首播
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1321,9 +1492,10 @@
                 <div class="slideshow-stage" id="slideshowStage"></div>
 
                 <div class="slideshow-meta">
-                    <div class="slideshow-counter" id="slideshowCounter">1 / 1</div>
+                    <div class="slideshow-counter" id="slideshowCounter">0 / 0</div>
                     <div class="slideshow-caption">
                         <div class="caption-title" id="slideshowCaptionTitle">JanJingJing ✨</div>
+                        <div class="caption-sub" id="slideshowCaptionSub"></div>
                     </div>
                     <div class="slideshow-dots" id="slideshowDots"></div>
                 </div>
@@ -1337,10 +1509,10 @@
                     <p class="category-label">Show Selection</p>
                     <div class="dropdown">
                         <button onclick="toggleD('showD')" class="dropbtn">
-    請選擇 <i class="fas fa-chevron-down"></i>
-</button>
+                            請選擇 <i class="fas fa-chevron-down"></i>
+                        </button>
                         <div id="showD" class="dropdown-content">
-                            <div class="active" onclick="swV('showPlayer', 'https://www.youtube.com/embed/q7-7eKMCa10', this)">
+                            <div onclick="swV('showPlayer', 'https://www.youtube.com/embed/q7-7eKMCa10', this)">
                                 <i class="fas fa-tv"></i><span>LANEIGE Let it go ทริปป่วน ก๊วนผิวปัง Season 2</span>
                             </div>
                         </div>
@@ -1366,10 +1538,10 @@
                 <p class="category-label">Blush Blossom Fan Fest 2026 : Midnight Bloom</p>
                 <div class="dropdown">
                     <button onclick="toggleD('bbfD')" class="dropbtn">
-    請選擇 <i class="fas fa-chevron-down"></i>
-</button>
+                        請選擇 <i class="fas fa-chevron-down"></i>
+                    </button>
                     <div id="bbfD" class="dropdown-content">
-                        <div class="active" onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/vqbNKArQejI', this)">
+                        <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/vqbNKArQejI', this)">
                             <i class="fas fa-clapperboard"></i><span>Blush Blossom Fan Fest : Midnight Bloom 預告 1</span>
                         </div>
                         <div onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/XrObJGT_1Co', this)">
@@ -1401,11 +1573,11 @@
             <div class="category-header">
                 <p class="category-label">JanJingJing</p>
                 <div class="dropdown">
-                   <button onclick="toggleD('jjjD')" class="dropbtn">
-    請選擇 <i class="fas fa-chevron-down"></i>
-</button>
+                    <button onclick="toggleD('jjjD')" class="dropbtn">
+                        請選擇 <i class="fas fa-chevron-down"></i>
+                    </button>
                     <div id="jjjD" class="dropdown-content">
-                        <div class="active" onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/Jwv6V3Oo9P4', this)">
+                        <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/4K__c9385LE', this)">
                             <i class="fas fa-heart"></i><span>ลัลล์ไม่ชอบไวน์ (Enemies with Benefits)</span>
                         </div>
                         <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/videoseries?list=PL_vCrT8PKfW0THj0b21-tIMFAP_3yaWxU', this)">
@@ -1424,7 +1596,7 @@
             <div class="full-vbox">
                 <iframe
                     id="jjjPlayer"
-                    src="https://www.youtube.com/embed/Jwv6V3Oo9P4"
+                    src="https://www.youtube.com/embed/4K__c9385LE"
                     loading="lazy"
                     referrerpolicy="strict-origin-when-cross-origin"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -1435,10 +1607,10 @@
                 <p class="category-label">Janhae</p>
                 <div class="dropdown">
                     <button onclick="toggleD('janD')" class="dropbtn">
-    請選擇 <i class="fas fa-chevron-down"></i>
-</button>
+                        請選擇 <i class="fas fa-chevron-down"></i>
+                    </button>
                     <div id="janD" class="dropdown-content">
-                        <div class="active" onclick="swV('janPlayer', 'https://www.youtube.com/embed/p8tf3dAkvFc', this)">
+                        <div onclick="swV('janPlayer', 'https://www.youtube.com/embed/p8tf3dAkvFc', this)">
                             <i class="fas fa-user"></i><span>關於 JAN 的 30 個問題</span>
                         </div>
                     </div>
@@ -1459,10 +1631,10 @@
                 <p class="category-label">JingJing</p>
                 <div class="dropdown">
                     <button onclick="toggleD('jingD')" class="dropbtn">
-    請選擇 <i class="fas fa-chevron-down"></i>
-</button>
+                        請選擇 <i class="fas fa-chevron-down"></i>
+                    </button>
                     <div id="jingD" class="dropdown-content">
-                        <div class="active" onclick="swV('jingPlayer', 'https://www.youtube.com/embed/uLRYn0u8y6o', this)">
+                        <div onclick="swV('jingPlayer', 'https://www.youtube.com/embed/uLRYn0u8y6o', this)">
                             <i class="fas fa-user"></i><span>關於 JingJing 的 20 個問題</span>
                         </div>
                         <div onclick="swV('jingPlayer', 'https://www.youtube.com/embed/YwIhG3DQ85o', this)">
@@ -1499,6 +1671,7 @@
                 <img class="story-img" id="lightboxImg" src="" alt="Preview" />
                 <div class="story-caption">
                     <div class="caption-title" id="lightboxCaptionTitle">JanJingJing ✨</div>
+                    <div class="story-caption-text" id="lightboxCaptionText"></div>
                 </div>
                 <div class="story-counter" id="lightboxCounter"></div>
             </div>
@@ -1517,12 +1690,13 @@
 
     <script>
         const YOUR_GITHUB_USERNAME = "JanJingJingTAIWANFANCLUB";
+        const REPO_NAME = "website-assets";
+        const REPO_BRANCH = "main";
         const SPLASH_FILENAME = "nlCTnKDA1rGosPoy.mp4";
 
-        const RAW_BASE = `https://raw.githubusercontent.com/${YOUR_GITHUB_USERNAME}/website-assets/main`;
-        const PHOTO_BASE = `${RAW_BASE}/`;
-        const PHOTO_EXT = ".JPG";
-        const TOTAL_PHOTOS = 27;
+        const RAW_BASE = `https://raw.githubusercontent.com/${YOUR_GITHUB_USERNAME}/${REPO_NAME}/${REPO_BRANCH}`;
+        const GITHUB_CONTENTS_API = `https://api.github.com/repos/${YOUR_GITHUB_USERNAME}/${REPO_NAME}/contents`;
+
         const AUTO_SLIDE_INTERVAL = 4500;
         const STORY_INTERVAL = 4500;
 
@@ -1537,12 +1711,25 @@
 
         const calendarEventMap = {
             april: {
-                21: "JAN 04/21 (TUE.) 泰國時間 21:30 GMMTV LIVE HOUSE",
-                28: "JAN 04/28 (TUE.) 泰國時間 21:30 GMMTV LIVE HOUSE"
+                21: "<span class='event-tag jan'>JAN</span>04/21 (TUE.) 泰國時間 21:30｜GMMTV LIVE HOUSE",
+                28: "<span class='event-tag jan'>JAN</span>04/28 (TUE.) 泰國時間 21:30｜GMMTV LIVE HOUSE"
+            },
+            may: {
+                3: "<span class='event-tag janjingjing'>JANJINGJING</span>05/03 (SUN.) 泰國時間 18:30｜Enemies With Benefits 首映會<br><span class='event-tag janjingjing'>JANJINGJING</span>05/03 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.1 GMMTV 首播<br><span class='event-tag janjingjing'>JANJINGJING</span>05/03 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.1 OneD 重播",
+                10: "<span class='event-tag janjingjing'>JANJINGJING</span>05/10 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.2 GMMTV 首播<br><span class='event-tag janjingjing'>JANJINGJING</span>05/10 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.2 OneD 重播",
+                17: "<span class='event-tag janjingjing'>JANJINGJING</span>05/17 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.3 GMMTV 首播<br><span class='event-tag janjingjing'>JANJINGJING</span>05/17 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.3 OneD 重播",
+                24: "<span class='event-tag janjingjing'>JANJINGJING</span>05/24 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.4 GMMTV 首播<br><span class='event-tag janjingjing'>JANJINGJING</span>05/24 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.4 OneD 重播",
+                31: "<span class='event-tag janjingjing'>JANJINGJING</span>05/31 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.5 GMMTV 首播<br><span class='event-tag janjingjing'>JANJINGJING</span>05/31 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.5 OneD 重播"
             },
             june: {
-                13: "JANJINGJING 06/13 (SAT.) 17:00 Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE",
-                14: "JANJINGJING 06/14 (SUN.) 17:00 Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE"
+                7: "<span class='event-tag janjingjing'>JANJINGJING</span>06/07 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.6 GMMTV 首播<br><span class='event-tag janjingjing'>JANJINGJING</span>06/07 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.6 OneD 重播",
+                13: "<span class='event-tag janjingjing'>JANJINGJING</span>06/13 (SAT.) 泰國時間 17:00｜Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE",
+                14: "<span class='event-tag janjingjing'>JANJINGJING</span>06/14 (SUN.) 泰國時間 17:00｜Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE<br><span class='event-tag janjingjing'>JANJINGJING</span>06/14 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.7 GMMTV 首播<br><span class='event-tag janjingjing'>JANJINGJING</span>06/14 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.7 OneD 重播",
+                21: "<span class='event-tag janjingjing'>JANJINGJING</span>06/21 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.8 GMMTV 首播<br><span class='event-tag janjingjing'>JANJINGJING</span>06/21 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.8 OneD 重播",
+                28: "<span class='event-tag janjingjing'>JANJINGJING</span>06/28 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.9 GMMTV 首播<br><span class='event-tag janjingjing'>JANJINGJING</span>06/28 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.9 OneD 重播"
+            },
+            july: {
+                5: "<span class='event-tag janjingjing'>JANJINGJING</span>07/05 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.10 GMMTV 首播<br><span class='event-tag janjingjing'>JANJINGJING</span>07/05 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.10 OneD 重播"
             }
         };
 
@@ -1643,29 +1830,30 @@
         }
 
         function swV(id, url, el) {
-    document.getElementById(id).src = url;
+            document.getElementById(id).src = url;
 
-    const menu = el.parentElement;
-    const dropdown = menu.parentElement;
-    const button = dropdown.querySelector(".dropbtn");
-    const label = el.querySelector("span")
-        ? el.querySelector("span").textContent
-        : el.textContent.trim();
-    const iconHTML = el.querySelector("i")
-        ? el.querySelector("i").outerHTML
-        : "";
+            const menu = el.parentElement;
+            const dropdown = menu.parentElement;
+            const button = dropdown.querySelector(".dropbtn");
 
-    menu.querySelectorAll("div").forEach((item) => {
-        item.classList.remove("active");
-    });
+            const label = el.querySelector("span")
+                ? el.querySelector("span").textContent.trim()
+                : el.textContent.trim();
 
-    el.classList.add("active");
+            const iconHTML = el.querySelector("i")
+                ? el.querySelector("i").outerHTML
+                : "";
 
-    button.innerHTML = `${iconHTML} ${label} <i class="fas fa-chevron-down"></i>`;
+            menu.querySelectorAll("div").forEach((item) => {
+                item.classList.remove("active");
+            });
 
-    menu.classList.remove("show");
-    dropdown.classList.remove("open");
-}
+            el.classList.add("active");
+            button.innerHTML = `${iconHTML} ${label} <i class="fas fa-chevron-down"></i>`;
+
+            menu.classList.remove("show");
+            dropdown.classList.remove("open");
+        }
 
         window.addEventListener("click", (e) => {
             if (!e.target.closest(".dropdown")) {
@@ -1694,7 +1882,7 @@
                 const date = day.dataset.date;
                 const detail = document.getElementById(`calendar-detail-${month}`);
                 const content = calendarEventMap[month]?.[date];
-                if (detail && content) detail.textContent = content;
+                if (detail && content) detail.innerHTML = content;
             });
         });
 
@@ -1704,6 +1892,7 @@
         const slideshowCounter = document.getElementById("slideshowCounter");
         const slideshowDots = document.getElementById("slideshowDots");
         const slideshowCaptionTitle = document.getElementById("slideshowCaptionTitle");
+        const slideshowCaptionSub = document.getElementById("slideshowCaptionSub");
 
         const lightbox = document.getElementById("lightbox");
         const lightboxImg = document.getElementById("lightboxImg");
@@ -1712,6 +1901,7 @@
         const lightboxNext = document.getElementById("lightboxNext");
         const lightboxCounter = document.getElementById("lightboxCounter");
         const lightboxCaptionTitle = document.getElementById("lightboxCaptionTitle");
+        const lightboxCaptionText = document.getElementById("lightboxCaptionText");
         const storyProgressWrap = document.getElementById("storyProgressWrap");
         const storyBody = document.getElementById("storyBody");
 
@@ -1724,23 +1914,49 @@
         let touchStartX = 0;
         let touchEndX = 0;
 
-        function padPhotoNumber(num) {
-            return String(num).padStart(2, "0");
+        function isPhotoFile(name) {
+            return /\.(jpe?g)$/i.test(name);
         }
 
-        function buildPhotoUrl(index) {
-            return `${PHOTO_BASE}photo${padPhotoNumber(index)}${PHOTO_EXT}`;
+        function naturalPhotoSort(a, b) {
+            return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" });
         }
 
-        function buildCaptionTitle() {
-            return "JanJingJing ✨";
-        }
+        async function fetchGitHubPhotos() {
+            try {
+                const response = await fetch(`${GITHUB_CONTENTS_API}?ref=${REPO_BRANCH}`, {
+                    headers: {
+                        "Accept": "application/vnd.github+json",
+                        "X-GitHub-Api-Version": "2022-11-28"
+                    }
+                });
 
-        function preloadImages() {
-            images = [];
-            for (let i = 1; i <= TOTAL_PHOTOS; i++) {
-                images.push(buildPhotoUrl(i));
+                if (!response.ok) {
+                    throw new Error(`GitHub API error: ${response.status}`);
+                }
+
+                const items = await response.json();
+
+                return items
+                    .filter(item => item.type === "file" && isPhotoFile(item.name))
+                    .sort(naturalPhotoSort)
+                    .map(item => ({
+                        src: item.download_url || `${RAW_BASE}/${item.name}`,
+                        title: "JanJingJing ✨",
+                        caption: ""
+                    }));
+            } catch (error) {
+                console.error("Failed to fetch photos from GitHub API:", error);
+                return [];
             }
+        }
+
+        async function preloadImages() {
+            images = await fetchGitHubPhotos();
+        }
+
+        function getPhotoData(index) {
+            return images[index] || { src: "", title: "JanJingJing ✨", caption: "" };
         }
 
         function updateDots() {
@@ -1759,7 +1975,19 @@
 
         function renderSlides() {
             stage.innerHTML = "";
-            if (!images.length) return;
+
+            if (!images.length) {
+                stage.innerHTML = `
+                    <div style="grid-column:1/-1; padding:36px 18px; text-align:center; color:#8e7f71; font-size:13px;">
+                        目前還沒有可顯示的照片
+                    </div>
+                `;
+                slideshowCounter.textContent = "0 / 0";
+                slideshowCaptionTitle.textContent = "JanJingJing ✨";
+                slideshowCaptionSub.textContent = "";
+                slideshowDots.innerHTML = "";
+                return;
+            }
 
             const left = (currentIndex - 1 + images.length) % images.length;
             const center = currentIndex;
@@ -1767,11 +1995,19 @@
             const displayIndexes = [left, center, right];
 
             displayIndexes.forEach((idx, position) => {
+                const photo = getPhotoData(idx);
                 const button = document.createElement("button");
                 button.className = "slide-hitbox";
                 if (position === 1) button.classList.add("active");
 
-                button.innerHTML = `<img src="${images[idx]}" alt="photo ${idx + 1}" loading="eager" decoding="async">`;
+                button.innerHTML = `
+                    <div class="slide-card">
+                        <img src="${photo.src}" alt="photo ${idx + 1}" loading="eager" decoding="async">
+                        <div class="slide-caption-overlay">
+                            <span>${photo.caption || ""}</span>
+                        </div>
+                    </div>
+                `;
 
                 button.addEventListener("click", () => {
                     if (position === 1) {
@@ -1786,13 +2022,15 @@
                 stage.appendChild(button);
             });
 
+            const activePhoto = getPhotoData(currentIndex);
             slideshowCounter.textContent = `${currentIndex + 1} / ${images.length}`;
+            slideshowCaptionTitle.textContent = activePhoto.title || "JanJingJing ✨";
+            slideshowCaptionSub.textContent = activePhoto.caption || "";
             updateDots();
-            slideshowCaptionTitle.textContent = buildCaptionTitle();
         }
 
-        function renderPhotos() {
-            preloadImages();
+        async function renderPhotos() {
+            await preloadImages();
             renderSlides();
             startAutoSlide();
         }
@@ -1898,9 +2136,13 @@
 
         function updateLightbox() {
             if (!images.length) return;
-            lightboxImg.src = images[currentLightboxIndex];
+
+            const activePhoto = getPhotoData(currentLightboxIndex);
+
+            lightboxImg.src = activePhoto.src;
             lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${images.length}`;
-            lightboxCaptionTitle.textContent = buildCaptionTitle();
+            lightboxCaptionTitle.textContent = activePhoto.title || "JanJingJing ✨";
+            lightboxCaptionText.textContent = activePhoto.caption || "";
             renderStoryProgress();
             startStoryAuto();
         }
