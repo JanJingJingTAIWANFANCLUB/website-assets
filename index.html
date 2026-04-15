@@ -1209,8 +1209,8 @@
                     <p class="category-label">Playlist Selection</p>
                     <div class="dropdown">
                         <button onclick="toggleD('musicD')" class="dropbtn">
-                            <i class="fas fa-music"></i> SIZZY - JAN <i class="fas fa-chevron-down"></i>
-                        </button>
+    請選擇 <i class="fas fa-chevron-down"></i>
+</button>
                         <div id="musicD" class="dropdown-content">
                             <div class="active" onclick="swV('musicPlayer', 'https://www.youtube.com/embed/WDxMcK0eau0', this)">
                                 <i class="fas fa-music"></i><span>SIZZY - JAN</span>
@@ -1337,8 +1337,8 @@
                     <p class="category-label">Show Selection</p>
                     <div class="dropdown">
                         <button onclick="toggleD('showD')" class="dropbtn">
-                            <i class="fas fa-tv"></i> LANEIGE Let it go ทริปป่วน ก๊วนผิวปัง Season 2 <i class="fas fa-chevron-down"></i>
-                        </button>
+    請選擇 <i class="fas fa-chevron-down"></i>
+</button>
                         <div id="showD" class="dropdown-content">
                             <div class="active" onclick="swV('showPlayer', 'https://www.youtube.com/embed/q7-7eKMCa10', this)">
                                 <i class="fas fa-tv"></i><span>LANEIGE Let it go ทริปป่วน ก๊วนผิวปัง Season 2</span>
@@ -1366,8 +1366,8 @@
                 <p class="category-label">Blush Blossom Fan Fest 2026 : Midnight Bloom</p>
                 <div class="dropdown">
                     <button onclick="toggleD('bbfD')" class="dropbtn">
-                        <i class="fas fa-clapperboard"></i> Blush Blossom Fan Fest : Midnight Bloom 預告 1 <i class="fas fa-chevron-down"></i>
-                    </button>
+    請選擇 <i class="fas fa-chevron-down"></i>
+</button>
                     <div id="bbfD" class="dropdown-content">
                         <div class="active" onclick="swV('bbfPlayer', 'https://www.youtube.com/embed/vqbNKArQejI', this)">
                             <i class="fas fa-clapperboard"></i><span>Blush Blossom Fan Fest : Midnight Bloom 預告 1</span>
@@ -1401,9 +1401,9 @@
             <div class="category-header">
                 <p class="category-label">JanJingJing</p>
                 <div class="dropdown">
-                    <button onclick="toggleD('jjjD')" class="dropbtn">
-                        <i class="fas fa-heart"></i> ลัลล์ไม่ชอบไวน์ (Enemies with Benefits) <i class="fas fa-chevron-down"></i>
-                    </button>
+                   <button onclick="toggleD('jjjD')" class="dropbtn">
+    請選擇 <i class="fas fa-chevron-down"></i>
+</button>
                     <div id="jjjD" class="dropdown-content">
                         <div class="active" onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/Jwv6V3Oo9P4', this)">
                             <i class="fas fa-heart"></i><span>ลัลล์ไม่ชอบไวน์ (Enemies with Benefits)</span>
@@ -1435,8 +1435,8 @@
                 <p class="category-label">Janhae</p>
                 <div class="dropdown">
                     <button onclick="toggleD('janD')" class="dropbtn">
-                        <i class="fas fa-user"></i> 關於 JAN 的 30 個問題 <i class="fas fa-chevron-down"></i>
-                    </button>
+    請選擇 <i class="fas fa-chevron-down"></i>
+</button>
                     <div id="janD" class="dropdown-content">
                         <div class="active" onclick="swV('janPlayer', 'https://www.youtube.com/embed/p8tf3dAkvFc', this)">
                             <i class="fas fa-user"></i><span>關於 JAN 的 30 個問題</span>
@@ -1459,8 +1459,8 @@
                 <p class="category-label">JingJing</p>
                 <div class="dropdown">
                     <button onclick="toggleD('jingD')" class="dropbtn">
-                        <i class="fas fa-user"></i> 關於 JingJing 的 20 個問題 <i class="fas fa-chevron-down"></i>
-                    </button>
+    請選擇 <i class="fas fa-chevron-down"></i>
+</button>
                     <div id="jingD" class="dropdown-content">
                         <div class="active" onclick="swV('jingPlayer', 'https://www.youtube.com/embed/uLRYn0u8y6o', this)">
                             <i class="fas fa-user"></i><span>關於 JingJing 的 20 個問題</span>
@@ -1643,24 +1643,29 @@
         }
 
         function swV(id, url, el) {
-            document.getElementById(id).src = url;
+    document.getElementById(id).src = url;
 
-            const menu = el.parentElement;
-            const dropdown = menu.parentElement;
-            const button = dropdown.querySelector(".dropbtn");
-            const label = el.querySelector("span") ? el.querySelector("span").textContent : el.textContent.trim();
-            const firstIcon = el.querySelector("i") ? el.querySelector("i").outerHTML : "";
+    const menu = el.parentElement;
+    const dropdown = menu.parentElement;
+    const button = dropdown.querySelector(".dropbtn");
+    const label = el.querySelector("span")
+        ? el.querySelector("span").textContent
+        : el.textContent.trim();
+    const iconHTML = el.querySelector("i")
+        ? el.querySelector("i").outerHTML
+        : "";
 
-            menu.querySelectorAll("div").forEach((item) => {
-                item.classList.remove("active");
-            });
+    menu.querySelectorAll("div").forEach((item) => {
+        item.classList.remove("active");
+    });
 
-            el.classList.add("active");
-            button.innerHTML = `${firstIcon} ${label} <i class="fas fa-chevron-down"></i>`;
+    el.classList.add("active");
 
-            menu.classList.remove("show");
-            dropdown.classList.remove("open");
-        }
+    button.innerHTML = `${iconHTML} ${label} <i class="fas fa-chevron-down"></i>`;
+
+    menu.classList.remove("show");
+    dropdown.classList.remove("open");
+}
 
         window.addEventListener("click", (e) => {
             if (!e.target.closest(".dropdown")) {
