@@ -1219,11 +1219,289 @@
     @keyframes countdownGlow { from { transform: translate(-4%, -3%) rotate(0deg); } to { transform: translate(4%, 3%) rotate(6deg); } }
     @media (max-width: 600px) { .countdown-card { padding: 16px; border-radius: 22px; } .countdown-grid { gap: 7px; } .countdown-unit { padding: 10px 6px; border-radius: 14px; } .countdown-number { font-size: 1.2rem; } }
 
+
+    /* ===== ✨ App Upgrades: Calendar Glow / Music Player ===== */
+    .event-tag {
+        position: relative;
+        box-shadow: 0 0 0 rgba(185,146,114,0);
+        transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+    }
+
+    .calendar-day.event-day .event-tag,
+    .calendar-detail-content .event-tag,
+    .countdown-title .event-tag {
+        animation: tagGlow 2.8s ease-in-out infinite;
+    }
+
+    .calendar-day.event-day {
+        overflow: hidden;
+    }
+
+    .calendar-day.event-day::before {
+        content: "";
+        position: absolute;
+        inset: -60%;
+        background: radial-gradient(circle, rgba(255,255,255,.55), transparent 28%);
+        opacity: 0;
+        transform: translate(-30%, -30%);
+        transition: opacity .28s ease, transform .45s ease;
+        pointer-events: none;
+    }
+
+    .calendar-day.event-day:hover::before {
+        opacity: .65;
+        transform: translate(12%, 12%);
+    }
+
+    .calendar-day.event-day:hover {
+        transform: translateY(-4px) scale(1.025);
+        box-shadow: 0 14px 26px rgba(185,146,114,.18);
+    }
+
+    .calendar-card {
+        will-change: transform;
+    }
+
+    .calendar-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 42px rgba(0,0,0,.10);
+    }
+
+    @keyframes tagGlow {
+        0%, 100% { box-shadow: 0 0 0 rgba(185,146,114,0); filter: brightness(1); }
+        50% { box-shadow: 0 0 16px rgba(185,146,114,.28); filter: brightness(1.04); }
+    }
+
+    .countdown-title {
+        font-size: clamp(1.08rem, 2vw, 1.38rem);
+        letter-spacing: .4px;
+        text-wrap: balance;
+    }
+
+    .countdown-number {
+        font-size: 1.65rem;
+        color: #b07f5d;
+        letter-spacing: 1.5px;
+        text-shadow: 0 2px 8px rgba(185,146,114,.16);
+    }
+
+    .app-music-player {
+        position: fixed;
+        right: 20px;
+        bottom: 92px;
+        z-index: 1998;
+        width: min(330px, calc(100vw - 32px));
+        display: block;
+        pointer-events: none;
+    }
+
+    .app-music-shell {
+        pointer-events: auto;
+        border-radius: 28px;
+        overflow: hidden;
+        background: linear-gradient(145deg, rgba(255,255,255,.72), rgba(255,255,255,.34));
+        border: 1px solid rgba(255,255,255,.62);
+        box-shadow: 0 22px 54px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.88);
+        backdrop-filter: blur(22px) saturate(1.45);
+        -webkit-backdrop-filter: blur(22px) saturate(1.45);
+        transform-origin: bottom right;
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        transition: transform .34s cubic-bezier(.2,.8,.2,1), opacity .25s ease;
+    }
+
+    .app-music-player.minimized .app-music-shell {
+        transform: translateY(16px) scale(.88);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .app-music-handle {
+        width: 44px;
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(120,100,86,.28);
+        margin: 12px auto 0;
+    }
+
+    .app-music-body {
+        position: relative;
+        padding: 14px 16px 16px;
+    }
+
+    .app-music-body::before {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(255,255,255,.55), transparent 22%),
+            radial-gradient(circle at 76% 12%, rgba(200,170,143,.25), transparent 24%),
+            radial-gradient(circle at 55% 88%, rgba(255,235,245,.32), transparent 26%);
+        animation: appPlayerGlow 8s ease-in-out infinite alternate;
+        pointer-events: none;
+    }
+
+    .app-music-body > * { position: relative; z-index: 1; }
+
+    .app-music-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .app-cover {
+        width: 58px;
+        height: 58px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f3ecff, #ffeaf3, #f9f3ec);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.78), 0 10px 22px rgba(185,146,114,.18);
+        color: #9a745f;
+        font-size: 22px;
+    }
+
+    .app-track-info { min-width: 0; flex: 1; }
+    .app-eyebrow { font-size: 9px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--accent-gold); font-weight: 800; margin-bottom: 4px; }
+    .app-track-title { font-size: 13px; line-height: 1.35; color: #4a4038; font-weight: 700; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+
+    .app-close {
+        border: none;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.38);
+        color: #7f6d60;
+        cursor: pointer;
+    }
+
+    .app-progress-wrap {
+        display: grid;
+        gap: 6px;
+        margin: 8px 0 12px;
+    }
+
+    #app-music-progress {
+        width: 100%;
+        accent-color: #b99272;
+        cursor: pointer;
+    }
+
+    .app-time-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        color: #8e7f71;
+        font-weight: 700;
+    }
+
+    .app-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .app-control-btn {
+        border: 1px solid rgba(255,255,255,.62);
+        border-radius: 999px;
+        background: rgba(255,255,255,.42);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        color: #5d5149;
+        cursor: pointer;
+        width: 42px;
+        height: 38px;
+        transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    .app-control-btn.main {
+        width: 54px;
+        height: 48px;
+        font-size: 16px;
+        background: rgba(255,255,255,.62);
+        box-shadow: 0 10px 24px rgba(185,146,114,.18);
+    }
+
+    .app-control-btn:hover {
+        transform: translateY(-2px) scale(1.04);
+        background: rgba(255,255,255,.72);
+    }
+
+    .app-playlist {
+        max-height: 146px;
+        overflow: auto;
+        display: grid;
+        gap: 6px;
+        padding-right: 2px;
+    }
+
+    .app-playlist-item {
+        border: 1px solid rgba(255,255,255,.36);
+        border-radius: 14px;
+        padding: 8px 10px;
+        background: rgba(255,255,255,.26);
+        cursor: pointer;
+        transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+        font-size: 11px;
+        line-height: 1.35;
+        color: #5b4d44;
+    }
+
+    .app-playlist-item:hover,
+    .app-playlist-item.active {
+        transform: translateX(3px);
+        background: rgba(255,255,255,.58);
+        box-shadow: 0 8px 18px rgba(185,146,114,.12);
+    }
+
+    .music-control {
+        background: rgba(255,255,255,.58);
+        border: 1px solid rgba(255,255,255,.65);
+        backdrop-filter: blur(16px) saturate(1.35);
+        -webkit-backdrop-filter: blur(16px) saturate(1.35);
+    }
+
+    .music-control.playing {
+        animation: appButtonPulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes appPlayerGlow {
+        from { transform: translate(-4%, -3%) rotate(0deg); }
+        to { transform: translate(4%, 3%) rotate(6deg); }
+    }
+
+    @keyframes appButtonPulse {
+        0%, 100% { transform: scale(1); box-shadow: 0 10px 24px rgba(0,0,0,.14), 0 0 0 rgba(185,146,114,0); }
+        50% { transform: scale(1.08); box-shadow: 0 14px 30px rgba(0,0,0,.16), 0 0 22px rgba(185,146,114,.38); }
+    }
+
+    @media (max-width: 768px) {
+        .app-music-player {
+            left: 16px;
+            right: 16px;
+            bottom: 84px;
+            width: auto;
+        }
+
+        .app-music-shell {
+            border-radius: 28px;
+            transform-origin: bottom center;
+        }
+
+        .app-music-player.minimized .app-music-shell {
+            transform: translateY(28px) scale(.94);
+        }
+    }
+
 </style>
 
 </head>
 <body class="locked">
-    <audio id="bg-music" playsinline preload="auto"></audio><div id="music-btn" class="music-control" onclick="toggleMusic()" aria-label="切換背景音樂">
+    <audio id="bg-music" playsinline preload="auto"></audio><div id="music-btn" class="music-control" aria-label="開啟音樂播放器">
     <i id="music-icon" class="fas fa-music"></i>
 </div>
 
@@ -1231,6 +1509,41 @@
     <i class="fas fa-compact-disc"></i>
     <span id="music-track-label">Now Playing · Abracadabra จงรัก จงหลง</span>
 </div>
+
+<div id="app-music-player" class="app-music-player minimized" aria-label="App style music player">
+    <div class="app-music-shell">
+        <div class="app-music-handle"></div>
+        <div class="app-music-body">
+            <div class="app-music-top">
+                <div class="app-cover"><i class="fas fa-compact-disc"></i></div>
+                <div class="app-track-info">
+                    <div class="app-eyebrow">Now Playing</div>
+                    <div id="app-track-title" class="app-track-title">音樂準備中</div>
+                </div>
+                <button class="app-close" type="button" onclick="toggleMusicPanel(true)" aria-label="Minimize player">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+
+            <div class="app-progress-wrap">
+                <input id="app-music-progress" type="range" min="0" max="100" value="0" aria-label="Music progress" />
+                <div class="app-time-row">
+                    <span id="app-current-time">0:00</span>
+                    <span id="app-duration">0:00</span>
+                </div>
+            </div>
+
+            <div class="app-controls">
+                <button class="app-control-btn" type="button" onclick="prevTrack()" aria-label="Previous song"><i class="fas fa-backward-step"></i></button>
+                <button class="app-control-btn main" type="button" onclick="toggleMusic()" aria-label="Play or pause"><i class="fas fa-play"></i></button>
+                <button class="app-control-btn" type="button" onclick="nextTrack()" aria-label="Next song"><i class="fas fa-forward-step"></i></button>
+            </div>
+
+            <div id="app-playlist" class="app-playlist"></div>
+        </div>
+    </div>
+</div>
+
 
 <div id="splash-screen">
     <video autoplay muted loop playsinline id="bg-video">
@@ -1737,17 +2050,55 @@
     const musicIcon = document.getElementById("music-icon");
     const musicBadge = document.getElementById("music-badge");
     const musicTrackLabel = document.getElementById("music-track-label");
+    const appMusicPlayer = document.getElementById("app-music-player");
+    const appTrackTitle = document.getElementById("app-track-title");
+    const appPlaylist = document.getElementById("app-playlist");
+    const appProgress = document.getElementById("app-music-progress");
+    const appCurrentTime = document.getElementById("app-current-time");
+    const appDuration = document.getElementById("app-duration");
+    let appTouchStartY = 0;
+    let appTouchEndY = 0;
     const splash = document.getElementById("splash-screen");
     const navBar = document.getElementById("nav-bar");
 
     function updateMusicUI(isPlaying) {
         musicIcon.className = isPlaying ? "fas fa-music" : "fas fa-volume-mute";
         musicBtn.classList.toggle("playing", isPlaying);
+        const mainBtnIcon = document.querySelector(".app-control-btn.main i");
+        if (mainBtnIcon) mainBtnIcon.className = isPlaying ? "fas fa-pause" : "fas fa-play";
     }
 
     function updateTrackLabel(extraText = "") {
         const song = playlist[currentTrack];
-        musicTrackLabel.textContent = extraText || `Now Playing · ${song.title}`;
+        const text = extraText || `Now Playing · ${song.title}`;
+        musicTrackLabel.textContent = text;
+        if (appTrackTitle) appTrackTitle.textContent = extraText || song.title;
+        renderAppPlaylist();
+    }
+
+    function formatTime(seconds) {
+        if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
+        const m = Math.floor(seconds / 60);
+        const s = Math.floor(seconds % 60);
+        return `${m}:${String(s).padStart(2, "0")}`;
+    }
+
+    function toggleMusicPanel(forceMinimize = false) {
+        if (!appMusicPlayer) return;
+        if (forceMinimize) appMusicPlayer.classList.add("minimized");
+        else appMusicPlayer.classList.toggle("minimized");
+    }
+
+    function renderAppPlaylist() {
+        if (!appPlaylist) return;
+        appPlaylist.innerHTML = "";
+        playlist.forEach((song, index) => {
+            const item = document.createElement("div");
+            item.className = `app-playlist-item${index === currentTrack ? " active" : ""}`;
+            item.textContent = `${index + 1}. ${song.title}`;
+            item.addEventListener("click", () => selectTrack(index));
+            appPlaylist.appendChild(item);
+        });
     }
 
     function encodeRawPath(path) {
@@ -1756,6 +2107,21 @@
 
     function audioUrlFromPath(path) {
         return `${RAW_BASE}/${encodeRawPath(path)}`;
+    }
+
+    function withTimeout(promise, ms, fallbackValue) {
+        return Promise.race([
+            promise,
+            new Promise(resolve => setTimeout(() => resolve(fallbackValue), ms))
+        ]);
+    }
+
+    function enterWithoutMusic(reason = "音樂暫時無法播放，但網站會正常顯示") {
+        audio.pause();
+        audio.removeAttribute("src");
+        updateMusicUI(false);
+        updateTrackLabel(reason);
+        console.warn("⚠️ 音樂 fallback：", reason);
     }
 
     async function fetchGitHubAudioFiles() {
@@ -1813,8 +2179,17 @@
         if (audioCheckCache.has(url)) return audioCheckCache.get(url);
 
         try {
-            const res = await fetch(url, { method: "GET", cache: "no-store" });
-            const ok = res.ok;
+            const res = await withTimeout(
+                fetch(url, {
+                    method: "GET",
+                    cache: "no-store",
+                    headers: { "Range": "bytes=0-1" }
+                }),
+                4500,
+                null
+            );
+
+            const ok = !!res && (res.ok || res.status === 206);
             audioCheckCache.set(url, ok);
             return ok;
         } catch (error) {
@@ -1851,9 +2226,7 @@
             };
 
         if (!result) {
-            audio.removeAttribute("src");
-            updateMusicUI(false);
-            updateTrackLabel("音樂檔案讀取失敗 · GitHub 沒有找到可播放 MP3");
+            enterWithoutMusic("音樂暫時無法播放 · GitHub 沒有找到可播放 MP3");
             return false;
         }
 
@@ -1901,19 +2274,64 @@
         if (loaded) playCurrentTrack();
     }
 
+    async function prevTrack() {
+        currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+        const loaded = await loadTrack(currentTrack);
+        if (loaded) playCurrentTrack();
+    }
+
+    async function selectTrack(index) {
+        currentTrack = index;
+        const loaded = await loadTrack(currentTrack);
+        if (loaded) playCurrentTrack();
+    }
+
+    audio.addEventListener("loadedmetadata", () => {
+        if (appDuration) appDuration.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+        if (appCurrentTime) appCurrentTime.textContent = formatTime(audio.currentTime);
+        if (appProgress && audio.duration) {
+            appProgress.value = String((audio.currentTime / audio.duration) * 100);
+        }
+    });
+
+    if (appProgress) {
+        appProgress.addEventListener("input", () => {
+            if (audio.duration) audio.currentTime = (Number(appProgress.value) / 100) * audio.duration;
+        });
+    }
+
+    if (musicBtn) {
+        musicBtn.addEventListener("click", () => toggleMusicPanel(false));
+    }
+
+    if (appMusicPlayer) {
+        appMusicPlayer.addEventListener("touchstart", (e) => {
+            appTouchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+        appMusicPlayer.addEventListener("touchend", (e) => {
+            appTouchEndY = e.changedTouches[0].screenY;
+            if (appTouchStartY - appTouchEndY > 35) appMusicPlayer.classList.remove("minimized");
+            if (appTouchEndY - appTouchStartY > 35) appMusicPlayer.classList.add("minimized");
+        }, { passive: true });
+    }
+
     audio.onended = nextTrack;
     audio.onerror = () => {
         console.warn("❌ 播放器載入失敗，不再自動亂跳：", audio.src);
-        updateMusicUI(false);
-        updateTrackLabel("音樂檔案讀取失敗 · 請確認 GitHub 檔名 / 資料夾 / 分支");
+        enterWithoutMusic("音樂暫時無法播放 · 請確認 GitHub 檔名 / 資料夾 / 分支");
     };
 
     async function enterSite() {
-        await fetchGitHubAudioFiles();
-        await loadTrack(currentTrack);
-        playCurrentTrack();
+        // 先進站，音樂之後再嘗試載入。
+        // 這樣就算 GitHub mp3 掛掉、檔名錯、網路慢，網站也不會空白。
         musicBtn.style.display = "flex";
         musicBadge.style.display = "flex";
+        if (appMusicPlayer) appMusicPlayer.style.display = "block";
+        renderAppPlaylist();
+        updateTrackLabel("音樂準備中 · 網站會先正常顯示");
 
         splash.classList.add("fade-out");
         document.body.classList.remove("locked");
@@ -1923,10 +2341,28 @@
             splash.style.display = "none";
             window.scrollTo(0, 0);
         }, 800);
+
+        try {
+            await withTimeout(fetchGitHubAudioFiles(), 5000, null);
+            const loaded = await withTimeout(loadTrack(currentTrack), 6500, false);
+
+            if (loaded) {
+                playCurrentTrack();
+            } else {
+                enterWithoutMusic("音樂暫時無法播放 · 網站已正常開啟");
+            }
+        } catch (error) {
+            console.warn("⚠️ 音樂初始化失敗，但網站不受影響：", error);
+            enterWithoutMusic("音樂暫時無法播放 · 網站已正常開啟");
+        }
     }
 
-    function toggleMusic() {
+    async function toggleMusic() {
         if (audio.paused) {
+            if (!audio.src) {
+                const loaded = await loadTrack(currentTrack);
+                if (!loaded) return;
+            }
             playCurrentTrack();
         } else {
             audio.pause();
@@ -2187,8 +2623,11 @@
 
         calendarMonthsTarget.innerHTML = "";
 
+        const now = new Date();
+
         monthKeys.forEach(monthKey => {
             const [year, month] = monthKey.split("-").map(Number);
+            if (year < now.getFullYear() || (year === now.getFullYear() && month < now.getMonth() + 1)) return;
             const card = buildCalendarCard(year, month, grouped[monthKey]);
             calendarMonthsTarget.appendChild(card);
         });
