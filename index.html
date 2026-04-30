@@ -1220,288 +1220,42 @@
     @media (max-width: 600px) { .countdown-card { padding: 16px; border-radius: 22px; } .countdown-grid { gap: 7px; } .countdown-unit { padding: 10px 6px; border-radius: 14px; } .countdown-number { font-size: 1.2rem; } }
 
 
-    /* ===== ✨ App Upgrades: Calendar Glow / Music Player ===== */
-    .event-tag {
-        position: relative;
-        box-shadow: 0 0 0 rgba(185,146,114,0);
-        transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
-    }
 
-    .calendar-day.event-day .event-tag,
-    .calendar-detail-content .event-tag,
-    .countdown-title .event-tag {
-        animation: tagGlow 2.8s ease-in-out infinite;
-    }
+    /* ===== 🎧 Spotify-style Glass Music Player ===== */
+    .music-badge { cursor: pointer; }
+    .music-player-panel { position: fixed; right: 20px; bottom: 150px; z-index: 1998; display: none; width: min(350px, calc(100vw - 32px)); padding: 18px; border-radius: 28px; overflow: hidden; color: #4a4038; background: linear-gradient(145deg, rgba(255,255,255,.74), rgba(255,255,255,.36)); border: 1px solid rgba(255,255,255,.62); box-shadow: 0 24px 60px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.86); backdrop-filter: blur(22px) saturate(1.45); -webkit-backdrop-filter: blur(22px) saturate(1.45); opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; transition: opacity .28s ease, transform .32s cubic-bezier(.2,.8,.2,1); }
+    .music-player-panel.minimized { opacity: 0; transform: translateY(24px) scale(.96); pointer-events: none; }
+    .music-player-panel::before { content: ""; position: absolute; inset: -45%; background: radial-gradient(circle at 18% 18%, rgba(255,255,255,.58), transparent 24%), radial-gradient(circle at 84% 12%, rgba(200,170,143,.25), transparent 22%), radial-gradient(circle at 58% 92%, rgba(255,235,245,.28), transparent 26%); animation: musicGlassGlow 8s ease-in-out infinite alternate; pointer-events: none; }
+    .music-player-panel::after { content: ""; position: absolute; top: -60%; left: -85%; width: 70%; height: 220%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.42), transparent); transform: rotate(24deg); animation: musicGlassShine 5.2s ease-in-out infinite; pointer-events: none; }
+    .music-player-panel > * { position: relative; z-index: 1; }
+    .music-sheet-handle { width: 42px; height: 4px; border-radius: 999px; background: rgba(80,70,60,.24); margin: 0 auto 14px; }
+    .music-player-top { display: flex; align-items: center; gap: 13px; margin-bottom: 15px; }
+    .music-cover { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; flex-shrink: 0; overflow: hidden; background: radial-gradient(circle at 24% 18%, #fff, #f1dfcf 46%, #c8aa8f 100%); color: var(--accent-gold); box-shadow: inset 0 0 0 1px rgba(185,146,114,.18), 0 12px 24px rgba(185,146,114,.20); }
+    .music-cover i { font-size: 1.35rem; animation: spinSoft 5s linear infinite; } .music-cover img { width:100%; height:100%; object-fit:cover; display:block; }
+    .music-meta { min-width: 0; flex: 1; } .music-eyebrow { font-size: 9px; letter-spacing: 1.8px; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 4px; font-weight: 800; } .music-title { font-family: var(--serif); font-size: 16px; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .music-subtitle { margin-top: 4px; font-size: 10px; letter-spacing: .7px; color: #8e7f71; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .music-progress-wrap { display: grid; grid-template-columns: 38px 1fr 38px; align-items: center; gap: 8px; font-size: 10px; color: #8e7f71; } .music-progress { height: 6px; border-radius: 999px; background: rgba(142,127,113,.16); overflow: hidden; cursor: pointer; box-shadow: inset 0 1px 2px rgba(0,0,0,.05); } .music-progress-bar { width: 0%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent-gold), var(--accent-color)); }
+    .music-controls-row { display: flex; align-items: center; justify-content: center; gap: 9px; margin: 13px 0 8px; } .music-mini-btn, .music-main-btn { border: none; cursor: pointer; display: grid; place-items: center; transition: transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease; } .music-mini-btn { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,.42); color: var(--accent-color); border: 1px solid rgba(255,255,255,.46); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); } .music-main-btn { width: 52px; height: 52px; border-radius: 50%; background: var(--accent-color); color: #fff; box-shadow: 0 12px 26px rgba(142,127,113,.28); } .music-mini-btn:hover, .music-main-btn:hover { transform: translateY(-1px) scale(1.04); } .music-mini-btn.active { background: rgba(247,241,234,.88); color: #b07f5d; box-shadow: inset 0 0 0 1px rgba(185,146,114,.22), 0 8px 18px rgba(185,146,114,.14); }
+    .music-mode-hint { text-align: center; font-size: 10px; color: #8e7f71; letter-spacing: .8px; margin-bottom: 10px; }
+    .music-list { margin-top: 10px; display: grid; gap: 7px; max-height: 190px; overflow-y: auto; padding-right: 2px; }
+    .music-list-item { display: grid; grid-template-columns: 24px 42px 1fr 18px; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 15px; background: rgba(255,255,255,.30); border: 1px solid rgba(255,255,255,.28); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; color: #5d5148; transition: background .2s ease, transform .2s ease, color .2s ease; }
+    .music-list-item:hover { transform: translateX(-2px); background: rgba(255,255,255,.58); } .music-list-item.active { background: rgba(247,241,234,.82); color: var(--accent-color); font-weight: 800; box-shadow: inset 0 0 0 1px rgba(185,146,114,.20); } .music-list-cover { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: radial-gradient(circle at top left, #fff, #f1dfcf); color: var(--accent-gold); overflow: hidden; } .music-list-cover img { width: 100%; height: 100%; object-fit: cover; display: block; } .music-list-title { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 11px; }
+    @keyframes musicGlassGlow { from { transform: translate(-4%, -3%) rotate(0deg); } to { transform: translate(4%, 3%) rotate(6deg); } } @keyframes musicGlassShine { 0% { left: -90%; opacity: 0; } 35% { opacity: .58; } 70% { left: 125%; opacity: 0; } 100% { left: 125%; opacity: 0; } }
+    @media (max-width: 768px) { .music-player-panel { left: 14px; right: 14px; bottom: calc(82px + env(safe-area-inset-bottom)); width: auto; max-height: min(72vh, 560px); overflow-y: auto; border-radius: 30px; padding: 16px 16px 18px; touch-action: pan-y; } .music-player-panel.minimized { opacity: 0; transform: translateY(calc(100% + 110px)) scale(.98); pointer-events: none; } .music-badge { right: 78px; bottom: calc(26px + env(safe-area-inset-bottom)); max-width: calc(100vw - 112px); } .music-control { bottom: calc(20px + env(safe-area-inset-bottom)); } }
+    /* ===== 🔔 Pretty Countdown Typography Override ===== */
+    .countdown-title { font-family: var(--serif); font-size: clamp(1.05rem, 2.5vw, 1.42rem); font-style: italic; letter-spacing: .4px; color: #4a4038; text-shadow: 0 1px 0 rgba(255,255,255,.55); }
+    .countdown-title .event-tag { font-family: var(--sans); font-style: normal; vertical-align: 2px; }
 
-    .calendar-day.event-day {
-        overflow: hidden;
-    }
-
-    .calendar-day.event-day::before {
-        content: "";
-        position: absolute;
-        inset: -60%;
-        background: radial-gradient(circle, rgba(255,255,255,.55), transparent 28%);
-        opacity: 0;
-        transform: translate(-30%, -30%);
-        transition: opacity .28s ease, transform .45s ease;
-        pointer-events: none;
-    }
-
-    .calendar-day.event-day:hover::before {
-        opacity: .65;
-        transform: translate(12%, 12%);
-    }
-
-    .calendar-day.event-day:hover {
-        transform: translateY(-4px) scale(1.025);
-        box-shadow: 0 14px 26px rgba(185,146,114,.18);
-    }
-
-    .calendar-card {
-        will-change: transform;
-    }
-
-    .calendar-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 42px rgba(0,0,0,.10);
-    }
-
-    @keyframes tagGlow {
-        0%, 100% { box-shadow: 0 0 0 rgba(185,146,114,0); filter: brightness(1); }
-        50% { box-shadow: 0 0 16px rgba(185,146,114,.28); filter: brightness(1.04); }
-    }
-
-    .countdown-title {
-        font-size: clamp(1.08rem, 2vw, 1.38rem);
-        letter-spacing: .4px;
-        text-wrap: balance;
-    }
-
-    .countdown-number {
-        font-size: 1.65rem;
-        color: #b07f5d;
-        letter-spacing: 1.5px;
-        text-shadow: 0 2px 8px rgba(185,146,114,.16);
-    }
-
-    .app-music-player {
-        position: fixed;
-        right: 20px;
-        bottom: 92px;
-        z-index: 1998;
-        width: min(330px, calc(100vw - 32px));
-        display: block;
-        pointer-events: none;
-    }
-
-    .app-music-shell {
-        pointer-events: auto;
-        border-radius: 28px;
-        overflow: hidden;
-        background: linear-gradient(145deg, rgba(255,255,255,.72), rgba(255,255,255,.34));
-        border: 1px solid rgba(255,255,255,.62);
-        box-shadow: 0 22px 54px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.88);
-        backdrop-filter: blur(22px) saturate(1.45);
-        -webkit-backdrop-filter: blur(22px) saturate(1.45);
-        transform-origin: bottom right;
-        transform: translateY(0) scale(1);
-        opacity: 1;
-        transition: transform .34s cubic-bezier(.2,.8,.2,1), opacity .25s ease;
-    }
-
-    .app-music-player.minimized .app-music-shell {
-        transform: translateY(16px) scale(.88);
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .app-music-handle {
-        width: 44px;
-        height: 4px;
-        border-radius: 999px;
-        background: rgba(120,100,86,.28);
-        margin: 12px auto 0;
-    }
-
-    .app-music-body {
-        position: relative;
-        padding: 14px 16px 16px;
-    }
-
-    .app-music-body::before {
-        content: "";
-        position: absolute;
-        inset: -40%;
-        background:
-            radial-gradient(circle at 20% 20%, rgba(255,255,255,.55), transparent 22%),
-            radial-gradient(circle at 76% 12%, rgba(200,170,143,.25), transparent 24%),
-            radial-gradient(circle at 55% 88%, rgba(255,235,245,.32), transparent 26%);
-        animation: appPlayerGlow 8s ease-in-out infinite alternate;
-        pointer-events: none;
-    }
-
-    .app-music-body > * { position: relative; z-index: 1; }
-
-    .app-music-top {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 12px;
-    }
-
-    .app-cover {
-        width: 58px;
-        height: 58px;
-        border-radius: 18px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #f3ecff, #ffeaf3, #f9f3ec);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.78), 0 10px 22px rgba(185,146,114,.18);
-        color: #9a745f;
-        font-size: 22px;
-    }
-
-    .app-track-info { min-width: 0; flex: 1; }
-    .app-eyebrow { font-size: 9px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--accent-gold); font-weight: 800; margin-bottom: 4px; }
-    .app-track-title { font-size: 13px; line-height: 1.35; color: #4a4038; font-weight: 700; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-
-    .app-close {
-        border: none;
-        width: 34px;
-        height: 34px;
-        border-radius: 50%;
-        background: rgba(255,255,255,.38);
-        color: #7f6d60;
-        cursor: pointer;
-    }
-
-    .app-progress-wrap {
-        display: grid;
-        gap: 6px;
-        margin: 8px 0 12px;
-    }
-
-    #app-music-progress {
-        width: 100%;
-        accent-color: #b99272;
-        cursor: pointer;
-    }
-
-    .app-time-row {
-        display: flex;
-        justify-content: space-between;
-        font-size: 10px;
-        color: #8e7f71;
-        font-weight: 700;
-    }
-
-    .app-controls {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 12px;
-    }
-
-    .app-control-btn {
-        border: 1px solid rgba(255,255,255,.62);
-        border-radius: 999px;
-        background: rgba(255,255,255,.42);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        color: #5d5149;
-        cursor: pointer;
-        width: 42px;
-        height: 38px;
-        transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
-    }
-
-    .app-control-btn.main {
-        width: 54px;
-        height: 48px;
-        font-size: 16px;
-        background: rgba(255,255,255,.62);
-        box-shadow: 0 10px 24px rgba(185,146,114,.18);
-    }
-
-    .app-control-btn:hover {
-        transform: translateY(-2px) scale(1.04);
-        background: rgba(255,255,255,.72);
-    }
-
-    .app-playlist {
-        max-height: 146px;
-        overflow: auto;
-        display: grid;
-        gap: 6px;
-        padding-right: 2px;
-    }
-
-    .app-playlist-item {
-        border: 1px solid rgba(255,255,255,.36);
-        border-radius: 14px;
-        padding: 8px 10px;
-        background: rgba(255,255,255,.26);
-        cursor: pointer;
-        transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
-        font-size: 11px;
-        line-height: 1.35;
-        color: #5b4d44;
-    }
-
-    .app-playlist-item:hover,
-    .app-playlist-item.active {
-        transform: translateX(3px);
-        background: rgba(255,255,255,.58);
-        box-shadow: 0 8px 18px rgba(185,146,114,.12);
-    }
-
-    .music-control {
-        background: rgba(255,255,255,.58);
-        border: 1px solid rgba(255,255,255,.65);
-        backdrop-filter: blur(16px) saturate(1.35);
-        -webkit-backdrop-filter: blur(16px) saturate(1.35);
-    }
-
-    .music-control.playing {
-        animation: appButtonPulse 1.8s ease-in-out infinite;
-    }
-
-    @keyframes appPlayerGlow {
-        from { transform: translate(-4%, -3%) rotate(0deg); }
-        to { transform: translate(4%, 3%) rotate(6deg); }
-    }
-
-    @keyframes appButtonPulse {
-        0%, 100% { transform: scale(1); box-shadow: 0 10px 24px rgba(0,0,0,.14), 0 0 0 rgba(185,146,114,0); }
-        50% { transform: scale(1.08); box-shadow: 0 14px 30px rgba(0,0,0,.16), 0 0 22px rgba(185,146,114,.38); }
-    }
-
-    @media (max-width: 768px) {
-        .app-music-player {
-            left: 16px;
-            right: 16px;
-            bottom: 84px;
-            width: auto;
-        }
-
-        .app-music-shell {
-            border-radius: 28px;
-            transform-origin: bottom center;
-        }
-
-        .app-music-player.minimized .app-music-shell {
-            transform: translateY(28px) scale(.94);
-        }
-    }
+    /* ===== Spotify player safety restore ===== */
+    .music-subtitle { margin-top: 3px; font-size: 10px; color: #8e7f71; letter-spacing: .8px; }
+    .music-cover img, .music-list-cover img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; }
+    .music-mode-label { margin: 6px 0 10px; text-align: center; font-size: 10px; letter-spacing: 1px; color: #8e7f71; }
+    .music-mini-btn.active { background: rgba(185,146,114,.22); color: var(--accent-gold); box-shadow: inset 0 0 0 1px rgba(185,146,114,.22); }
 
 </style>
 
 </head>
 <body class="locked">
-    <audio id="bg-music" playsinline preload="auto"></audio><div id="music-btn" class="music-control" aria-label="開啟音樂播放器">
+    <audio id="bg-music" playsinline preload="auto"></audio><div id="music-btn" class="music-control" onclick="toggleMusic()" aria-label="切換背景音樂">
     <i id="music-icon" class="fas fa-music"></i>
 </div>
 
@@ -1509,39 +1263,29 @@
     <i class="fas fa-compact-disc"></i>
     <span id="music-track-label">Now Playing · Abracadabra จงรัก จงหลง</span>
 </div>
-
-<div id="app-music-player" class="app-music-player minimized" aria-label="App style music player">
-    <div class="app-music-shell">
-        <div class="app-music-handle"></div>
-        <div class="app-music-body">
-            <div class="app-music-top">
-                <div class="app-cover"><i class="fas fa-compact-disc"></i></div>
-                <div class="app-track-info">
-                    <div class="app-eyebrow">Now Playing</div>
-                    <div id="app-track-title" class="app-track-title">音樂準備中</div>
-                </div>
-                <button class="app-close" type="button" onclick="toggleMusicPanel(true)" aria-label="Minimize player">
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-            </div>
-
-            <div class="app-progress-wrap">
-                <input id="app-music-progress" type="range" min="0" max="100" value="0" aria-label="Music progress" />
-                <div class="app-time-row">
-                    <span id="app-current-time">0:00</span>
-                    <span id="app-duration">0:00</span>
-                </div>
-            </div>
-
-            <div class="app-controls">
-                <button id="app-prev-btn" class="app-control-btn" type="button" aria-label="Previous song"><i class="fas fa-backward-step"></i></button>
-                <button id="app-play-btn" class="app-control-btn main" type="button" aria-label="Play or pause"><i class="fas fa-play"></i></button>
-                <button id="app-next-btn" class="app-control-btn" type="button" aria-label="Next song"><i class="fas fa-forward-step"></i></button>
-            </div>
-
-            <div id="app-playlist" class="app-playlist"></div>
+<div id="music-player-panel" class="music-player-panel minimized" aria-label="背景音樂播放器">
+    <div class="music-player-top">
+        <div id="music-cover" class="music-cover"><i class="fas fa-compact-disc"></i></div>
+        <div class="music-meta">
+            <div class="music-eyebrow">JanJingJing Radio</div>
+            <div id="music-player-title" class="music-title">Abracadabra จงรัก จงหลง</div>
+            <div id="music-player-subtitle" class="music-subtitle">Track 1 of 3</div>
         </div>
     </div>
+    <div class="music-progress-wrap">
+        <span id="music-current-time">0:00</span>
+        <div id="music-progress" class="music-progress"><div id="music-progress-bar" class="music-progress-bar"></div></div>
+        <span id="music-duration">0:00</span>
+    </div>
+    <div class="music-controls-row">
+        <button type="button" id="music-shuffle-btn" class="music-mini-btn" onclick="toggleShuffle()" aria-label="隨機播放"><i class="fas fa-shuffle"></i></button>
+        <button type="button" class="music-mini-btn" onclick="prevTrack()" aria-label="上一首"><i class="fas fa-backward-step"></i></button>
+        <button type="button" id="music-main-play" class="music-main-btn" onclick="toggleMusic()" aria-label="播放或暫停"><i class="fas fa-play"></i></button>
+        <button type="button" class="music-mini-btn" onclick="nextTrack()" aria-label="下一首"><i class="fas fa-forward-step"></i></button>
+        <button type="button" id="music-repeat-btn" class="music-mini-btn" onclick="toggleRepeatMode()" aria-label="循環模式"><i class="fas fa-repeat"></i></button>
+    </div>
+    <div id="music-mode-label" class="music-mode-label">清單循環 · 隨機關閉</div>
+    <div id="music-list" class="music-list"></div>
 </div>
 
 
@@ -2050,55 +1794,72 @@
     const musicIcon = document.getElementById("music-icon");
     const musicBadge = document.getElementById("music-badge");
     const musicTrackLabel = document.getElementById("music-track-label");
-    const appMusicPlayer = document.getElementById("app-music-player");
-    const appTrackTitle = document.getElementById("app-track-title");
-    const appPlaylist = document.getElementById("app-playlist");
-    const appProgress = document.getElementById("app-music-progress");
-    const appCurrentTime = document.getElementById("app-current-time");
-    const appDuration = document.getElementById("app-duration");
-    let appTouchStartY = 0;
-    let appTouchEndY = 0;
+        const musicPanel = document.getElementById("music-player-panel");
+    const musicCover = document.getElementById("music-cover");
+    const musicPlayerTitle = document.getElementById("music-player-title");
+    const musicPlayerSubtitle = document.getElementById("music-player-subtitle");
+    const musicMainPlay = document.getElementById("music-main-play");
+    const musicShuffleBtn = document.getElementById("music-shuffle-btn");
+    const musicRepeatBtn = document.getElementById("music-repeat-btn");
+    const musicModeLabel = document.getElementById("music-mode-label");
+    const musicProgress = document.getElementById("music-progress");
+    const musicProgressBar = document.getElementById("music-progress-bar");
+    const musicCurrentTime = document.getElementById("music-current-time");
+    const musicDuration = document.getElementById("music-duration");
+    const musicList = document.getElementById("music-list");
+    let isShuffle = false;
+    let repeatMode = "all";
     const splash = document.getElementById("splash-screen");
     const navBar = document.getElementById("nav-bar");
+
+    function formatAudioTime(seconds) {
+        if (!Number.isFinite(seconds)) return "0:00";
+        const min = Math.floor(seconds / 60);
+        const sec = Math.floor(seconds % 60).toString().padStart(2, "0");
+        return `${min}:${sec}`;
+    }
 
     function updateMusicUI(isPlaying) {
         musicIcon.className = isPlaying ? "fas fa-music" : "fas fa-volume-mute";
         musicBtn.classList.toggle("playing", isPlaying);
-        const mainBtnIcon = document.querySelector(".app-control-btn.main i");
-        if (mainBtnIcon) mainBtnIcon.className = isPlaying ? "fas fa-pause" : "fas fa-play";
+        if (musicMainPlay) musicMainPlay.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+        renderPlaylistUI();
+    }
+
+    function getCoverMarkup(song) {
+        if (song.cover) return `<img src="${audioUrlFromPath(song.cover)}" alt="cover" onerror="this.remove();">`;
+        return `<i class="fas fa-compact-disc"></i>`;
+    }
+
+    function updateCoverUI() {
+        const song = playlist[currentTrack];
+        if (musicCover && song) musicCover.innerHTML = getCoverMarkup(song);
+    }
+
+    function updateModeUI() {
+        if (musicShuffleBtn) musicShuffleBtn.classList.toggle("active", isShuffle);
+        if (musicRepeatBtn) {
+            musicRepeatBtn.classList.toggle("active", repeatMode !== "off");
+            musicRepeatBtn.innerHTML = repeatMode === "one"
+                ? '<i class="fas fa-repeat"></i><span style="font-size:9px;position:absolute;margin-top:16px;">1</span>'
+                : '<i class="fas fa-repeat"></i>';
+        }
+        if (musicModeLabel) {
+            const repeatText = repeatMode === "one" ? "單曲循環" : repeatMode === "all" ? "清單循環" : "循環關閉";
+            const shuffleText = isShuffle ? "隨機開啟" : "隨機關閉";
+            musicModeLabel.textContent = `${repeatText} · ${shuffleText}`;
+        }
     }
 
     function updateTrackLabel(extraText = "") {
         const song = playlist[currentTrack];
-        const text = extraText || `Now Playing · ${song.title}`;
-        musicTrackLabel.textContent = text;
-        if (appTrackTitle) appTrackTitle.textContent = extraText || song.title;
-        renderAppPlaylist();
-    }
-
-    function formatTime(seconds) {
-        if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
-        const m = Math.floor(seconds / 60);
-        const s = Math.floor(seconds % 60);
-        return `${m}:${String(s).padStart(2, "0")}`;
-    }
-
-    function toggleMusicPanel(forceMinimize = false) {
-        if (!appMusicPlayer) return;
-        if (forceMinimize) appMusicPlayer.classList.add("minimized");
-        else appMusicPlayer.classList.toggle("minimized");
-    }
-
-    function renderAppPlaylist() {
-        if (!appPlaylist) return;
-        appPlaylist.innerHTML = "";
-        playlist.forEach((song, index) => {
-            const item = document.createElement("div");
-            item.className = `app-playlist-item${index === currentTrack ? " active" : ""}`;
-            item.textContent = `${index + 1}. ${song.title}`;
-            item.addEventListener("click", () => selectTrack(index));
-            appPlaylist.appendChild(item);
-        });
+        if (!song) return;
+        musicTrackLabel.textContent = extraText || `Now Playing · (${currentTrack + 1}/${playlist.length}) ${song.title}`;
+        if (musicPlayerTitle) musicPlayerTitle.textContent = song.title;
+        if (musicPlayerSubtitle) musicPlayerSubtitle.textContent = `Track ${currentTrack + 1} of ${playlist.length}`;
+        updateCoverUI();
+        updateModeUI();
+        renderPlaylistUI();
     }
 
     function encodeRawPath(path) {
@@ -2109,36 +1870,15 @@
         return `${RAW_BASE}/${encodeRawPath(path)}`;
     }
 
-    function withTimeout(promise, ms, fallbackValue) {
-        return Promise.race([
-            promise,
-            new Promise(resolve => setTimeout(() => resolve(fallbackValue), ms))
-        ]);
-    }
-
-    function enterWithoutMusic(reason = "音樂暫時無法播放，但網站會正常顯示") {
-        audio.pause();
-        audio.removeAttribute("src");
-        updateMusicUI(false);
-        updateTrackLabel(reason);
-        console.warn("⚠️ 音樂 fallback：", reason);
-    }
-
     async function fetchGitHubAudioFiles() {
         try {
-            // 這個 API 會掃描整個 repo，不只根目錄，所以 music/Song1.mp3 也找得到
             const response = await fetch(
                 `https://api.github.com/repos/${YOUR_GITHUB_USERNAME}/${REPO_NAME}/git/trees/${REPO_BRANCH}?recursive=1`,
                 { cache: "no-store" }
             );
-
             if (!response.ok) throw new Error(`GitHub tree API error: ${response.status}`);
-
             const data = await response.json();
-            githubAudioFiles = (data.tree || [])
-                .filter(item => item.type === "blob" && /\.mp3$/i.test(item.path))
-                .map(item => item.path);
-
+            githubAudioFiles = (data.tree || []).filter(item => item.type === "blob" && /\.mp3$/i.test(item.path)).map(item => item.path);
             console.log("✅ GitHub 找到的 MP3：", githubAudioFiles);
         } catch (error) {
             console.warn("⚠️ 無法取得 GitHub MP3 清單，改用 playlist 原始檔名", error);
@@ -2148,52 +1888,25 @@
 
     function autoFixAudioFileName(fileName) {
         if (!githubAudioFiles.length) return fileName;
-
         const normalized = fileName.replace(/^\.\//, "");
         const baseName = normalized.split("/").pop().toLowerCase();
-
         const exactPath = githubAudioFiles.find(path => path === normalized);
         if (exactPath) return exactPath;
-
-        const exactCaseInsensitivePath = githubAudioFiles.find(
-            path => path.toLowerCase() === normalized.toLowerCase()
-        );
-        if (exactCaseInsensitivePath) {
-            console.warn(`🔧 自動修正路徑/大小寫：${fileName} → ${exactCaseInsensitivePath}`);
-            return exactCaseInsensitivePath;
-        }
-
-        const baseNameMatch = githubAudioFiles.find(
-            path => path.split("/").pop().toLowerCase() === baseName
-        );
-        if (baseNameMatch) {
-            console.warn(`🔧 自動找到資料夾內檔案：${fileName} → ${baseNameMatch}`);
-            return baseNameMatch;
-        }
-
-        console.warn(`❌ GitHub 裡找不到：${fileName}`);
+        const exactCaseInsensitivePath = githubAudioFiles.find(path => path.toLowerCase() === normalized.toLowerCase());
+        if (exactCaseInsensitivePath) return exactCaseInsensitivePath;
+        const baseNameMatch = githubAudioFiles.find(path => path.split("/").pop().toLowerCase() === baseName);
+        if (baseNameMatch) return baseNameMatch;
         return fileName;
     }
 
     async function checkAudioExists(url) {
         if (audioCheckCache.has(url)) return audioCheckCache.get(url);
-
         try {
-            const res = await withTimeout(
-                fetch(url, {
-                    method: "GET",
-                    cache: "no-store",
-                    headers: { "Range": "bytes=0-1" }
-                }),
-                4500,
-                null
-            );
-
-            const ok = !!res && (res.ok || res.status === 206);
+            const res = await fetch(url, { method: "GET", cache: "no-store" });
+            const ok = res.ok;
             audioCheckCache.set(url, ok);
             return ok;
         } catch (error) {
-            console.warn("⚠️ 音樂檢查失敗：", url, error);
             audioCheckCache.set(url, false);
             return false;
         }
@@ -2204,49 +1917,26 @@
             const index = (startIndex + i) % playlist.length;
             const fixedFile = autoFixAudioFileName(playlist[index].file);
             const url = audioUrlFromPath(fixedFile);
-            const ok = await checkAudioExists(url);
-
-            if (ok) {
-                return { index, file: fixedFile, url };
-            }
-
-            console.warn(`❌ 音樂檔案讀不到：${playlist[index].file} → ${url}`);
+            if (await checkAudioExists(url)) return { index, file: fixedFile, url };
         }
-
         return null;
     }
 
     async function loadTrack(index, autoFind = true) {
-        let result = null;
-
-        if (autoFind) {
-            result = await findPlayableTrack(index);
-        } else {
-            const fixedFile = autoFixAudioFileName(playlist[index].file);
-            const url = audioUrlFromPath(fixedFile);
-            const ok = await checkAudioExists(url);
-
-            if (ok) {
-                result = { index, file: fixedFile, url };
-            } else {
-                console.warn(`❌ 指定歌曲讀不到：${playlist[index].file} → ${url}`);
-                updateTrackLabel(`這首讀不到 · ${playlist[index].title}`);
-                updateMusicUI(false);
-                renderAppPlaylist();
-                return false;
-            }
-        }
-
+        if (musicProgressBar) musicProgressBar.style.width = "0%";
+        if (musicCurrentTime) musicCurrentTime.textContent = "0:00";
+        if (musicDuration) musicDuration.textContent = "0:00";
+        const result = autoFind ? await findPlayableTrack(index) : { index, file: autoFixAudioFileName(playlist[index].file), url: audioUrlFromPath(autoFixAudioFileName(playlist[index].file)) };
         if (!result) {
-            enterWithoutMusic("音樂暫時無法播放 · GitHub 沒有找到可播放 MP3");
+            audio.removeAttribute("src");
+            updateMusicUI(false);
+            updateTrackLabel("音樂檔案讀取失敗 · GitHub 沒有找到可播放 MP3");
             return false;
         }
-
         currentTrack = result.index;
         audio.src = result.url;
         audio.load();
         updateTrackLabel();
-        console.log(`🎵 載入音樂：${playlist[currentTrack].title}`, result.file, result.url);
         return true;
     }
 
@@ -2254,11 +1944,8 @@
         clearInterval(fadeTimer);
         audio.volume = 0;
         fadeTimer = setInterval(() => {
-            if (audio.volume < 0.95) {
-                audio.volume = Math.min(1, audio.volume + 0.05);
-            } else {
-                clearInterval(fadeTimer);
-            }
+            if (audio.volume < 0.95) audio.volume = Math.min(1, audio.volume + 0.05);
+            else clearInterval(fadeTimer);
         }, 100);
     }
 
@@ -2267,126 +1954,104 @@
             const loaded = await loadTrack(currentTrack);
             if (!loaded) return;
         }
-
         const p = audio.play();
         if (p !== undefined) {
-            p.then(() => {
-                updateMusicUI(true);
-                fadeInAudio();
-            }).catch((error) => {
-                console.warn("⚠️ 瀏覽器阻擋播放或播放失敗：", error);
-                updateMusicUI(false);
-            });
+            p.then(() => { updateMusicUI(true); fadeInAudio(); }).catch(() => updateMusicUI(false));
         }
     }
 
-    async function switchToTrack(index) {
-        currentTrack = (index + playlist.length) % playlist.length;
-        audio.pause();
-        audio.removeAttribute("src");
-        audio.load();
-        updateMusicUI(false);
-        updateTrackLabel(`Loading · ${playlist[currentTrack].title}`);
-        renderAppPlaylist();
-
-        const loaded = await loadTrack(currentTrack, false);
-        if (loaded) {
-            playCurrentTrack();
+    function getNextIndex() {
+        if (isShuffle && playlist.length > 1) {
+            let next = currentTrack;
+            while (next === currentTrack) next = Math.floor(Math.random() * playlist.length);
+            return next;
         }
-    }
-
-    async function nextTrack() {
-        await switchToTrack(currentTrack + 1);
-    }
-
-    async function prevTrack() {
-        await switchToTrack(currentTrack - 1);
+        return (currentTrack + 1) % playlist.length;
     }
 
     async function selectTrack(index) {
-        await switchToTrack(index);
+        const loaded = await loadTrack(index, false);
+        if (loaded) playCurrentTrack();
     }
 
-    window.nextTrack = nextTrack;
-    window.prevTrack = prevTrack;
-    window.selectTrack = selectTrack;
-    window.toggleMusic = toggleMusic;
-    window.toggleMusicPanel = toggleMusicPanel;
+    async function prevTrack() { await selectTrack((currentTrack - 1 + playlist.length) % playlist.length); }
+    async function nextTrack() { await selectTrack(getNextIndex()); }
+    function toggleShuffle() { isShuffle = !isShuffle; updateModeUI(); }
+    function toggleRepeatMode() { repeatMode = repeatMode === "all" ? "one" : repeatMode === "one" ? "off" : "all"; updateModeUI(); }
+    function openMusicPanel() { if (musicPanel) musicPanel.classList.remove("minimized"); }
+    function closeMusicPanel() { if (musicPanel) musicPanel.classList.add("minimized"); }
+    function toggleMusicPanel() { if (musicPanel) musicPanel.classList.toggle("minimized"); }
 
-    audio.addEventListener("loadedmetadata", () => {
-        if (appDuration) appDuration.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-        if (appCurrentTime) appCurrentTime.textContent = formatTime(audio.currentTime);
-        if (appProgress && audio.duration) {
-            appProgress.value = String((audio.currentTime / audio.duration) * 100);
-        }
-    });
-
-    if (appProgress) {
-        appProgress.addEventListener("input", () => {
-            if (audio.duration) audio.currentTime = (Number(appProgress.value) / 100) * audio.duration;
+    function renderPlaylistUI() {
+        if (!musicList) return;
+        musicList.innerHTML = "";
+        playlist.forEach((song, index) => {
+            const item = document.createElement("div");
+            item.className = `music-list-item${index === currentTrack ? " active" : ""}`;
+            item.innerHTML = `<span>${String(index + 1).padStart(2, "0")}</span><span class="music-list-cover">${getCoverMarkup(song)}</span><span class="music-list-title">${song.title}</span><i class="fas ${index === currentTrack && !audio.paused ? "fa-volume-high" : "fa-play"}"></i>`;
+            item.addEventListener("click", () => selectTrack(index));
+            musicList.appendChild(item);
         });
     }
 
-    const appPrevBtn = document.getElementById("app-prev-btn");
-    const appPlayBtn = document.getElementById("app-play-btn");
-    const appNextBtn = document.getElementById("app-next-btn");
-
-    if (appPrevBtn) {
-        appPrevBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            prevTrack();
-        });
-    }
-
-    if (appPlayBtn) {
-        appPlayBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMusic();
-        });
-    }
-
-    if (appNextBtn) {
-        appNextBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            nextTrack();
-        });
-    }
-
-    if (musicBtn) {
-        musicBtn.addEventListener("click", () => toggleMusicPanel(false));
-    }
-
-    if (appMusicPlayer) {
-        appMusicPlayer.addEventListener("touchstart", (e) => {
-            appTouchStartY = e.changedTouches[0].screenY;
-        }, { passive: true });
-        appMusicPlayer.addEventListener("touchend", (e) => {
-            appTouchEndY = e.changedTouches[0].screenY;
-            if (appTouchStartY - appTouchEndY > 35) appMusicPlayer.classList.remove("minimized");
-            if (appTouchEndY - appTouchStartY > 35) appMusicPlayer.classList.add("minimized");
-        }, { passive: true });
-    }
-
-    audio.onended = nextTrack;
-    audio.onerror = () => {
-        console.warn("❌ 播放器載入失敗，不再自動亂跳：", audio.src);
-        enterWithoutMusic("音樂暫時無法播放 · 請確認 GitHub 檔名 / 資料夾 / 分支");
+    audio.onended = async () => {
+        if (repeatMode === "one") { audio.currentTime = 0; playCurrentTrack(); return; }
+        if (repeatMode === "off" && currentTrack === playlist.length - 1 && !isShuffle) { updateMusicUI(false); return; }
+        nextTrack();
     };
 
+    audio.onerror = () => {
+        console.warn("❌ 播放器載入失敗，不再自動亂跳：", audio.src);
+        updateMusicUI(false);
+        updateTrackLabel("音樂檔案讀取失敗 · 請確認 GitHub 檔名 / 資料夾 / 分支");
+    };
+
+    audio.addEventListener("loadedmetadata", () => { if (musicDuration) musicDuration.textContent = formatAudioTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => {
+        if (musicCurrentTime) musicCurrentTime.textContent = formatAudioTime(audio.currentTime);
+        if (musicProgressBar && Number.isFinite(audio.duration) && audio.duration > 0) musicProgressBar.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+    });
+    audio.addEventListener("play", () => updateMusicUI(true));
+    audio.addEventListener("pause", () => updateMusicUI(false));
+
+    if (musicProgress) {
+        musicProgress.addEventListener("click", (e) => {
+            if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
+            const rect = musicProgress.getBoundingClientRect();
+            const ratio = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
+            audio.currentTime = ratio * audio.duration;
+        });
+    }
+
+    let musicTouchStartY = 0;
+    [musicBtn, musicBadge].forEach((target) => {
+        if (!target) return;
+        target.addEventListener("click", () => { if (target === musicBadge) toggleMusicPanel(); });
+        target.addEventListener("touchstart", (e) => { musicTouchStartY = e.changedTouches[0].screenY; }, { passive: true });
+        target.addEventListener("touchend", (e) => { if (musicTouchStartY - e.changedTouches[0].screenY > 35) openMusicPanel(); }, { passive: true });
+    });
+    if (musicPanel) {
+        musicPanel.addEventListener("touchstart", (e) => { musicTouchStartY = e.changedTouches[0].screenY; }, { passive: true });
+        musicPanel.addEventListener("touchend", (e) => {
+            const endY = e.changedTouches[0].screenY;
+            if (endY - musicTouchStartY > 45) closeMusicPanel();
+            if (musicTouchStartY - endY > 45) openMusicPanel();
+        }, { passive: true });
+    }
+
     async function enterSite() {
-        // 先進站，音樂之後再嘗試載入。
-        // 這樣就算 GitHub mp3 掛掉、檔名錯、網路慢，網站也不會空白。
+        try {
+            await fetchGitHubAudioFiles();
+            const loaded = await loadTrack(currentTrack);
+            if (loaded) playCurrentTrack();
+            else console.warn("⚠️ 沒有可播放音樂，略過播放但正常進入網站");
+        } catch (error) {
+            console.warn("⚠️ 音樂初始化失敗，略過播放但正常進入網站", error);
+            updateMusicUI(false);
+        }
         musicBtn.style.display = "flex";
         musicBadge.style.display = "flex";
-        if (appMusicPlayer) appMusicPlayer.style.display = "block";
-        renderAppPlaylist();
-        updateTrackLabel("音樂準備中 · 網站會先正常顯示");
+        if (musicPanel) musicPanel.style.display = "block";
 
         splash.classList.add("fade-out");
         document.body.classList.remove("locked");
@@ -2396,28 +2061,10 @@
             splash.style.display = "none";
             window.scrollTo(0, 0);
         }, 800);
-
-        try {
-            await withTimeout(fetchGitHubAudioFiles(), 5000, null);
-            const loaded = await withTimeout(loadTrack(currentTrack), 6500, false);
-
-            if (loaded) {
-                playCurrentTrack();
-            } else {
-                enterWithoutMusic("音樂暫時無法播放 · 網站已正常開啟");
-            }
-        } catch (error) {
-            console.warn("⚠️ 音樂初始化失敗，但網站不受影響：", error);
-            enterWithoutMusic("音樂暫時無法播放 · 網站已正常開啟");
-        }
     }
 
-    async function toggleMusic() {
+    function toggleMusic() {
         if (audio.paused) {
-            if (!audio.src) {
-                const loaded = await loadTrack(currentTrack);
-                if (!loaded) return;
-            }
             playCurrentTrack();
         } else {
             audio.pause();
@@ -2670,6 +2317,11 @@
         return card;
     }
 
+    function isPastCalendarMonth(year, month) {
+        const now = new Date();
+        return year < now.getFullYear() || (year === now.getFullYear() && month < now.getMonth() + 1);
+    }
+
     function renderAutoCalendar() {
         if (!calendarMonthsTarget) return;
 
@@ -2678,11 +2330,9 @@
 
         calendarMonthsTarget.innerHTML = "";
 
-        const now = new Date();
-
         monthKeys.forEach(monthKey => {
             const [year, month] = monthKey.split("-").map(Number);
-            if (year < now.getFullYear() || (year === now.getFullYear() && month < now.getMonth() + 1)) return;
+            if (isPastCalendarMonth(year, month)) return;
             const card = buildCalendarCard(year, month, grouped[monthKey]);
             calendarMonthsTarget.appendChild(card);
         });
