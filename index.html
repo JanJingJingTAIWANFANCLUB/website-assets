@@ -1043,57 +1043,6 @@
         animation: spinSoft 4s linear infinite;
     }
 
-    .music-player-panel {
-        position: fixed;
-        right: 20px;
-        bottom: 150px;
-        z-index: 1998;
-        display: none;
-        width: min(330px, calc(100vw - 32px));
-        padding: 16px;
-        border-radius: 24px;
-        background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(250,246,240,.94));
-        border: 1px solid rgba(185,146,114,.18);
-        box-shadow: 0 20px 45px rgba(0,0,0,.16);
-        backdrop-filter: blur(16px);
-        color: #4a4038;
-    }
-
-    .music-player-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-    .music-cover {
-        width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center;
-        background: radial-gradient(circle at top left, #fff, #f1dfcf);
-        color: var(--accent-gold);
-        box-shadow: inset 0 0 0 1px rgba(185,146,114,.18), 0 10px 20px rgba(185,146,114,.18);
-        flex-shrink: 0;
-    }
-    .music-cover i { animation: spinSoft 5s linear infinite; }
-    .music-meta { min-width: 0; }
-    .music-eyebrow { font-size: 9px; letter-spacing: 1.8px; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 4px; font-weight: 700; }
-    .music-title { font-family: var(--serif); font-size: 15px; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .music-controls-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 12px 0 10px; }
-    .music-mini-btn, .music-main-btn { border: none; cursor: pointer; display: grid; place-items: center; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
-    .music-mini-btn { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,.8); color: var(--accent-color); box-shadow: 0 6px 14px rgba(0,0,0,.06); }
-    .music-main-btn { width: 48px; height: 48px; border-radius: 50%; background: var(--accent-color); color: #fff; box-shadow: 0 10px 24px rgba(142,127,113,.24); }
-    .music-mini-btn:hover, .music-main-btn:hover { transform: translateY(-1px) scale(1.03); }
-    .music-progress-wrap { display: grid; grid-template-columns: 38px 1fr 38px; align-items: center; gap: 8px; font-size: 10px; color: #8e7f71; }
-    .music-progress { height: 6px; border-radius: 999px; background: rgba(142,127,113,.16); overflow: hidden; cursor: pointer; }
-    .music-progress-bar { width: 0%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent-gold), var(--accent-color)); }
-    .music-list { margin-top: 12px; display: grid; gap: 7px; max-height: 190px; overflow-y: auto; padding-right: 2px; }
-    .music-list-item {
-        display: grid; grid-template-columns: 22px 1fr 18px; align-items: center; gap: 8px;
-        padding: 9px 10px; border-radius: 14px; background: rgba(255,255,255,.55);
-        cursor: pointer; font-size: 11px; color: #5d5148;
-        transition: background .2s ease, transform .2s ease, color .2s ease;
-    }
-    .music-list-item:hover { transform: translateX(-2px); background: #fff; }
-    .music-list-item.active {
-        background: var(--accent-soft); color: var(--accent-color); font-weight: 700;
-        box-shadow: inset 0 0 0 1px rgba(185,146,114,.18);
-    }
-    .music-list-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-
     @keyframes spinSoft {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
@@ -1206,12 +1155,6 @@
             max-width: calc(100vw - 32px);
         }
 
-        .music-player-panel {
-            right: 16px;
-            bottom: 148px;
-            border-radius: 20px;
-        }
-
         .story-topbar {
             padding: 12px 12px 0;
         }
@@ -1263,184 +1206,18 @@
         }
     }
 
-
-    /* ===== 🫧 Final Glass Music Player + Mobile Swipe Sheet ===== */
-    .music-player-panel {
-        position: fixed;
-        right: 20px;
-        bottom: 150px;
-        z-index: 1998;
-        display: none;
-        width: min(340px, calc(100vw - 32px));
-        padding: 18px;
-        border-radius: 28px;
-        color: #4a4038;
-        overflow: hidden;
-        background: linear-gradient(145deg, rgba(255,255,255,.74), rgba(255,255,255,.36));
-        border: 1px solid rgba(255,255,255,.62);
-        box-shadow:
-            0 24px 60px rgba(0,0,0,.18),
-            inset 0 1px 0 rgba(255,255,255,.86);
-        backdrop-filter: blur(22px) saturate(1.45);
-        -webkit-backdrop-filter: blur(22px) saturate(1.45);
-        transform: translateY(0) scale(1);
-        opacity: 1;
-        pointer-events: auto;
-        transition: opacity .28s ease, transform .32s cubic-bezier(.2,.8,.2,1);
-    }
-
-    .music-player-panel.minimized {
-        opacity: 0;
-        transform: translateY(22px) scale(.96);
-        pointer-events: none;
-    }
-
-    .music-player-panel::before {
-        content: "";
-        position: absolute;
-        inset: -45%;
-        background:
-            radial-gradient(circle at 18% 18%, rgba(255,255,255,.58), transparent 24%),
-            radial-gradient(circle at 84% 12%, rgba(200,170,143,.25), transparent 22%),
-            radial-gradient(circle at 58% 92%, rgba(255,235,245,.28), transparent 26%);
-        animation: musicGlassGlow 8s ease-in-out infinite alternate;
-        pointer-events: none;
-    }
-
-    .music-player-panel::after {
-        content: "";
-        position: absolute;
-        top: -60%;
-        left: -85%;
-        width: 70%;
-        height: 220%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,.42), transparent);
-        transform: rotate(24deg);
-        animation: musicGlassShine 5.2s ease-in-out infinite;
-        pointer-events: none;
-    }
-
-    .music-player-panel > * {
-        position: relative;
-        z-index: 1;
-    }
-
-    .music-player-panel .music-player-top::before {
-        content: "";
-        display: block;
-        width: 42px;
-        height: 4px;
-        border-radius: 999px;
-        background: rgba(80,70,60,.24);
-        position: absolute;
-        left: 50%;
-        top: -8px;
-        transform: translateX(-50%);
-    }
-
-    .music-badge {
-        cursor: pointer;
-    }
-
-    .music-control {
-        background: rgba(255,255,255,.58);
-        border: 1px solid rgba(255,255,255,.65);
-        backdrop-filter: blur(16px) saturate(1.4);
-        -webkit-backdrop-filter: blur(16px) saturate(1.4);
-        box-shadow:
-            0 14px 34px rgba(0,0,0,.16),
-            inset 0 1px 0 rgba(255,255,255,.8);
-    }
-
-    .music-control.playing {
-        animation: musicGlassPulse 1.8s infinite ease-in-out;
-    }
-
-    .music-list-item {
-        background: rgba(255,255,255,.30);
-        border: 1px solid rgba(255,255,255,.28);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-    }
-
-    .music-list-item:hover {
-        transform: translateX(-2px);
-        background: rgba(255,255,255,.58);
-    }
-
-    .music-list-item.active {
-        background: rgba(247,241,234,.78);
-    }
-
-    .music-progress {
-        background: rgba(142,127,113,.16);
-        box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
-    }
-
-    @keyframes musicGlassPulse {
-        0%, 100% {
-            transform: scale(1);
-            box-shadow:
-                0 14px 34px rgba(0,0,0,.16),
-                0 0 0 rgba(185,146,114,0),
-                inset 0 1px 0 rgba(255,255,255,.8);
-        }
-        50% {
-            transform: scale(1.08);
-            box-shadow:
-                0 18px 40px rgba(0,0,0,.18),
-                0 0 24px rgba(185,146,114,.36),
-                inset 0 1px 0 rgba(255,255,255,.88);
-        }
-    }
-
-    @keyframes musicGlassGlow {
-        from { transform: translate(-4%, -3%) rotate(0deg); }
-        to { transform: translate(4%, 3%) rotate(6deg); }
-    }
-
-    @keyframes musicGlassShine {
-        0% { left: -90%; opacity: 0; }
-        35% { opacity: .58; }
-        70% { left: 125%; opacity: 0; }
-        100% { left: 125%; opacity: 0; }
-    }
-
-    @media (max-width: 768px) {
-        .music-player-panel {
-            left: 14px;
-            right: 14px;
-            bottom: calc(82px + env(safe-area-inset-bottom));
-            width: auto;
-            max-height: min(72vh, 560px);
-            overflow-y: auto;
-            border-radius: 30px;
-            padding: 20px 16px 18px;
-            transform: translateY(0) scale(1);
-            touch-action: pan-y;
-        }
-
-        .music-player-panel.minimized {
-            opacity: 0;
-            transform: translateY(calc(100% + 110px)) scale(.98);
-            pointer-events: none;
-        }
-
-        .music-player-panel .music-player-top::before {
-            top: -10px;
-        }
-
-        .music-control {
-            right: 16px;
-            bottom: calc(20px + env(safe-area-inset-bottom));
-        }
-
-        .music-badge {
-            right: 78px;
-            bottom: calc(26px + env(safe-area-inset-bottom));
-            max-width: calc(100vw - 112px);
-        }
-    }
+    /* ===== 🔔 Calendar Countdown Card ===== */
+    .countdown-card { max-width: 760px; margin: 0 auto 34px; padding: 18px 20px; border-radius: 24px; position: relative; overflow: hidden; background: linear-gradient(145deg, rgba(255,255,255,.78), rgba(255,255,255,.42)); border: 1px solid rgba(255,255,255,.62); box-shadow: 0 18px 46px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.88); backdrop-filter: blur(18px) saturate(1.35); -webkit-backdrop-filter: blur(18px) saturate(1.35); }
+    .countdown-card::before { content: ""; position: absolute; inset: -50%; background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.55), transparent 22%), radial-gradient(circle at 80% 10%, rgba(200,170,143,.24), transparent 24%), radial-gradient(circle at 60% 90%, rgba(255,235,245,.30), transparent 26%); animation: countdownGlow 8s ease-in-out infinite alternate; pointer-events: none; }
+    .countdown-card > * { position: relative; z-index: 1; }
+    .countdown-eyebrow { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-gold); font-weight: 700; margin-bottom: 8px; }
+    .countdown-title { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: #4a4038; margin-bottom: 12px; line-height: 1.45; }
+    .countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
+    .countdown-unit { padding: 12px 8px; border-radius: 16px; background: rgba(255,255,255,.46); border: 1px solid rgba(255,255,255,.42); text-align: center; box-shadow: inset 0 1px 0 rgba(255,255,255,.55); }
+    .countdown-number { display: block; font-family: var(--serif); font-size: 1.45rem; color: var(--accent-color); line-height: 1; }
+    .countdown-label { display: block; margin-top: 6px; font-size: 9px; letter-spacing: 1.2px; color: #8e7f71; text-transform: uppercase; font-weight: 700; }
+    @keyframes countdownGlow { from { transform: translate(-4%, -3%) rotate(0deg); } to { transform: translate(4%, 3%) rotate(6deg); } }
+    @media (max-width: 600px) { .countdown-card { padding: 16px; border-radius: 22px; } .countdown-grid { gap: 7px; } .countdown-unit { padding: 10px 6px; border-radius: 14px; } .countdown-number { font-size: 1.2rem; } }
 
 </style>
 
@@ -1453,27 +1230,6 @@
 <div id="music-badge" class="music-badge">
     <i class="fas fa-compact-disc"></i>
     <span id="music-track-label">Now Playing · Abracadabra จงรัก จงหลง</span>
-</div>
-
-<div id="music-player-panel" class="music-player-panel minimized" aria-label="背景音樂播放器">
-    <div class="music-player-top">
-        <div class="music-cover"><i class="fas fa-compact-disc"></i></div>
-        <div class="music-meta">
-            <div class="music-eyebrow">JanJingJing Radio</div>
-            <div id="music-player-title" class="music-title">Abracadabra จงรัก จงหลง</div>
-        </div>
-    </div>
-    <div class="music-progress-wrap">
-        <span id="music-current-time">0:00</span>
-        <div id="music-progress" class="music-progress"><div id="music-progress-bar" class="music-progress-bar"></div></div>
-        <span id="music-duration">0:00</span>
-    </div>
-    <div class="music-controls-row">
-        <button type="button" class="music-mini-btn" onclick="prevTrack()" aria-label="上一首"><i class="fas fa-backward-step"></i></button>
-        <button type="button" id="music-main-play" class="music-main-btn" onclick="toggleMusic()" aria-label="播放或暫停"><i class="fas fa-play"></i></button>
-        <button type="button" class="music-mini-btn" onclick="nextTrack()" aria-label="下一首"><i class="fas fa-forward-step"></i></button>
-    </div>
-    <div id="music-list" class="music-list"></div>
 </div>
 
 <div id="splash-screen">
@@ -1612,6 +1368,18 @@
 
     <section id="calendar" class="reveal">
         <h2 class="section-title">Calendar</h2>
+
+        <div id="nextEventCountdown" class="countdown-card">
+            <div class="countdown-eyebrow">Next Schedule</div>
+            <div id="countdownEventTitle" class="countdown-title">Loading next event...</div>
+            <div class="countdown-grid">
+                <div class="countdown-unit"><span id="countdownDays" class="countdown-number">00</span><span class="countdown-label">Days</span></div>
+                <div class="countdown-unit"><span id="countdownHours" class="countdown-number">00</span><span class="countdown-label">Hours</span></div>
+                <div class="countdown-unit"><span id="countdownMinutes" class="countdown-number">00</span><span class="countdown-label">Minutes</span></div>
+                <div class="countdown-unit"><span id="countdownSeconds" class="countdown-number">00</span><span class="countdown-label">Seconds</span></div>
+            </div>
+        </div>
+
         <div class="calendar-months" id="calendarMonths"></div>
     </section>
 
@@ -1847,9 +1615,8 @@
 
     const playlist = [
         { file: "Song1.mp3", title: "Abracadabra จงรัก จงหลง" },
-        { file: "Song2.mp3", title: "เถียงเก่ง (Bad Mouth)" },
-        { file: "Song3.mp3", title: "หาย（Hide）" },
-        { file: "Song4.mp3", title: "งั้นรักละ (Don’t wanna, But I Do)" }
+        { file: "Song2.mp3", title: "หาย (Hide)" },
+        { file: "Song3.mp3", title: "งั้นรักละ (Don’t wanna, But I Do) " }
     ];
 
     const calendarEvents = [
@@ -1880,6 +1647,13 @@
             shortLabel: "PREMIERE",
             detail: "05/03 (SUN.) 泰國時間 18:30｜Enemies With Benefits 首映會<br>05/03 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.1 GMMTV 首播<br>05/03 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.1 OneD 重播",
             featured: true
+        },
+        {
+            date: "2026-05-05",
+            label: "jj",
+            shortLabel: "EVENT",
+            detail: "05/05 (TUE.) 泰國時間 16:00｜LA Roche-Posay Briget Unlocked Exclusive Guests",
+            featured: false
         },
         {
             date: "2026-05-10",
@@ -1955,144 +1729,191 @@
 
     let currentTrack = Math.floor(Math.random() * playlist.length);
     let fadeTimer = null;
+    let githubAudioFiles = [];
+    const audioCheckCache = new Map();
 
     const audio = document.getElementById("bg-music");
     const musicBtn = document.getElementById("music-btn");
     const musicIcon = document.getElementById("music-icon");
     const musicBadge = document.getElementById("music-badge");
     const musicTrackLabel = document.getElementById("music-track-label");
-    const musicPanel = document.getElementById("music-player-panel");
-    const musicPlayerTitle = document.getElementById("music-player-title");
-    const musicMainPlay = document.getElementById("music-main-play");
-    const musicProgress = document.getElementById("music-progress");
-    const musicProgressBar = document.getElementById("music-progress-bar");
-    const musicCurrentTime = document.getElementById("music-current-time");
-    const musicDuration = document.getElementById("music-duration");
-    const musicList = document.getElementById("music-list");
     const splash = document.getElementById("splash-screen");
     const navBar = document.getElementById("nav-bar");
-
-    function formatAudioTime(seconds) {
-        if (!Number.isFinite(seconds)) return "0:00";
-        const min = Math.floor(seconds / 60);
-        const sec = Math.floor(seconds % 60).toString().padStart(2, "0");
-        return `${min}:${sec}`;
-    }
 
     function updateMusicUI(isPlaying) {
         musicIcon.className = isPlaying ? "fas fa-music" : "fas fa-volume-mute";
         musicBtn.classList.toggle("playing", isPlaying);
-        musicMainPlay.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
     }
 
-    function updateTrackLabel() {
+    function updateTrackLabel(extraText = "") {
         const song = playlist[currentTrack];
-        musicTrackLabel.textContent = `Now Playing · (${currentTrack + 1}/${playlist.length}) ${song.title}`;
-        musicPlayerTitle.textContent = song.title;
-        renderPlaylistUI();
+        musicTrackLabel.textContent = extraText || `Now Playing · ${song.title}`;
     }
 
-    function loadTrack(index) {
-        currentTrack = index;
-        audio.src = `${RAW_BASE}/${playlist[currentTrack].file}`;
+    function encodeRawPath(path) {
+        return path.split("/").map(part => encodeURIComponent(part)).join("/");
+    }
+
+    function audioUrlFromPath(path) {
+        return `${RAW_BASE}/${encodeRawPath(path)}`;
+    }
+
+    async function fetchGitHubAudioFiles() {
+        try {
+            // 這個 API 會掃描整個 repo，不只根目錄，所以 music/Song1.mp3 也找得到
+            const response = await fetch(
+                `https://api.github.com/repos/${YOUR_GITHUB_USERNAME}/${REPO_NAME}/git/trees/${REPO_BRANCH}?recursive=1`,
+                { cache: "no-store" }
+            );
+
+            if (!response.ok) throw new Error(`GitHub tree API error: ${response.status}`);
+
+            const data = await response.json();
+            githubAudioFiles = (data.tree || [])
+                .filter(item => item.type === "blob" && /\.mp3$/i.test(item.path))
+                .map(item => item.path);
+
+            console.log("✅ GitHub 找到的 MP3：", githubAudioFiles);
+        } catch (error) {
+            console.warn("⚠️ 無法取得 GitHub MP3 清單，改用 playlist 原始檔名", error);
+            githubAudioFiles = [];
+        }
+    }
+
+    function autoFixAudioFileName(fileName) {
+        if (!githubAudioFiles.length) return fileName;
+
+        const normalized = fileName.replace(/^\.\//, "");
+        const baseName = normalized.split("/").pop().toLowerCase();
+
+        const exactPath = githubAudioFiles.find(path => path === normalized);
+        if (exactPath) return exactPath;
+
+        const exactCaseInsensitivePath = githubAudioFiles.find(
+            path => path.toLowerCase() === normalized.toLowerCase()
+        );
+        if (exactCaseInsensitivePath) {
+            console.warn(`🔧 自動修正路徑/大小寫：${fileName} → ${exactCaseInsensitivePath}`);
+            return exactCaseInsensitivePath;
+        }
+
+        const baseNameMatch = githubAudioFiles.find(
+            path => path.split("/").pop().toLowerCase() === baseName
+        );
+        if (baseNameMatch) {
+            console.warn(`🔧 自動找到資料夾內檔案：${fileName} → ${baseNameMatch}`);
+            return baseNameMatch;
+        }
+
+        console.warn(`❌ GitHub 裡找不到：${fileName}`);
+        return fileName;
+    }
+
+    async function checkAudioExists(url) {
+        if (audioCheckCache.has(url)) return audioCheckCache.get(url);
+
+        try {
+            const res = await fetch(url, { method: "GET", cache: "no-store" });
+            const ok = res.ok;
+            audioCheckCache.set(url, ok);
+            return ok;
+        } catch (error) {
+            console.warn("⚠️ 音樂檢查失敗：", url, error);
+            audioCheckCache.set(url, false);
+            return false;
+        }
+    }
+
+    async function findPlayableTrack(startIndex) {
+        for (let i = 0; i < playlist.length; i++) {
+            const index = (startIndex + i) % playlist.length;
+            const fixedFile = autoFixAudioFileName(playlist[index].file);
+            const url = audioUrlFromPath(fixedFile);
+            const ok = await checkAudioExists(url);
+
+            if (ok) {
+                return { index, file: fixedFile, url };
+            }
+
+            console.warn(`❌ 音樂檔案讀不到：${playlist[index].file} → ${url}`);
+        }
+
+        return null;
+    }
+
+    async function loadTrack(index, autoFind = true) {
+        const result = autoFind
+            ? await findPlayableTrack(index)
+            : {
+                index,
+                file: autoFixAudioFileName(playlist[index].file),
+                url: audioUrlFromPath(autoFixAudioFileName(playlist[index].file))
+            };
+
+        if (!result) {
+            audio.removeAttribute("src");
+            updateMusicUI(false);
+            updateTrackLabel("音樂檔案讀取失敗 · GitHub 沒有找到可播放 MP3");
+            return false;
+        }
+
+        currentTrack = result.index;
+        audio.src = result.url;
         audio.load();
-        musicProgressBar.style.width = "0%";
-        musicCurrentTime.textContent = "0:00";
-        musicDuration.textContent = "0:00";
         updateTrackLabel();
+        console.log(`🎵 載入音樂：${playlist[currentTrack].title}`, result.file, result.url);
+        return true;
     }
 
     function fadeInAudio() {
         clearInterval(fadeTimer);
         audio.volume = 0;
         fadeTimer = setInterval(() => {
-            if (audio.volume < 0.95) audio.volume = Math.min(1, audio.volume + 0.05);
-            else clearInterval(fadeTimer);
-        }, 90);
+            if (audio.volume < 0.95) {
+                audio.volume = Math.min(1, audio.volume + 0.05);
+            } else {
+                clearInterval(fadeTimer);
+            }
+        }, 100);
     }
 
-    function playCurrentTrack() {
+    async function playCurrentTrack() {
+        if (!audio.src) {
+            const loaded = await loadTrack(currentTrack);
+            if (!loaded) return;
+        }
+
         const p = audio.play();
         if (p !== undefined) {
             p.then(() => {
                 updateMusicUI(true);
                 fadeInAudio();
-            }).catch(() => updateMusicUI(false));
+            }).catch((error) => {
+                console.warn("⚠️ 瀏覽器阻擋播放或播放失敗：", error);
+                updateMusicUI(false);
+            });
         }
     }
 
-    function selectTrack(index) {
-        loadTrack(index);
-        playCurrentTrack();
+    async function nextTrack() {
+        currentTrack = (currentTrack + 1) % playlist.length;
+        const loaded = await loadTrack(currentTrack);
+        if (loaded) playCurrentTrack();
     }
 
-    function prevTrack() {
-        selectTrack((currentTrack - 1 + playlist.length) % playlist.length);
-    }
-
-    function nextTrack() {
-        selectTrack((currentTrack + 1) % playlist.length);
-    }
-
-    function toggleMusic() {
-        if (!audio.src) loadTrack(currentTrack);
-        if (audio.paused) playCurrentTrack();
-        else {
-            audio.pause();
-            updateMusicUI(false);
-        }
-    }
-
-    function renderPlaylistUI() {
-        if (!musicList) return;
-        musicList.innerHTML = "";
-
-        playlist.forEach((song, index) => {
-            const item = document.createElement("div");
-            item.className = `music-list-item${index === currentTrack ? " active" : ""}`;
-            item.innerHTML = `
-                <span>${String(index + 1).padStart(2, "0")}</span>
-                <span class="music-list-title">${song.title}</span>
-                <i class="fas ${index === currentTrack && !audio.paused ? "fa-volume-high" : "fa-play"}"></i>
-            `;
-            item.addEventListener("click", () => selectTrack(index));
-            musicList.appendChild(item);
-        });
-    }
-
-    audio.addEventListener("ended", nextTrack);
-    audio.addEventListener("error", nextTrack);
-    audio.addEventListener("loadedmetadata", () => {
-        musicDuration.textContent = formatAudioTime(audio.duration);
-    });
-    audio.addEventListener("timeupdate", () => {
-        musicCurrentTime.textContent = formatAudioTime(audio.currentTime);
-        if (Number.isFinite(audio.duration) && audio.duration > 0) {
-            musicProgressBar.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
-        }
-    });
-    audio.addEventListener("play", () => {
-        updateMusicUI(true);
-        renderPlaylistUI();
-    });
-    audio.addEventListener("pause", () => {
+    audio.onended = nextTrack;
+    audio.onerror = () => {
+        console.warn("❌ 播放器載入失敗，不再自動亂跳：", audio.src);
         updateMusicUI(false);
-        renderPlaylistUI();
-    });
+        updateTrackLabel("音樂檔案讀取失敗 · 請確認 GitHub 檔名 / 資料夾 / 分支");
+    };
 
-    musicProgress.addEventListener("click", (e) => {
-        if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
-        const rect = musicProgress.getBoundingClientRect();
-        const ratio = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
-        audio.currentTime = ratio * audio.duration;
-    });
-
-    function enterSite() {
-        loadTrack(currentTrack);
+    async function enterSite() {
+        await fetchGitHubAudioFiles();
+        await loadTrack(currentTrack);
         playCurrentTrack();
         musicBtn.style.display = "flex";
         musicBadge.style.display = "flex";
-        musicPanel.style.display = "block";
 
         splash.classList.add("fade-out");
         document.body.classList.remove("locked");
@@ -2104,52 +1925,14 @@
         }, 800);
     }
 
-    renderPlaylistUI();
-
-    function openMusicPanel() {
-        musicPanel.classList.remove("minimized");
-    }
-
-    function closeMusicPanel() {
-        musicPanel.classList.add("minimized");
-    }
-
-    function toggleMusicPanel() {
-        musicPanel.classList.toggle("minimized");
-    }
-
-    let musicTouchStartY = 0;
-    let musicTouchEndY = 0;
-
-    function bindMusicSwipeControls() {
-        [musicBtn, musicBadge].forEach((target) => {
-            if (!target) return;
-            target.addEventListener("touchstart", (e) => {
-                musicTouchStartY = e.changedTouches[0].screenY;
-            }, { passive: true });
-            target.addEventListener("touchend", (e) => {
-                musicTouchEndY = e.changedTouches[0].screenY;
-                if (musicTouchStartY - musicTouchEndY > 35) openMusicPanel();
-            }, { passive: true });
-        });
-
-        if (musicPanel) {
-            musicPanel.addEventListener("touchstart", (e) => {
-                musicTouchStartY = e.changedTouches[0].screenY;
-            }, { passive: true });
-            musicPanel.addEventListener("touchend", (e) => {
-                musicTouchEndY = e.changedTouches[0].screenY;
-                if (musicTouchEndY - musicTouchStartY > 45) closeMusicPanel();
-                if (musicTouchStartY - musicTouchEndY > 45) openMusicPanel();
-            }, { passive: true });
-        }
-
-        if (musicBadge) {
-            musicBadge.addEventListener("click", toggleMusicPanel);
+    function toggleMusic() {
+        if (audio.paused) {
+            playCurrentTrack();
+        } else {
+            audio.pause();
+            updateMusicUI(false);
         }
     }
-
-    bindMusicSwipeControls();
 
     function toggleD(id) {
         const list = document.getElementById(id);
@@ -2241,10 +2024,64 @@
         return `${formatEventTag(event.label)}${event.detail}`;
     }
 
+    function getEventTime(event) {
+        const match = event.detail.match(/(\d{1,2}:\d{2})/);
+        return event.time || (match ? match[1] : "00:00");
+    }
+
+    function getEventTimezoneOffset(event) {
+        if (event.detail.includes("韓國時間")) return "+09:00";
+        if (event.detail.includes("台灣時間")) return "+08:00";
+        return "+07:00";
+    }
+
+    function getEventDateObject(event) {
+        return new Date(event.date + "T" + getEventTime(event) + ":00" + getEventTimezoneOffset(event));
+    }
+
+    function sortEventsByDateTime(events) {
+        return [...events].sort((a, b) => getEventDateObject(a) - getEventDateObject(b));
+    }
+
+    function getNextUpcomingEvent() {
+        const now = new Date();
+        return sortEventsByDateTime(calendarEvents).find(event => getEventDateObject(event) > now) || null;
+    }
+
+    function renderNextEventCountdown() {
+        const event = getNextUpcomingEvent();
+        const titleEl = document.getElementById("countdownEventTitle");
+        const daysEl = document.getElementById("countdownDays");
+        const hoursEl = document.getElementById("countdownHours");
+        const minutesEl = document.getElementById("countdownMinutes");
+        const secondsEl = document.getElementById("countdownSeconds");
+
+        if (!titleEl || !daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+        if (!event) {
+            titleEl.textContent = "目前沒有未來行程";
+            daysEl.textContent = hoursEl.textContent = minutesEl.textContent = secondsEl.textContent = "00";
+            return;
+        }
+
+        const target = getEventDateObject(event);
+        const diff = Math.max(target - new Date(), 0);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        titleEl.innerHTML = formatEventTag(event.label) + event.detail;
+        daysEl.textContent = String(days).padStart(2, "0");
+        hoursEl.textContent = String(hours).padStart(2, "0");
+        minutesEl.textContent = String(minutes).padStart(2, "0");
+        secondsEl.textContent = String(seconds).padStart(2, "0");
+    }
+
     function groupEventsByMonth(events) {
         const grouped = {};
 
-        events.forEach(event => {
+        sortEventsByDateTime(events).forEach(event => {
             const d = parseLocalDate(event.date);
             const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
             if (!grouped[key]) grouped[key] = [];
@@ -2258,7 +2095,7 @@
         });
 
         Object.keys(grouped).forEach(key => {
-            grouped[key].sort((a, b) => a.day - b.day);
+            grouped[key].sort((a, b) => getEventDateObject(a) - getEventDateObject(b));
         });
 
         return grouped;
@@ -2711,11 +2548,12 @@
         }
     }, { passive: true });
 
+    renderNextEventCountdown();
+    setInterval(renderNextEventCountdown, 1000);
     renderAutoCalendar();
     renderPhotos();
 </script>
 
 </body>
 </html>
-
 
