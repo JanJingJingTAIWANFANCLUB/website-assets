@@ -1603,6 +1603,64 @@
 }
 
 
+
+/* ===== 🛠 Calendar Detail Layout Fix · prevent schedule text from squeezing vertical ===== */
+.calendar-detail-content .schedule-wrap {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.calendar-detail-content .schedule-wrap > .event-tag {
+    display: inline-block !important;
+    width: auto !important;
+    max-width: 100% !important;
+    margin: 0 0 10px 0 !important;
+    padding: 2px 10px !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+}
+
+.calendar-detail-content .event-content {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.calendar-detail-content .schedule-line {
+    display: grid !important;
+    grid-template-columns: minmax(142px, max-content) minmax(0, 1fr) !important;
+    gap: 10px !important;
+    align-items: start !important;
+    margin-bottom: 8px !important;
+    line-height: 1.65 !important;
+}
+
+.calendar-detail-content .schedule-time {
+    white-space: nowrap !important;
+    font-weight: 700 !important;
+}
+
+.calendar-detail-content .schedule-text {
+    min-width: 0 !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+}
+
+@media (max-width: 900px) {
+    .calendar-detail-content .schedule-line {
+        grid-template-columns: 1fr !important;
+        gap: 2px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .calendar-detail-content .schedule-time {
+        white-space: normal !important;
+    }
+}
+
+
 </style>
 
 </head>
@@ -1741,6 +1799,9 @@
                         請選擇 <i class="fas fa-chevron-down"></i>
                     </button>
                     <div id="musicD" class="dropdown-content">
+                        <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/xWvhq6bsde8', this)">
+                            <i class="fas fa-star"></i><span>JANJINGJING</span>
+                        </div>
                         <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/WDxMcK0eau0', this)">
                             <i class="fas fa-music"></i><span>SIZZY - JAN</span>
                         </div>
@@ -1766,7 +1827,7 @@
             <div class="full-vbox">
                 <iframe
                     id="musicPlayer"
-                    src="https://www.youtube.com/embed/WDxMcK0eau0"
+                    src="https://www.youtube.com/embed/xWvhq6bsde8"
                     loading="lazy"
                     referrerpolicy="strict-origin-when-cross-origin"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
