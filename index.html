@@ -1752,10 +1752,17 @@
     align-items: start;
 }
 
+.calendar-months {
+    display: grid;
+    grid-template-columns: repeat(3, 360px);
+    justify-content: center;
+    align-items: start;
+    gap: 24px;
+}
+
 .calendar-card {
     width: 360px;
     max-width: 360px;
-    justify-self: center;
 }
 
 .calendar-day {
@@ -1769,6 +1776,18 @@
 
 .calendar-detail-content {
     font-size: 11px;
+}
+
+@media (max-width: 900px) {
+    .calendar-months {
+        grid-template-columns: 1fr;
+    }
+
+    .calendar-card {
+        width: 100%;
+        max-width: 360px;
+        justify-self: center;
+    }
 }
 
 
