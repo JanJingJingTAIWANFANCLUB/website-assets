@@ -627,34 +627,39 @@
         font-weight: 700;
     }
 
-    .event-tag.jan {
-        background: #f3ecff;
-        color: #7b5cff;
-    }
+    .event-tag.jan,
+.event-tag.jj,
+.event-tag.janjingjing {
+    background: none;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
 
-    .event-tag.jj {
-        background: #ffeaf3;
-        color: #e26a9b;
-    }
+.event-tag.jan {
+    background-image: linear-gradient(90deg, #bfa6ff, #8b6bff);
+}
 
-    .event-tag.janjingjing {
-        background: linear-gradient(90deg, #f3ecff, #ffeaf3);
-        color: #8e5aa8;
-    }
+.event-tag.jj {
+    background-image: linear-gradient(90deg, #ffb6d9, #ff7eb6);
+}
+
+.event-tag.janjingjing {
+    background-image: linear-gradient(90deg, #caa8ff, #ff9ecb);
+}
 
     .event-tag.jan::before {
-        content: "💜";
-        margin-right: 2px;
-    }
+    content: "💜 ";
+}
 
-    .event-tag.jj::before {
-        content: "🎀";
-        margin-right: 2px;
-    }
+.event-tag.jj::before {
+    content: "🎀 ";
+}
 
-    .event-tag.janjingjing::before {
-        content: "💜🎀 ";
-    }
+.event-tag.janjingjing::before {
+    content: "💜🎀 ";
+}
 
     .calendar-detail-box.featured {
         background: linear-gradient(180deg, #f9f3ec, #fbf7f2);
@@ -1043,6 +1048,57 @@
         animation: spinSoft 4s linear infinite;
     }
 
+    .music-player-panel {
+        position: fixed;
+        right: 20px;
+        bottom: 150px;
+        z-index: 1998;
+        display: none;
+        width: min(330px, calc(100vw - 32px));
+        padding: 16px;
+        border-radius: 24px;
+        background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(250,246,240,.94));
+        border: 1px solid rgba(185,146,114,.18);
+        box-shadow: 0 20px 45px rgba(0,0,0,.16);
+        backdrop-filter: blur(16px);
+        color: #4a4038;
+    }
+
+    .music-player-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .music-cover {
+        width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center;
+        background: radial-gradient(circle at top left, #fff, #f1dfcf);
+        color: var(--accent-gold);
+        box-shadow: inset 0 0 0 1px rgba(185,146,114,.18), 0 10px 20px rgba(185,146,114,.18);
+        flex-shrink: 0;
+    }
+    .music-cover i { animation: spinSoft 5s linear infinite; }
+    .music-meta { min-width: 0; }
+    .music-eyebrow { font-size: 9px; letter-spacing: 1.8px; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 4px; font-weight: 700; }
+    .music-title { font-family: var(--serif); font-size: 15px; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .music-controls-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 12px 0 10px; }
+    .music-mini-btn, .music-main-btn { border: none; cursor: pointer; display: grid; place-items: center; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+    .music-mini-btn { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,.8); color: var(--accent-color); box-shadow: 0 6px 14px rgba(0,0,0,.06); }
+    .music-main-btn { width: 48px; height: 48px; border-radius: 50%; background: var(--accent-color); color: #fff; box-shadow: 0 10px 24px rgba(142,127,113,.24); }
+    .music-mini-btn:hover, .music-main-btn:hover { transform: translateY(-1px) scale(1.03); }
+    .music-progress-wrap { display: grid; grid-template-columns: 38px 1fr 38px; align-items: center; gap: 8px; font-size: 10px; color: #8e7f71; }
+    .music-progress { height: 6px; border-radius: 999px; background: rgba(142,127,113,.16); overflow: hidden; cursor: pointer; }
+    .music-progress-bar { width: 0%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent-gold), var(--accent-color)); }
+    .music-list { margin-top: 12px; display: grid; gap: 7px; max-height: 190px; overflow-y: auto; padding-right: 2px; }
+    .music-list-item {
+        display: grid; grid-template-columns: 22px 1fr 18px; align-items: center; gap: 8px;
+        padding: 9px 10px; border-radius: 14px; background: rgba(255,255,255,.55);
+        cursor: pointer; font-size: 11px; color: #5d5148;
+        transition: background .2s ease, transform .2s ease, color .2s ease;
+    }
+    .music-list-item:hover { transform: translateX(-2px); background: #fff; }
+    .music-list-item.active {
+        background: var(--accent-soft); color: var(--accent-color); font-weight: 700;
+        box-shadow: inset 0 0 0 1px rgba(185,146,114,.18);
+    }
+    .music-list-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+
     @keyframes spinSoft {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
@@ -1155,6 +1211,12 @@
             max-width: calc(100vw - 32px);
         }
 
+        .music-player-panel {
+            right: 16px;
+            bottom: 148px;
+            border-radius: 20px;
+        }
+
         .story-topbar {
             padding: 12px 12px 0;
         }
@@ -1205,6 +1267,361 @@
             bottom: 20px;
         }
     }
+
+
+    /* ===== 🫧 Final Glass Music Player + Mobile Swipe Sheet ===== */
+    .music-player-panel {
+        position: fixed;
+        right: 20px;
+        bottom: 150px;
+        z-index: 1998;
+        display: none;
+        width: min(340px, calc(100vw - 32px));
+        padding: 18px;
+        border-radius: 28px;
+        color: #4a4038;
+        overflow: hidden;
+        background: linear-gradient(145deg, rgba(255,255,255,.74), rgba(255,255,255,.36));
+        border: 1px solid rgba(255,255,255,.62);
+        box-shadow:
+            0 24px 60px rgba(0,0,0,.18),
+            inset 0 1px 0 rgba(255,255,255,.86);
+        backdrop-filter: blur(22px) saturate(1.45);
+        -webkit-backdrop-filter: blur(22px) saturate(1.45);
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        pointer-events: auto;
+        transition: opacity .28s ease, transform .32s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .music-player-panel.minimized {
+        opacity: 0;
+        transform: translateY(22px) scale(.96);
+        pointer-events: none;
+    }
+
+    .music-player-panel::before {
+        content: "";
+        position: absolute;
+        inset: -45%;
+        background:
+            radial-gradient(circle at 18% 18%, rgba(255,255,255,.58), transparent 24%),
+            radial-gradient(circle at 84% 12%, rgba(200,170,143,.25), transparent 22%),
+            radial-gradient(circle at 58% 92%, rgba(255,235,245,.28), transparent 26%);
+        animation: musicGlassGlow 8s ease-in-out infinite alternate;
+        pointer-events: none;
+    }
+
+    .music-player-panel::after {
+        content: "";
+        position: absolute;
+        top: -60%;
+        left: -85%;
+        width: 70%;
+        height: 220%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,.42), transparent);
+        transform: rotate(24deg);
+        animation: musicGlassShine 5.2s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    .music-player-panel > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .music-player-panel .music-player-top::before {
+        content: "";
+        display: block;
+        width: 42px;
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(80,70,60,.24);
+        position: absolute;
+        left: 50%;
+        top: -8px;
+        transform: translateX(-50%);
+    }
+
+    .music-badge {
+        cursor: pointer;
+    }
+
+    .music-control {
+        background: rgba(255,255,255,.58);
+        border: 1px solid rgba(255,255,255,.65);
+        backdrop-filter: blur(16px) saturate(1.4);
+        -webkit-backdrop-filter: blur(16px) saturate(1.4);
+        box-shadow:
+            0 14px 34px rgba(0,0,0,.16),
+            inset 0 1px 0 rgba(255,255,255,.8);
+    }
+
+    .music-control.playing {
+        animation: musicGlassGlowOnly 1.8s infinite ease-in-out;
+    }
+
+    .music-list-item {
+        background: rgba(255,255,255,.30);
+        border: 1px solid rgba(255,255,255,.28);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    .music-list-item:hover {
+        transform: translateX(-2px);
+        background: rgba(255,255,255,.58);
+    }
+
+    .music-list-item.active {
+        background: rgba(247,241,234,.78);
+    }
+
+    .music-progress {
+        background: rgba(142,127,113,.16);
+        box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
+    }
+    @keyframes musicGlassGlowOnly {
+        0%, 100% {
+            box-shadow:
+                0 14px 34px rgba(0,0,0,.16),
+                0 0 0 rgba(185,146,114,0),
+                inset 0 1px 0 rgba(255,255,255,.8);
+        }
+        50% {
+            box-shadow:
+                0 18px 40px rgba(0,0,0,.18),
+                0 0 24px rgba(185,146,114,.36),
+                inset 0 1px 0 rgba(255,255,255,.88);
+        }
+    }
+
+
+    @keyframes musicGlassPulse {
+        0%, 100% {
+            transform: scale(1);
+            box-shadow:
+                0 14px 34px rgba(0,0,0,.16),
+                0 0 0 rgba(185,146,114,0),
+                inset 0 1px 0 rgba(255,255,255,.8);
+        }
+        50% {
+            transform: scale(1.08);
+            box-shadow:
+                0 18px 40px rgba(0,0,0,.18),
+                0 0 24px rgba(185,146,114,.36),
+                inset 0 1px 0 rgba(255,255,255,.88);
+        }
+    }
+
+    @keyframes musicGlassGlow {
+        from { transform: translate(-4%, -3%) rotate(0deg); }
+        to { transform: translate(4%, 3%) rotate(6deg); }
+    }
+
+    @keyframes musicGlassShine {
+        0% { left: -90%; opacity: 0; }
+        35% { opacity: .58; }
+        70% { left: 125%; opacity: 0; }
+        100% { left: 125%; opacity: 0; }
+    }
+
+    @media (max-width: 768px) {
+        .music-player-panel {
+            left: 14px;
+            right: 14px;
+            bottom: calc(82px + env(safe-area-inset-bottom));
+            width: auto;
+            max-height: min(72vh, 560px);
+            overflow-y: auto;
+            border-radius: 30px;
+            padding: 20px 16px 18px;
+            transform: translateY(0) scale(1);
+            touch-action: pan-y;
+        }
+
+        .music-player-panel.minimized {
+            opacity: 0;
+            transform: translateY(calc(100% + 110px)) scale(.98);
+            pointer-events: none;
+        }
+
+        .music-player-panel .music-player-top::before {
+            top: -10px;
+        }
+
+        .music-control {
+            right: 16px;
+            bottom: calc(20px + env(safe-area-inset-bottom));
+        }
+
+        .music-badge {
+            right: 78px;
+            bottom: calc(26px + env(safe-area-inset-bottom));
+            max-width: calc(100vw - 112px);
+        }
+    }
+
+
+    /* ===== 🔔 Final Countdown Card · One-day Schedule Fit ===== */
+    .countdown-card {
+        max-width: 640px;
+        margin: 24px auto 34px;
+        padding: 14px 18px 16px;
+        border-radius: 18px;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(145deg, rgba(255,255,255,.78), rgba(255,255,255,.42));
+        border: 1px solid rgba(255,255,255,.62);
+        box-shadow: 0 8px 20px rgba(0,0,0,.06), inset 0 1px 0 rgba(255,255,255,.88);
+        backdrop-filter: blur(18px) saturate(1.35);
+        -webkit-backdrop-filter: blur(18px) saturate(1.35);
+        text-align: center;
+    }
+
+    .countdown-card::before {
+        content: "";
+        position: absolute;
+        inset: -50%;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(255,255,255,.55), transparent 22%),
+            radial-gradient(circle at 80% 10%, rgba(200,170,143,.24), transparent 24%),
+            radial-gradient(circle at 60% 90%, rgba(255,235,245,.30), transparent 26%);
+        animation: countdownGlow 8s ease-in-out infinite alternate;
+        pointer-events: none;
+    }
+
+    .countdown-card > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .countdown-eyebrow {
+        font-size: 9px;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+        color: var(--accent-gold);
+        font-weight: 700;
+        margin-bottom: 7px;
+    }
+
+    .countdown-title {
+        max-width: 100%;
+        margin: 0 auto 10px;
+        font-family: var(--serif);
+        font-size: clamp(.9rem, 2vw, 1.05rem);
+        font-style: italic;
+        letter-spacing: .45px;
+        color: #4a4038;
+        text-shadow: 0 1px 0 rgba(255,255,255,.55);
+        line-height: 1.55;
+        white-space: normal;
+        word-break: keep-all;
+        overflow-wrap: anywhere;
+    }
+
+    .countdown-title .event-tag {
+        font-family: var(--sans);
+        font-style: normal;
+        vertical-align: 2px;
+    }
+
+    .countdown-grid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 7px;
+        margin-top: 8px;
+        flex-wrap: nowrap;
+    }
+
+    .countdown-unit {
+        min-width: 58px;
+        padding: 8px 6px;
+        border-radius: 13px;
+        background: rgba(255,255,255,.46);
+        border: 1px solid rgba(255,255,255,.42);
+        text-align: center;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+    }
+
+    .countdown-number {
+        display: block;
+        font-family: var(--serif);
+        font-size: 1.16rem;
+        color: var(--accent-color);
+        line-height: 1;
+        animation: countdownNumberBounce 1.18s ease-in-out infinite;
+    }
+
+    .countdown-unit:nth-child(2) .countdown-number { animation-delay: .08s; }
+    .countdown-unit:nth-child(3) .countdown-number { animation-delay: .16s; }
+    .countdown-unit:nth-child(4) .countdown-number { animation-delay: .24s; }
+
+    .countdown-label {
+        display: block;
+        margin-top: 4px;
+        font-size: 7px;
+        letter-spacing: 1px;
+        color: #8e7f71;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    @keyframes countdownGlow {
+        from { transform: translate(-4%, -3%) rotate(0deg); }
+        to { transform: translate(4%, 3%) rotate(6deg); }
+    }
+
+    @keyframes countdownNumberBounce {
+        0%, 100% { transform: translateY(0) scale(1); }
+        45% { transform: translateY(-2px) scale(1.035); }
+    }
+
+    @media (max-width: 600px) {
+        .countdown-card {
+            max-width: calc(100% - 24px);
+            padding: 12px 12px 14px;
+            border-radius: 16px;
+        }
+
+        .countdown-title {
+            font-size: .82rem;
+            line-height: 1.52;
+        }
+
+        .countdown-grid {
+            gap: 5px;
+        }
+
+        .countdown-unit {
+            min-width: 48px;
+            padding: 7px 4px;
+            border-radius: 12px;
+        }
+
+        .countdown-number {
+            font-size: 1rem;
+        }
+
+        .countdown-label {
+            font-size: 6.5px;
+        }
+    }
+
+    /* ===== 🎥 Music YouTube Preview Fade ===== */
+    #musicPlayer {
+        transition: opacity .38s ease;
+    }
+
+/* 🔔 行程自動換行（放最底一定吃到） */
+.countdown-title {
+    white-space: normal !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+}
+
 </style>
 
 </head>
@@ -1216,6 +1633,27 @@
 <div id="music-badge" class="music-badge">
     <i class="fas fa-compact-disc"></i>
     <span id="music-track-label">Now Playing · Abracadabra จงรัก จงหลง</span>
+</div>
+
+<div id="music-player-panel" class="music-player-panel minimized" aria-label="背景音樂播放器">
+    <div class="music-player-top">
+        <div class="music-cover"><i class="fas fa-compact-disc"></i></div>
+        <div class="music-meta">
+            <div class="music-eyebrow">JanJingJing Radio</div>
+            <div id="music-player-title" class="music-title">Abracadabra จงรัก จงหลง</div>
+        </div>
+    </div>
+    <div class="music-progress-wrap">
+        <span id="music-current-time">0:00</span>
+        <div id="music-progress" class="music-progress"><div id="music-progress-bar" class="music-progress-bar"></div></div>
+        <span id="music-duration">0:00</span>
+    </div>
+    <div class="music-controls-row">
+        <button type="button" class="music-mini-btn" onclick="prevTrack()" aria-label="上一首"><i class="fas fa-backward-step"></i></button>
+        <button type="button" id="music-main-play" class="music-main-btn" onclick="toggleMusic()" aria-label="播放或暫停"><i class="fas fa-play"></i></button>
+        <button type="button" class="music-mini-btn" onclick="nextTrack()" aria-label="下一首"><i class="fas fa-forward-step"></i></button>
+    </div>
+    <div id="music-list" class="music-list"></div>
 </div>
 
 <div id="splash-screen">
@@ -1319,7 +1757,7 @@
                     </button>
                     <div id="musicD" class="dropdown-content">
                         <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/xWvhq6bsde8', this)">
-                            <i class="fas fa-star"></i><span>JANJINGJING Special</span>
+                            <i class="fas fa-star"></i><span>JANJINGJING</span>
                         </div>
                         <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/WDxMcK0eau0', this)">
                             <i class="fas fa-music"></i><span>SIZZY - JAN</span>
@@ -1357,6 +1795,18 @@
 
     <section id="calendar" class="reveal">
         <h2 class="section-title">Calendar</h2>
+
+        <div id="nextEventCountdown" class="countdown-card">
+            <div class="countdown-eyebrow">Next Schedule</div>
+            <div id="countdownEventTitle" class="countdown-title">Loading next event...</div>
+            <div class="countdown-grid">
+                <div class="countdown-unit"><span id="countdownDays" class="countdown-number">00</span><span class="countdown-label">Days</span></div>
+                <div class="countdown-unit"><span id="countdownHours" class="countdown-number">00</span><span class="countdown-label">Hours</span></div>
+                <div class="countdown-unit"><span id="countdownMinutes" class="countdown-number">00</span><span class="countdown-label">Minutes</span></div>
+                <div class="countdown-unit"><span id="countdownSeconds" class="countdown-number">00</span><span class="countdown-label">Seconds</span></div>
+            </div>
+        </div>
+
         <div class="calendar-months" id="calendarMonths"></div>
     </section>
 
@@ -1591,9 +2041,9 @@
     document.getElementById("bg-video").load();
 
     const playlist = [
-        { file: "Song1.mp3", title: "Abracadabra จงรัก จงหลง" },
-        { file: "Song2.mp3", title: "เถียงเก่ง (Bad Mouth)" },
-        { file: "Song3.mp3", title: "หาย（Hide）" }
+        { file: "Song1.mp3", title: "เถียงเก่ง (Bad Mouth)" },
+        { file: "Song2.mp3", title: "หาย（Hide）" },
+        { file: "Song3.mp3", title: "งั้นรักละ (Don’t wanna, But I Do)" }
     ];
 
     const calendarEvents = [
@@ -1624,6 +2074,13 @@
             shortLabel: "PREMIERE",
             detail: "05/03 (SUN.) 泰國時間 18:30｜Enemies With Benefits 首映會<br>05/03 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.1 GMMTV 首播<br>05/03 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.1 OneD 重播",
             featured: true
+        },
+        {
+            date: "2026-05-05",
+            label: "jj",
+            shortLabel: "EVENT",
+            detail: "05/05 (TUE.) 泰國時間 16:00｜LA Roche-Posay Briget Unlocked Exclusive Guests",
+            featured: false
         },
         {
             date: "2026-05-10",
@@ -1698,39 +2155,62 @@
     ];
 
     let currentTrack = Math.floor(Math.random() * playlist.length);
+    let fadeTimer = null;
+    let isShuffle = true;
 
     const audio = document.getElementById("bg-music");
     const musicBtn = document.getElementById("music-btn");
     const musicIcon = document.getElementById("music-icon");
     const musicBadge = document.getElementById("music-badge");
     const musicTrackLabel = document.getElementById("music-track-label");
+    const musicPanel = document.getElementById("music-player-panel");
+    const musicPlayerTitle = document.getElementById("music-player-title");
+    const musicMainPlay = document.getElementById("music-main-play");
+    const musicProgress = document.getElementById("music-progress");
+    const musicProgressBar = document.getElementById("music-progress-bar");
+    const musicCurrentTime = document.getElementById("music-current-time");
+    const musicDuration = document.getElementById("music-duration");
+    const musicList = document.getElementById("music-list");
     const splash = document.getElementById("splash-screen");
     const navBar = document.getElementById("nav-bar");
+
+    function formatAudioTime(seconds) {
+        if (!Number.isFinite(seconds)) return "0:00";
+        const min = Math.floor(seconds / 60);
+        const sec = Math.floor(seconds % 60).toString().padStart(2, "0");
+        return `${min}:${sec}`;
+    }
 
     function updateMusicUI(isPlaying) {
         musicIcon.className = isPlaying ? "fas fa-music" : "fas fa-volume-mute";
         musicBtn.classList.toggle("playing", isPlaying);
+        musicMainPlay.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
     }
 
     function updateTrackLabel() {
-        musicTrackLabel.textContent = `Now Playing · ${playlist[currentTrack].title}`;
+        const song = playlist[currentTrack];
+        musicTrackLabel.textContent = `Now Playing · (${currentTrack + 1}/${playlist.length}) ${song.title}`;
+        musicPlayerTitle.textContent = song.title;
+        renderPlaylistUI();
     }
 
     function loadTrack(index) {
-        audio.src = `${RAW_BASE}/${playlist[index].file}`;
+        currentTrack = index;
+        audio.src = `${RAW_BASE}/${playlist[currentTrack].file}`;
         audio.load();
+        musicProgressBar.style.width = "0%";
+        musicCurrentTime.textContent = "0:00";
+        musicDuration.textContent = "0:00";
         updateTrackLabel();
     }
 
     function fadeInAudio() {
+        clearInterval(fadeTimer);
         audio.volume = 0;
-        const fade = setInterval(() => {
-            if (audio.volume < 0.95) {
-                audio.volume = Math.min(1, audio.volume + 0.05);
-            } else {
-                clearInterval(fade);
-            }
-        }, 100);
+        fadeTimer = setInterval(() => {
+            if (audio.volume < 0.95) audio.volume = Math.min(1, audio.volume + 0.05);
+            else clearInterval(fadeTimer);
+        }, 90);
     }
 
     function playCurrentTrack() {
@@ -1743,20 +2223,93 @@
         }
     }
 
-    function nextTrack() {
-        currentTrack = (currentTrack + 1) % playlist.length;
-        loadTrack(currentTrack);
+    function selectTrack(index) {
+        loadTrack(index);
         playCurrentTrack();
     }
 
-    audio.onended = nextTrack;
-    audio.onerror = nextTrack;
+    function prevTrack() {
+        selectTrack((currentTrack - 1 + playlist.length) % playlist.length);
+    }
+
+    function getNextIndex() {
+        if (isShuffle && playlist.length > 1) {
+            let next = currentTrack;
+            while (next === currentTrack) {
+                next = Math.floor(Math.random() * playlist.length);
+            }
+            return next;
+        }
+        return (currentTrack + 1) % playlist.length;
+    }
+
+    function nextTrack() {
+        selectTrack(getNextIndex());
+    }
+
+    function toggleMusic() {
+        if (!audio.src) loadTrack(currentTrack);
+        if (audio.paused) playCurrentTrack();
+        else {
+            audio.pause();
+            updateMusicUI(false);
+        }
+    }
+
+    function renderPlaylistUI() {
+        if (!musicList) return;
+        musicList.innerHTML = "";
+
+        playlist.forEach((song, index) => {
+            const item = document.createElement("div");
+            item.className = `music-list-item${index === currentTrack ? " active" : ""}`;
+            item.innerHTML = `
+                <span>${String(index + 1).padStart(2, "0")}</span>
+                <span class="music-list-title">${song.title}</span>
+                <i class="fas ${index === currentTrack && !audio.paused ? "fa-volume-high" : "fa-play"}"></i>
+            `;
+            item.addEventListener("click", () => selectTrack(index));
+            musicList.appendChild(item);
+        });
+    }
+
+    audio.addEventListener("ended", nextTrack);
+    audio.addEventListener("error", () => {
+        console.warn("Music file failed to load:", audio.src);
+        updateMusicUI(false);
+        musicTrackLabel.textContent = `音樂檔案讀取失敗 · 請確認 file 已上傳`;
+    });
+    audio.addEventListener("loadedmetadata", () => {
+        musicDuration.textContent = formatAudioTime(audio.duration);
+    });
+    audio.addEventListener("timeupdate", () => {
+        musicCurrentTime.textContent = formatAudioTime(audio.currentTime);
+        if (Number.isFinite(audio.duration) && audio.duration > 0) {
+            musicProgressBar.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+        }
+    });
+    audio.addEventListener("play", () => {
+        updateMusicUI(true);
+        renderPlaylistUI();
+    });
+    audio.addEventListener("pause", () => {
+        updateMusicUI(false);
+        renderPlaylistUI();
+    });
+
+    musicProgress.addEventListener("click", (e) => {
+        if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
+        const rect = musicProgress.getBoundingClientRect();
+        const ratio = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
+        audio.currentTime = ratio * audio.duration;
+    });
 
     function enterSite() {
         loadTrack(currentTrack);
         playCurrentTrack();
         musicBtn.style.display = "flex";
         musicBadge.style.display = "flex";
+        musicPanel.style.display = "block";
 
         splash.classList.add("fade-out");
         document.body.classList.remove("locked");
@@ -1768,14 +2321,52 @@
         }, 800);
     }
 
-    function toggleMusic() {
-        if (audio.paused) {
-            playCurrentTrack();
-        } else {
-            audio.pause();
-            updateMusicUI(false);
+    renderPlaylistUI();
+
+    function openMusicPanel() {
+        musicPanel.classList.remove("minimized");
+    }
+
+    function closeMusicPanel() {
+        musicPanel.classList.add("minimized");
+    }
+
+    function toggleMusicPanel() {
+        musicPanel.classList.toggle("minimized");
+    }
+
+    let musicTouchStartY = 0;
+    let musicTouchEndY = 0;
+
+    function bindMusicSwipeControls() {
+        [musicBtn, musicBadge].forEach((target) => {
+            if (!target) return;
+            target.addEventListener("touchstart", (e) => {
+                musicTouchStartY = e.changedTouches[0].screenY;
+            }, { passive: true });
+            target.addEventListener("touchend", (e) => {
+                musicTouchEndY = e.changedTouches[0].screenY;
+                if (musicTouchStartY - musicTouchEndY > 35) openMusicPanel();
+            }, { passive: true });
+        });
+
+        if (musicPanel) {
+            musicPanel.addEventListener("touchstart", (e) => {
+                musicTouchStartY = e.changedTouches[0].screenY;
+            }, { passive: true });
+            musicPanel.addEventListener("touchend", (e) => {
+                musicTouchEndY = e.changedTouches[0].screenY;
+                if (musicTouchEndY - musicTouchStartY > 45) closeMusicPanel();
+                if (musicTouchStartY - musicTouchEndY > 45) openMusicPanel();
+            }, { passive: true });
+        }
+
+        if (musicBadge) {
+            musicBadge.addEventListener("click", toggleMusicPanel);
         }
     }
+
+    bindMusicSwipeControls();
 
     function toggleD(id) {
         const list = document.getElementById(id);
@@ -1794,7 +2385,21 @@
     }
 
     function swV(id, url, el) {
-        document.getElementById(id).src = url;
+        const player = document.getElementById(id);
+
+        if (player) {
+            player.style.opacity = "0";
+            setTimeout(() => {
+                player.src = url;
+                player.style.opacity = "1";
+            }, 220);
+        }
+
+        // 🎬 點選 YouTube 影片時，只暫停正在播放的背景音樂，不改背景音樂清單或播放邏輯
+        if (audio && !audio.paused) {
+            audio.pause();
+            updateMusicUI(false);
+        }
 
         const menu = el.parentElement;
         const dropdown = menu.parentElement;
@@ -1867,10 +2472,62 @@
         return `${formatEventTag(event.label)}${event.detail}`;
     }
 
+    function getEventTime(event) {
+        const match = event.detail.match(/(\d{1,2}:\d{2})/);
+        return event.time || (match ? match[1] : "00:00");
+    }
+
+    function getEventTimezoneOffset(event) {
+        if (event.detail.includes("韓國時間")) return "+09:00";
+        if (event.detail.includes("台灣時間")) return "+08:00";
+        return "+07:00";
+    }
+
+    function getEventDateObject(event) {
+        return new Date(event.date + "T" + getEventTime(event) + ":00" + getEventTimezoneOffset(event));
+    }
+
+    function sortEventsByDateTime(events) {
+        return [...events].sort((a, b) => getEventDateObject(a) - getEventDateObject(b));
+    }
+
+    function getNextUpcomingEvent() {
+        const now = new Date();
+        return sortEventsByDateTime(calendarEvents).find(event => getEventDateObject(event) > now) || null;
+    }
+
+    function renderNextEventCountdown() {
+        const event = getNextUpcomingEvent();
+        const titleEl = document.getElementById("countdownEventTitle");
+        const daysEl = document.getElementById("countdownDays");
+        const hoursEl = document.getElementById("countdownHours");
+        const minutesEl = document.getElementById("countdownMinutes");
+        const secondsEl = document.getElementById("countdownSeconds");
+        if (!titleEl || !daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+        if (!event) {
+            titleEl.textContent = "目前沒有未來行程";
+            daysEl.textContent = hoursEl.textContent = minutesEl.textContent = secondsEl.textContent = "00";
+            return;
+        }
+        const target = getEventDateObject(event);
+        const diff = Math.max(target - new Date(), 0);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        titleEl.innerHTML =
+    `<div class="event-main">${formatEventTag(event.label)}</div>
+     <div class="event-sub">${event.detail}</div>`;
+        daysEl.textContent = String(days).padStart(2, "0");
+        hoursEl.textContent = String(hours).padStart(2, "0");
+        minutesEl.textContent = String(minutes).padStart(2, "0");
+        secondsEl.textContent = String(seconds).padStart(2, "0");
+    }
+
     function groupEventsByMonth(events) {
         const grouped = {};
 
-        events.forEach(event => {
+        sortEventsByDateTime(events).forEach(event => {
             const d = parseLocalDate(event.date);
             const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
             if (!grouped[key]) grouped[key] = [];
@@ -1884,7 +2541,7 @@
         });
 
         Object.keys(grouped).forEach(key => {
-            grouped[key].sort((a, b) => a.day - b.day);
+            grouped[key].sort((a, b) => getEventDateObject(a) - getEventDateObject(b));
         });
 
         return grouped;
@@ -1968,6 +2625,11 @@
         return card;
     }
 
+    function isPastCalendarMonth(year, month) {
+        const now = new Date();
+        return year < now.getFullYear() || (year === now.getFullYear() && month < now.getMonth() + 1);
+    }
+
     function renderAutoCalendar() {
         if (!calendarMonthsTarget) return;
 
@@ -1978,6 +2640,7 @@
 
         monthKeys.forEach(monthKey => {
             const [year, month] = monthKey.split("-").map(Number);
+            if (isPastCalendarMonth(year, month)) return;
             const card = buildCalendarCard(year, month, grouped[monthKey]);
             calendarMonthsTarget.appendChild(card);
         });
@@ -2337,10 +3000,13 @@
         }
     }, { passive: true });
 
+    renderNextEventCountdown();
+    setInterval(renderNextEventCountdown, 1000);
     renderAutoCalendar();
     renderPhotos();
 </script>
 
 </body>
 </html>
+
 
