@@ -468,9 +468,8 @@
 
     .calendar-months {
         display: grid;
-        - grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        + grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 22px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 28px;
         margin: 0 auto 60px;
     }
 
@@ -1746,50 +1745,52 @@
     }
 }
 
-/* ===== Calendar cards compact layout ===== */
-.calendar-months {
-    justify-content: center;
-    align-items: start;
-}
 
-.calendar-months {
+/* ===== ✅ Auto Save + Multi Events Same Day Final Fix ===== */
+.schedule-event-stack {
     display: grid;
-    grid-template-columns: repeat(3, 360px);
-    justify-content: center;
-    align-items: start;
-    gap: 24px;
+    gap: 10px;
 }
 
-.calendar-card {
-    width: 360px;
-    max-width: 360px;
+.schedule-event-block {
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(142,127,113,.12);
 }
 
-.calendar-day {
-    min-height: 58px;
-    padding: 6px 5px;
+.schedule-event-block:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
 }
 
-.calendar-grid {
-    gap: 6px;
+.calendar-day.event-day.multi-event small::after {
+    content: "";
 }
 
-.calendar-detail-content {
-    font-size: 11px;
+.calendar-day.event-day.multi-event {
+    background: linear-gradient(180deg, #fff8fb, var(--accent-soft));
 }
 
-@media (max-width: 900px) {
-    .calendar-months {
-        grid-template-columns: 1fr;
-    }
-
-    .calendar-card {
-        width: 100%;
-        max-width: 360px;
-        justify-self: center;
-    }
+.calendar-day.event-day.multi-event::before {
+    content: attr(data-event-count);
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    font-size: 9px;
+    line-height: 1;
+    color: #fff;
+    background: linear-gradient(90deg, #caa8ff, #ff9ecb);
+    box-shadow: 0 0 10px rgba(202,168,255,.32);
 }
 
+.schedule-cms-note strong {
+    color: var(--accent-color);
+}
 
 </style>
 
@@ -2014,7 +2015,7 @@
                 <button type="button" onclick="clearScheduleCMS()">清空</button>
                 <button type="button" class="primary" onclick="addScheduleFromCMS()">加入行程</button>
             </div>
-            <div class="schedule-cms-note" id="cmsEventNote">新增後會存在此瀏覽器的 localStorage，並自動套用時間對齊 / Featured 高亮 / 倒數排序。</div>
+            <div class="schedule-cms-note" id="cmsEventNote">新增後會自動儲存在此瀏覽器，重新整理後仍保留；同一天可新增多筆，會一起顯示並自動排序。</div>
         </div>
 
         <div id="nextEventCountdown" class="countdown-card">
@@ -2460,7 +2461,7 @@
         renderNextEventCountdown();
         renderAutoCalendar();
 
-        if (note) note.textContent = "已加入行程，並自動套用排版。";
+        if (note) note.textContent = "已加入行程並自動儲存；同一天多筆行程也會一起顯示。";
         clearScheduleCMS();
     }
 
@@ -2878,6 +2879,21 @@
         `;
     }
 
+    function enrichEventList(eventList) {
+        const list = sortEventsByDateTime(eventList || []);
+        if (!list.length) return "本日暫無活動";
+
+        return `
+            <div class="schedule-event-stack">
+                ${list.map(event => `
+                    <div class="schedule-event-block${event.featured ? " is-featured" : ""}">
+                        ${enrichEventDetail(event)}
+                    </div>
+                `).join("")}
+            </div>
+        `;
+    }
+
     function getEventTime(event) {
         const match = event.detail.match(/(\d{1,2}:\d{2})/);
         return event.time || (match ? match[1] : "00:00");
@@ -3001,19 +3017,24 @@
         }
 
         for (let day = 1; day <= lastDate; day++) {
-            const event = events.find(item => item.day === day);
+            const eventList = events.filter(item => item.day === day);
+            const event = eventList[0];
             const cell = document.createElement("div");
             cell.className = "calendar-day";
 
-            if (event) {
+            if (eventList.length) {
                 cell.classList.add("event-day");
-                if (event.featured) cell.classList.add("major-event");
-                if (isTodayEvent(event)) cell.classList.add("today-event");
+                if (eventList.some(item => item.featured)) cell.classList.add("major-event");
+                if (eventList.some(item => isTodayEvent(item))) cell.classList.add("today-event");
+                if (eventList.length > 1) {
+                    cell.classList.add("multi-event");
+                    cell.dataset.eventCount = String(eventList.length);
+                }
                 cell.dataset.monthKey = monthKey;
                 cell.dataset.day = String(day);
                 cell.innerHTML = `
                     <span>${day}</span>
-                    <small>${event.shortLabel}</small>
+                    <small>${eventList.length > 1 ? `${event.shortLabel} +${eventList.length - 1}` : event.shortLabel}</small>
                 `;
             } else {
                 cell.innerHTML = `<span>${day}</span>`;
@@ -3036,7 +3057,7 @@
         detailContent.className = "calendar-detail-content";
         detailContent.id = `calendar-detail-${monthKey}`;
         detailContent.innerHTML = firstEvent
-            ? enrichEventDetail(firstEvent)
+            ? enrichEventList(events.filter(item => item.day === firstEvent.day))
             : "本月暫無活動";
 
         detailBox.appendChild(detailTitle);
@@ -3071,11 +3092,11 @@
                 const monthKey = dayEl.dataset.monthKey;
                 const day = Number(dayEl.dataset.day);
                 const monthEvents = grouped[monthKey] || [];
-                const event = monthEvents.find(item => item.day === day);
+                const eventList = monthEvents.filter(item => item.day === day);
                 const detail = document.getElementById(`calendar-detail-${monthKey}`);
 
-                if (event && detail) {
-                    detail.innerHTML = enrichEventDetail(event);
+                if (eventList.length && detail) {
+                    detail.innerHTML = enrichEventList(eventList);
                 }
             });
         });
