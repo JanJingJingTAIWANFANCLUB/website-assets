@@ -2913,9 +2913,26 @@
         return [...events].sort((a, b) => getEventDateObject(a) - getEventDateObject(b));
     }
 
+    function expandEventsForCountdown(events) {
+        return (events || []).flatMap(event => {
+            const lines = String(event.detail || "")
+                .split(/<br\s*\/?>|\n/i)
+                .map(line => line.trim())
+                .filter(Boolean);
+
+            if (!lines.length) return [event];
+
+            return lines.map(line => ({
+                ...event,
+                detail: line
+            }));
+        });
+    }
+
     function getNextUpcomingEvent() {
         const now = new Date();
-        return sortEventsByDateTime(calendarEvents).find(event => getEventDateObject(event) > now) || null;
+        return sortEventsByDateTime(expandEventsForCountdown(calendarEvents))
+            .find(event => getEventDateObject(event) > now) || null;
     }
 
     function renderNextEventCountdown() {
