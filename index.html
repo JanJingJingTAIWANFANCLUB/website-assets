@@ -1792,6 +1792,65 @@
     color: var(--accent-color);
 }
 
+
+/* ===== 📌 Today Schedule List · Next + Today All ===== */
+.today-schedule-card {
+    max-width: 720px;
+    margin: -18px auto 30px;
+    padding: 14px 18px 16px;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, rgba(255,255,255,.72), rgba(255,255,255,.36));
+    border: 1px solid rgba(255,255,255,.62);
+    box-shadow: 0 8px 20px rgba(0,0,0,.055), inset 0 1px 0 rgba(255,255,255,.86);
+    backdrop-filter: blur(18px) saturate(1.32);
+    -webkit-backdrop-filter: blur(18px) saturate(1.32);
+    text-align: left;
+}
+
+.today-schedule-card.has-events {
+    border-color: rgba(226,106,155,.34);
+    box-shadow: 0 0 22px rgba(226,106,155,.16), inset 0 1px 0 rgba(255,255,255,.86);
+}
+
+.today-schedule-eyebrow {
+    font-size: 9px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    font-weight: 800;
+    margin-bottom: 9px;
+}
+
+.today-schedule-content {
+    font-size: 12px;
+    line-height: 1.65;
+    color: #4a4038;
+}
+
+.today-schedule-empty {
+    color: #8e7f71;
+    font-size: 12px;
+}
+
+.today-schedule-card .schedule-event-block.is-featured {
+    border-radius: 14px;
+    padding: 10px 10px 9px;
+    margin: 2px 0 8px;
+    background: linear-gradient(145deg, rgba(255,248,251,.82), rgba(249,243,236,.65));
+    box-shadow: 0 0 18px rgba(202,168,255,.16);
+    border: 1px solid rgba(202,168,255,.20);
+}
+
+@media (max-width: 600px) {
+    .today-schedule-card {
+        max-width: calc(100% - 24px);
+        margin-top: -14px;
+        padding: 13px 14px 15px;
+    }
+}
+
 </style>
 
 </head>
@@ -2027,6 +2086,12 @@
                 <div class="countdown-unit"><span id="countdownMinutes" class="countdown-number">00</span><span class="countdown-label">Minutes</span></div>
                 <div class="countdown-unit"><span id="countdownSeconds" class="countdown-number">00</span><span class="countdown-label">Seconds</span></div>
             </div>
+        </div>
+
+
+        <div id="todayScheduleCard" class="today-schedule-card">
+            <div class="today-schedule-eyebrow">Today Schedule</div>
+            <div id="todayScheduleContent" class="today-schedule-content">Loading today schedule...</div>
         </div>
 
         <div class="calendar-months" id="calendarMonths"></div>
@@ -2913,29 +2978,33 @@
         return [...events].sort((a, b) => getEventDateObject(a) - getEventDateObject(b));
     }
 
-    function expandEventsForCountdown(events) {
-        return (events || []).flatMap(event => {
-            const lines = String(event.detail || "")
-                .split(/<br\s*\/?>|\n/i)
-                .map(line => line.trim())
-                .filter(Boolean);
-
-            if (!lines.length) return [event];
-
-            return lines.map(line => ({
-                ...event,
-                detail: line
-            }));
-        });
-    }
-
     function getNextUpcomingEvent() {
         const now = new Date();
-        return sortEventsByDateTime(expandEventsForCountdown(calendarEvents))
-            .find(event => getEventDateObject(event) > now) || null;
+        return sortEventsByDateTime(calendarEvents).find(event => getEventDateObject(event) > now) || null;
+    }
+
+    function getTodayEvents() {
+        return sortEventsByDateTime(calendarEvents).filter(event => isTodayEvent(event));
+    }
+
+    function renderTodayScheduleList() {
+        const card = document.getElementById("todayScheduleCard");
+        const content = document.getElementById("todayScheduleContent");
+        if (!card || !content) return;
+
+        const todayEvents = getTodayEvents();
+        card.classList.toggle("has-events", todayEvents.length > 0);
+
+        if (!todayEvents.length) {
+            content.innerHTML = `<div class="today-schedule-empty">今天目前沒有行程</div>`;
+            return;
+        }
+
+        content.innerHTML = enrichEventList(todayEvents);
     }
 
     function renderNextEventCountdown() {
+        renderTodayScheduleList();
         const event = getNextUpcomingEvent();
         const titleEl = document.getElementById("countdownEventTitle");
         const daysEl = document.getElementById("countdownDays");
