@@ -1,0 +1,110 @@
+{
+  "updatedAt": "2026-05-05T08:42:34.165Z",
+  "events": [
+    {
+      "date": "2026-04-17",
+      "label": "jj",
+      "shortLabel": "HERA EVENT",
+      "detail": "04/17 (FRI.) 韓國時間 17:00｜HERA Black Event in SEOUL",
+      "featured": false
+    },
+    {
+      "date": "2026-04-21",
+      "label": "jan",
+      "shortLabel": "LIVE HOUSE",
+      "detail": "04/21 (TUE.) 泰國時間 21:30｜GMMTV LIVE HOUSE",
+      "featured": false
+    },
+    {
+      "date": "2026-04-28",
+      "label": "jan",
+      "shortLabel": "LIVE HOUSE",
+      "detail": "04/28 (TUE.) 泰國時間 21:30｜GMMTV LIVE HOUSE",
+      "featured": false
+    },
+    {
+      "date": "2026-05-03",
+      "label": "janjingjing",
+      "shortLabel": "PREMIERE",
+      "detail": "05/03 (SUN.) 泰國時間 18:30｜Enemies With Benefits 首映會<br>05/03 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.1 GMMTV 首播<br>05/03 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.1 OneD 重播",
+      "featured": true
+    },
+    {
+      "date": "2026-05-05",
+      "label": "jj",
+      "shortLabel": "EVENT",
+      "detail": "05/05 (TUE.) 泰國時間 16:00｜LA Roche-Posay Briget Unlocked Exclusive Guests",
+      "featured": false
+    },
+    {
+      "date": "2026-05-10",
+      "label": "janjingjing",
+      "shortLabel": "ON AIR",
+      "detail": "05/10 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.2 GMMTV 首播<br>05/10 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.2 OneD 重播",
+      "featured": false
+    },
+    {
+      "date": "2026-05-17",
+      "label": "janjingjing",
+      "shortLabel": "ON AIR",
+      "detail": "05/17 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.3 GMMTV 首播<br>05/17 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.3 OneD 重播",
+      "featured": false
+    },
+    {
+      "date": "2026-05-24",
+      "label": "janjingjing",
+      "shortLabel": "ON AIR",
+      "detail": "05/24 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.4 GMMTV 首播<br>05/24 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.4 OneD 重播",
+      "featured": false
+    },
+    {
+      "date": "2026-05-31",
+      "label": "janjingjing",
+      "shortLabel": "ON AIR",
+      "detail": "05/31 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.5 GMMTV 首播<br>05/31 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.5 OneD 重播",
+      "featured": false
+    },
+    {
+      "date": "2026-06-07",
+      "label": "janjingjing",
+      "shortLabel": "ON AIR",
+      "detail": "06/07 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.6 GMMTV 首播<br>06/07 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.6 OneD 重播",
+      "featured": false
+    },
+    {
+      "date": "2026-06-13",
+      "label": "janjingjing",
+      "shortLabel": "FAN FEST",
+      "detail": "06/13 (SAT.) 泰國時間 17:00｜Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE",
+      "featured": true
+    },
+    {
+      "date": "2026-06-14",
+      "label": "janjingjing",
+      "shortLabel": "FAN FEST",
+      "detail": "06/14 (SUN.) 泰國時間 17:00｜Blush Blossom Fan Fest : Midnight Bloom in BITEC LIVE<br>06/14 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.7 GMMTV 首播<br>06/14 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.7 OneD 重播",
+      "featured": true
+    },
+    {
+      "date": "2026-06-21",
+      "label": "janjingjing",
+      "shortLabel": "ON AIR",
+      "detail": "06/21 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.8 GMMTV 首播<br>06/21 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.8 OneD 重播",
+      "featured": false
+    },
+    {
+      "date": "2026-06-28",
+      "label": "janjingjing",
+      "shortLabel": "ON AIR",
+      "detail": "06/28 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.9 GMMTV 首播<br>06/28 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.9 OneD 重播",
+      "featured": false
+    },
+    {
+      "date": "2026-07-05",
+      "label": "janjingjing",
+      "shortLabel": "FINAL EP",
+      "detail": "07/05 (SUN.) 泰國時間 20:30｜Enemies With Benefits EP.10 GMMTV 首播<br>07/05 (SUN.) 泰國時間 21:30｜Enemies With Benefits EP.10 OneD 重播",
+      "featured": true
+    }
+  ]
+}
