@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-05T08:42:34.165Z",
+  "updatedAt": "2026-05-05T08:43:21.548Z",
   "events": [
     {
       "date": "2026-04-17",
@@ -34,6 +34,13 @@
       "label": "jj",
       "shortLabel": "EVENT",
       "detail": "05/05 (TUE.) 泰國時間 16:00｜LA Roche-Posay Briget Unlocked Exclusive Guests",
+      "featured": false
+    },
+    {
+      "date": "2026-05-05",
+      "label": "janjingjing",
+      "shortLabel": "ONAIR",
+      "detail": "05/05 (TUE.) 泰國時間 21:30｜GMMTV LIVE HOUSE",
       "featured": false
     },
     {
