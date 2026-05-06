@@ -2003,6 +2003,20 @@
     .yt-preview-hint { left: 13px; bottom: 12px; font-size: 10px; padding: 6px 10px; }
 }
 
+
+/* ===== 🛠 Schedule Admin Sync Panel Only ===== */
+.schedule-admin-box { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(142,127,113,.14); }
+.schedule-manager-box { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(142,127,113,.14); }
+.schedule-manager-title { margin-bottom: 9px; font-size: 10px; letter-spacing: 1.4px; color: var(--accent-color); font-weight: 800; text-transform: uppercase; }
+.schedule-manager-list { display: grid; gap: 8px; }
+.schedule-manager-item { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: start; padding: 10px 11px; border-radius: 13px; background: rgba(255,255,255,.56); border: 1px solid rgba(234,223,211,.92); }
+.schedule-manager-info { min-width: 0; font-size: 11px; line-height: 1.55; color: #4a4038; }
+.schedule-manager-info strong { color: var(--accent-color); }
+.schedule-manager-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.schedule-manager-actions button { border: 1px solid rgba(185,146,114,.42); border-radius: 999px; padding: 6px 9px; font-size: 10px; font-weight: 800; cursor: pointer; background: rgba(255,255,255,.8); color: var(--accent-color); }
+.schedule-manager-actions button.danger { color: #c76485; border-color: rgba(199,100,133,.34); }
+@media (max-width: 600px) { .schedule-manager-item { grid-template-columns: 1fr; } .schedule-manager-actions { justify-content: flex-start; } }
+
 </style>
 
 </head>
@@ -2234,7 +2248,23 @@
                 <button type="button" onclick="clearScheduleCMS()">清空</button>
                 <button type="button" class="primary" onclick="addScheduleFromCMS()">加入行程</button>
             </div>
-            <div class="schedule-cms-note" id="cmsEventNote">新增後會自動儲存在此瀏覽器，重新整理後仍保留；同一天可新增多筆，會一起顯示並自動排序。</div>
+            <div class="schedule-cms-note" id="cmsEventNote">管理員模式：新增 / 編輯 / 刪除後會同步寫入 GitHub JSON；若沒有填入 Token，會先暫存在本機。</div>
+
+            <input id="cmsEventId" type="hidden" />
+            <div class="schedule-admin-box">
+                <label class="schedule-cms-field full">GitHub Token（只存在你的瀏覽器）
+                    <input id="cmsGithubToken" type="password" placeholder="貼上 GitHub Fine-grained token：Contents Read and write" autocomplete="off" />
+                </label>
+                <div class="schedule-cms-actions">
+                    <button type="button" onclick="saveGithubTokenFromCMS()">儲存 Token</button>
+                    <button type="button" onclick="syncScheduleFromGithub(true)">從 GitHub 同步</button>
+                </div>
+            </div>
+
+            <div class="schedule-manager-box">
+                <div class="schedule-manager-title">行程管理</div>
+                <div id="scheduleManagerList" class="schedule-manager-list">Loading schedules...</div>
+            </div>
         </div>
 
         <div id="nextEventCountdown" class="countdown-card">
@@ -2623,6 +2653,10 @@
     ];
 
     const CUSTOM_EVENTS_KEY = "janjingjing_custom_schedule_events_v1";
+    const GITHUB_SCHEDULE_FILE = "schedule-events.json";
+    const GITHUB_TOKEN_KEY = "janjingjing_github_schedule_token_v1";
+    const BASE_CALENDAR_EVENTS = calendarEvents.map(event => ({ ...event }));
+    let cloudScheduleEvents = [];
 
     function getWeekdayAbbr(dateStr) {
         const d = parseLocalDate(dateStr);
@@ -2634,49 +2668,136 @@
         return `${String(month).padStart(2, "0")}/${String(day).padStart(2, "0")}`;
     }
 
+    function getScheduleNote() { return document.getElementById("cmsEventNote"); }
+    function setScheduleNote(message) { const note = getScheduleNote(); if (note) note.textContent = message; }
+    function createScheduleId() { return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : `event_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`; }
+
+    function parseEventTitle(detail) {
+        const firstLine = String(detail || "").split(/<br\s*\/?>|\n/i)[0] || "";
+        const parts = firstLine.split(/[｜|]/);
+        return (parts[1] || firstLine).trim();
+    }
+
+    function normalizeScheduleEvent(event) {
+        const normalized = { ...event };
+        normalized.id = normalized.id || createScheduleId();
+        normalized.date = normalized.date || "";
+        normalized.label = normalized.label || "janjingjing";
+        normalized.shortLabel = normalized.shortLabel || (normalized.featured ? "FEATURED" : "EVENT");
+        normalized.time = normalized.time || getEventTime(normalized);
+        normalized.timezone = normalized.timezone || (String(normalized.detail || "").includes("韓國時間") ? "韓國時間" : String(normalized.detail || "").includes("台灣時間") ? "台灣時間" : "泰國時間");
+        normalized.title = normalized.title || parseEventTitle(normalized.detail);
+        normalized.featured = Boolean(normalized.featured);
+        normalized.detail = normalized.detail || `${formatDateSlash(normalized.date)} (${getWeekdayAbbr(normalized.date)}) ${normalized.timezone} ${normalized.time}｜${normalized.title}`;
+        return normalized;
+    }
+
     function loadCustomScheduleEvents() {
         try {
             const saved = JSON.parse(localStorage.getItem(CUSTOM_EVENTS_KEY) || "[]");
-            return Array.isArray(saved) ? saved : [];
-        } catch (error) {
-            console.warn("Failed to read custom schedule events", error);
-            return [];
-        }
+            return Array.isArray(saved) ? saved.map(normalizeScheduleEvent) : [];
+        } catch (error) { console.warn("Failed to read custom schedule events", error); return []; }
     }
 
     function saveCustomScheduleEvents(events) {
-        localStorage.setItem(CUSTOM_EVENTS_KEY, JSON.stringify(events));
+        localStorage.setItem(CUSTOM_EVENTS_KEY, JSON.stringify(events.map(normalizeScheduleEvent)));
     }
 
-    function applyCustomScheduleEvents() {
-        const saved = loadCustomScheduleEvents();
-        saved.forEach(event => {
-            const exists = calendarEvents.some(item =>
-                item.date === event.date &&
-                item.label === event.label &&
-                item.detail === event.detail
-            );
+    function mergeScheduleEvents(localEvents, githubEvents) {
+        const map = new Map();
+        [...localEvents, ...githubEvents].map(normalizeScheduleEvent).forEach(event => {
+            const key = event.id || `${event.date}_${event.time}_${event.label}_${event.title}`;
+            map.set(key, event);
+        });
+        return sortEventsByDateTime([...map.values()]);
+    }
+
+    function rebuildCalendarEvents(customEvents = cloudScheduleEvents) {
+        calendarEvents.length = 0;
+        BASE_CALENDAR_EVENTS.forEach(event => calendarEvents.push({ ...event }));
+        mergeScheduleEvents([], customEvents).forEach(event => {
+            const exists = calendarEvents.some(item => item.date === event.date && item.label === event.label && item.detail === event.detail);
             if (!exists) calendarEvents.push(event);
         });
+        calendarEvents.sort((a, b) => getEventDateObject(a) - getEventDateObject(b));
+    }
+
+    function getGithubToken() { return localStorage.getItem(GITHUB_TOKEN_KEY) || ""; }
+
+    function saveGithubTokenFromCMS() {
+        const input = document.getElementById("cmsGithubToken");
+        const token = input?.value.trim() || "";
+        if (!token) { localStorage.removeItem(GITHUB_TOKEN_KEY); setScheduleNote("GitHub Token 已清除；之後新增只會暫存在本機。"); return; }
+        localStorage.setItem(GITHUB_TOKEN_KEY, token);
+        if (input) input.value = "";
+        setScheduleNote("GitHub Token 已儲存在此瀏覽器；之後新增/編輯/刪除會同步到 GitHub JSON。");
+    }
+
+    async function fetchGithubScheduleFileMeta(token = "") {
+        const headers = { "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" };
+        if (token) headers.Authorization = `Bearer ${token}`;
+        const response = await fetch(`${GITHUB_CONTENTS_API}/${GITHUB_SCHEDULE_FILE}?ref=${REPO_BRANCH}`, { headers, cache: "no-store" });
+        if (response.status === 404) return null;
+        if (!response.ok) throw new Error(`GitHub JSON 讀取失敗：${response.status}`);
+        return response.json();
+    }
+
+    async function fetchGithubScheduleEvents() {
+        try {
+            const response = await fetch(`${RAW_BASE}/${GITHUB_SCHEDULE_FILE}?v=${Date.now()}`, { cache: "no-store" });
+            if (!response.ok) return [];
+            const data = await response.json();
+            const events = Array.isArray(data) ? data : Array.isArray(data.events) ? data.events : [];
+            return events.map(normalizeScheduleEvent);
+        } catch (error) { console.warn("GitHub schedule JSON 讀取失敗，改用本機行程", error); return []; }
+    }
+
+    function encodeBase64UTF8(value) { return btoa(unescape(encodeURIComponent(value))); }
+
+    async function saveScheduleEventsToGithub(events) {
+        const token = getGithubToken();
+        if (!token) { saveCustomScheduleEvents(events); setScheduleNote("已先儲存在本機。要同步 GitHub，請在管理員模式貼上 Token 後再儲存。"); return false; }
+        const normalized = sortEventsByDateTime(events.map(normalizeScheduleEvent));
+        const meta = await fetchGithubScheduleFileMeta(token);
+        const body = { message: `Update JanJingJing schedule ${new Date().toISOString()}`, content: encodeBase64UTF8(JSON.stringify({ events: normalized }, null, 2)), branch: REPO_BRANCH };
+        if (meta?.sha) body.sha = meta.sha;
+        const response = await fetch(`${GITHUB_CONTENTS_API}/${GITHUB_SCHEDULE_FILE}`, {
+            method: "PUT",
+            headers: { "Accept": "application/vnd.github+json", "Content-Type": "application/json", "X-GitHub-Api-Version": "2022-11-28", "Authorization": `Bearer ${token}` },
+            body: JSON.stringify(body)
+        });
+        if (!response.ok) throw new Error(`GitHub 同步失敗：${response.status} ${await response.text()}`);
+        saveCustomScheduleEvents(normalized);
+        return true;
+    }
+
+    async function syncScheduleFromGithub(showMessage = false) {
+        const githubEvents = await fetchGithubScheduleEvents();
+        const localEvents = loadCustomScheduleEvents();
+        cloudScheduleEvents = mergeScheduleEvents(localEvents, githubEvents);
+        saveCustomScheduleEvents(cloudScheduleEvents);
+        rebuildCalendarEvents(cloudScheduleEvents);
+        renderNextEventCountdown();
+        renderAutoCalendar(false);
+        renderScheduleManagerList();
+        if (showMessage) setScheduleNote(`已從 GitHub 同步 ${githubEvents.length} 筆雲端行程，並與本機行程合併。`);
     }
 
     function toggleScheduleCMS() {
         const panel = document.getElementById("scheduleCmsPanel");
-        if (panel) panel.classList.toggle("show");
+        if (panel) { panel.classList.toggle("show"); if (panel.classList.contains("show")) renderScheduleManagerList(); }
     }
 
     function clearScheduleCMS() {
-        ["cmsEventDate", "cmsEventTime", "cmsEventTitle", "cmsEventShortLabel"].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.value = "";
-        });
-        const featured = document.getElementById("cmsEventFeatured");
-        if (featured) featured.value = "false";
-        const note = document.getElementById("cmsEventNote");
-        if (note) note.textContent = "已清空。";
+        ["cmsEventId", "cmsEventDate", "cmsEventTime", "cmsEventTitle", "cmsEventShortLabel"].forEach(id => { const el = document.getElementById(id); if (el) el.value = ""; });
+        const label = document.getElementById("cmsEventLabel"); if (label) label.value = "janjingjing";
+        const timezone = document.getElementById("cmsEventTimezone"); if (timezone) timezone.value = "泰國時間";
+        const featured = document.getElementById("cmsEventFeatured"); if (featured) featured.value = "false";
+        setScheduleNote("已清空。若要同步 GitHub，請先儲存 Token。");
     }
 
-    function addScheduleFromCMS() {
+    function buildScheduleEventFromCMS() {
+        const id = document.getElementById("cmsEventId")?.value || createScheduleId();
         const date = document.getElementById("cmsEventDate")?.value;
         const time = document.getElementById("cmsEventTime")?.value;
         const label = document.getElementById("cmsEventLabel")?.value || "janjingjing";
@@ -2684,34 +2805,108 @@
         const title = document.getElementById("cmsEventTitle")?.value.trim();
         const shortLabelInput = document.getElementById("cmsEventShortLabel")?.value.trim();
         const featured = document.getElementById("cmsEventFeatured")?.value === "true";
-        const note = document.getElementById("cmsEventNote");
-
-        if (!date || !time || !title) {
-            if (note) note.textContent = "請至少填日期、時間、行程內容。";
-            return;
-        }
-
-        const event = {
-            date,
-            label,
-            shortLabel: shortLabelInput || (featured ? "FEATURED" : "EVENT"),
-            detail: `${formatDateSlash(date)} (${getWeekdayAbbr(date)}) ${timezone} ${time}｜${title}`,
-            featured
-        };
-
-        const saved = loadCustomScheduleEvents();
-        saved.push(event);
-        saveCustomScheduleEvents(saved);
-        calendarEvents.push(event);
-
-        renderNextEventCountdown();
-        renderAutoCalendar();
-
-        if (note) note.textContent = "已加入行程並自動儲存；同一天多筆行程也會一起顯示。";
-        clearScheduleCMS();
+        if (!date || !time || !title) return null;
+        return normalizeScheduleEvent({ id, date, time, timezone, title, label, shortLabel: shortLabelInput || (featured ? "FEATURED" : "EVENT"), detail: `${formatDateSlash(date)} (${getWeekdayAbbr(date)}) ${timezone} ${time}｜${title}`, featured });
     }
 
-    applyCustomScheduleEvents();
+    async function addScheduleFromCMS() {
+        const event = buildScheduleEventFromCMS();
+        if (!event) { setScheduleNote("請至少填日期、時間、行程內容。"); return; }
+        const existingIndex = cloudScheduleEvents.findIndex(item => item.id === event.id);
+        if (existingIndex >= 0) cloudScheduleEvents.splice(existingIndex, 1, event);
+        else cloudScheduleEvents.push(event);
+        cloudScheduleEvents = sortEventsByDateTime(cloudScheduleEvents.map(normalizeScheduleEvent));
+        saveCustomScheduleEvents(cloudScheduleEvents);
+        rebuildCalendarEvents(cloudScheduleEvents);
+        renderNextEventCountdown();
+        renderAutoCalendar(false);
+        renderScheduleManagerList();
+        let finalMessage = "已儲存在本機並自動排序；尚未同步 GitHub。";
+        try {
+            const synced = await saveScheduleEventsToGithub(cloudScheduleEvents);
+            finalMessage = synced ? "已同步寫入 GitHub JSON，新增完也已自動排序。" : "已儲存在本機並自動排序；尚未同步 GitHub。";
+        } catch (error) {
+            console.error(error);
+            finalMessage = "GitHub 同步失敗，但已保存在本機。請確認 Token 是否有 Contents Read and write 權限。";
+        }
+        clearScheduleCMS();
+        setScheduleNote(finalMessage);
+        renderScheduleManagerList();
+    }
+
+    function editScheduleEvent(eventId) {
+        const event = cloudScheduleEvents.find(item => item.id === eventId);
+        if (!event) return;
+        const normalized = normalizeScheduleEvent(event);
+        document.getElementById("cmsEventId").value = normalized.id;
+        document.getElementById("cmsEventDate").value = normalized.date;
+        document.getElementById("cmsEventTime").value = normalized.time;
+        document.getElementById("cmsEventLabel").value = normalized.label;
+        document.getElementById("cmsEventTimezone").value = normalized.timezone;
+        document.getElementById("cmsEventTitle").value = normalized.title;
+        document.getElementById("cmsEventShortLabel").value = normalized.shortLabel;
+        document.getElementById("cmsEventFeatured").value = String(Boolean(normalized.featured));
+        setScheduleNote("正在編輯行程；修改後按「加入行程」即可更新並同步 GitHub。");
+    }
+
+    async function deleteScheduleEvent(eventId) {
+        const event = cloudScheduleEvents.find(item => item.id === eventId);
+        if (!event) return;
+        if (!confirm(`確定刪除這筆行程？
+${event.date} ${event.time || ""} ${event.title || event.shortLabel || ""}`)) return;
+        cloudScheduleEvents = cloudScheduleEvents.filter(item => item.id !== eventId);
+        saveCustomScheduleEvents(cloudScheduleEvents);
+        rebuildCalendarEvents(cloudScheduleEvents);
+        renderNextEventCountdown();
+        renderAutoCalendar(false);
+        renderScheduleManagerList();
+        try {
+            const synced = await saveScheduleEventsToGithub(cloudScheduleEvents);
+            setScheduleNote(synced ? "已刪除並同步 GitHub JSON。" : "已刪除本機行程；尚未同步 GitHub。");
+        } catch (error) { console.error(error); setScheduleNote("已刪除本機行程，但 GitHub 同步失敗。請確認 Token 權限。"); }
+    }
+
+    function renderScheduleManagerList() {
+        const list = document.getElementById("scheduleManagerList");
+        if (!list) return;
+        const events = sortEventsByDateTime(cloudScheduleEvents.map(normalizeScheduleEvent));
+        if (!events.length) { list.innerHTML = `<div class="schedule-manager-item"><div class="schedule-manager-info">目前沒有自訂 / GitHub 行程。</div></div>`; return; }
+        list.innerHTML = events.map(event => `
+            <div class="schedule-manager-item">
+                <div class="schedule-manager-info">
+                    <strong>${escapeHTML(event.date)} ${escapeHTML(event.time || "")}</strong><br>
+                    ${formatEventTag(event.label)} ${escapeHTML(event.shortLabel || "EVENT")}｜${escapeHTML(event.title || parseEventTitle(event.detail))}
+                </div>
+                <div class="schedule-manager-actions">
+                    <button type="button" onclick="editScheduleEvent('${escapeHTML(event.id)}')">編輯</button>
+                    <button type="button" class="danger" onclick="deleteScheduleEvent('${escapeHTML(event.id)}')">刪除</button>
+                </div>
+            </div>
+        `).join("");
+    }
+
+    function isTodayCalendarDate(year, month, day) {
+        const today = new Date();
+        return today.getFullYear() === year && today.getMonth() + 1 === month && today.getDate() === day;
+    }
+
+    function scrollToTodayDate() {
+        const target = document.getElementById("calendarTodayCell") || document.querySelector(".calendar-day.today-event");
+        if (!target) return;
+        setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" }), 500);
+    }
+
+    async function initScheduleSystem() {
+        const tokenInput = document.getElementById("cmsGithubToken");
+        if (tokenInput && getGithubToken()) tokenInput.placeholder = "Token 已儲存；重新貼上可更新";
+        cloudScheduleEvents = loadCustomScheduleEvents();
+        rebuildCalendarEvents(cloudScheduleEvents);
+        renderNextEventCountdown();
+        renderAutoCalendar(true);
+        renderScheduleManagerList();
+        await syncScheduleFromGithub(false);
+        renderAutoCalendar(true);
+    }
 
     let currentTrack = Math.floor(Math.random() * playlist.length);
     let fadeTimer = null;
@@ -3550,12 +3745,18 @@
             const eventList = events.filter(item => item.day === day);
             const event = eventList[0];
             const cell = document.createElement("div");
+            const dateStr = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
             cell.className = "calendar-day";
+            cell.dataset.date = dateStr;
+
+            if (isTodayCalendarDate(year, month, day)) {
+                cell.classList.add("today-event");
+                cell.id = "calendarTodayCell";
+            }
 
             if (eventList.length) {
                 cell.classList.add("event-day");
                 if (eventList.some(item => item.featured)) cell.classList.add("major-event");
-                if (eventList.some(item => isTodayEvent(item))) cell.classList.add("today-event");
                 if (eventList.length > 1) {
                     cell.classList.add("multi-event");
                     cell.dataset.eventCount = String(eventList.length);
@@ -3602,7 +3803,7 @@
         return year < now.getFullYear() || (year === now.getFullYear() && month < now.getMonth() + 1);
     }
 
-    function renderAutoCalendar() {
+    function renderAutoCalendar(shouldScrollToToday = false) {
         if (!calendarMonthsTarget) return;
 
         const grouped = groupEventsByMonth(calendarEvents);
@@ -3630,6 +3831,8 @@
                 }
             });
         });
+
+        if (shouldScrollToToday) scrollToTodayDate();
     }
 
     const stage = document.getElementById("slideshowStage");
@@ -3973,9 +4176,8 @@
     }, { passive: true });
 
     initAutoPlaylistPlayers();
-    renderNextEventCountdown();
+    initScheduleSystem();
     setInterval(renderNextEventCountdown, 1000);
-    renderAutoCalendar();
     renderPhotos();
 </script>
 
