@@ -1,1 +1,16 @@
-[]
+{
+  "updatedAt": "2026-05-06T06:50:23.069Z",
+  "events": [
+    {
+      "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
+      "date": "2026-05-05",
+      "time": "21:30",
+      "timezone": "泰國時間",
+      "title": "GMMTV LIVE HOUSE",
+      "label": "janjingjing",
+      "shortLabel": "ON AIR",
+      "detail": "05/05 (TUE.) 泰國時間 21:30｜GMMTV LIVE HOUSE",
+      "featured": false
+    }
+  ]
+}
