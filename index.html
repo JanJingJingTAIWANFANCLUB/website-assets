@@ -1667,28 +1667,6 @@
 .calendar-tools { display: flex; justify-content: center; margin: -10px auto 22px; }
 .schedule-add-btn { border: 1px solid rgba(185,146,114,.42); background: rgba(255,255,255,.72); color: var(--accent-color); border-radius: 999px; padding: 10px 16px; font-size: 11px; font-weight: 700; letter-spacing: 1px; cursor: pointer; box-shadow: 0 8px 18px rgba(0,0,0,.06); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
 .schedule-add-btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.92); box-shadow: 0 12px 24px rgba(0,0,0,.08); }
-.github-sync-panel {
-    display: none;
-    max-width: 720px;
-    margin: 0 auto 24px;
-    padding: 14px 16px;
-    border-radius: 18px;
-    background: linear-gradient(145deg, rgba(255,255,255,.78), rgba(255,255,255,.42));
-    border: 1px solid rgba(255,255,255,.62);
-    box-shadow: 0 10px 24px rgba(0,0,0,.07), inset 0 1px 0 rgba(255,255,255,.88);
-    backdrop-filter: blur(18px) saturate(1.35);
-    -webkit-backdrop-filter: blur(18px) saturate(1.35);
-}
-.github-sync-panel.show { display: block; }
-.github-sync-title { font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent-gold); font-weight: 800; margin-bottom: 9px; }
-.github-sync-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
-.github-sync-row input { width: 100%; border: 1px solid #eadfd3; border-radius: 999px; padding: 10px 12px; font-family: var(--sans); font-size: 12px; color: #4a4038; background: rgba(255,255,255,.78); outline: none; }
-.github-sync-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-.github-sync-actions button, .github-sync-row button { border: 1px solid rgba(185,146,114,.42); border-radius: 999px; padding: 9px 14px; font-size: 11px; font-weight: 700; cursor: pointer; background: rgba(255,255,255,.75); color: var(--accent-color); }
-.github-sync-actions button.primary, .github-sync-row button.primary { background: var(--accent-color); color: #fff; }
-.github-sync-note { margin-top: 9px; font-size: 11px; line-height: 1.55; color: #8e7f71; }
-@media (max-width: 600px) { .calendar-tools { flex-wrap: wrap; gap: 8px; } .github-sync-row { grid-template-columns: 1fr; } }
-
 .schedule-cms-panel { display: none; max-width: 720px; margin: 0 auto 28px; padding: 16px; border-radius: 18px; background: linear-gradient(145deg, rgba(255,255,255,.78), rgba(255,255,255,.42)); border: 1px solid rgba(255,255,255,.62); box-shadow: 0 10px 24px rgba(0,0,0,.07), inset 0 1px 0 rgba(255,255,255,.88); backdrop-filter: blur(18px) saturate(1.35); -webkit-backdrop-filter: blur(18px) saturate(1.35); }
 .schedule-cms-panel.show { display: block; }
 .schedule-cms-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
@@ -1895,247 +1873,134 @@
 }
 
 
-
-/* ===== ✅ YouTube Direct Display Cards · no black iframe ===== */
-.yt-direct-player {
-    width: 100%;
-    min-height: 420px;
-    margin-bottom: 20px;
-    border-radius: 18px;
-    overflow: hidden;
-    position: relative;
-    display: grid;
-    place-items: center;
-    padding: 26px;
-    background:
-        radial-gradient(circle at 20% 18%, rgba(255,255,255,.42), transparent 26%),
-        radial-gradient(circle at 80% 10%, rgba(200,170,143,.18), transparent 30%),
-        linear-gradient(145deg, rgba(255,255,255,.82), rgba(247,241,234,.66));
-    border: 1px solid rgba(255,255,255,.62);
-    box-shadow: var(--shadow-medium);
-    backdrop-filter: blur(18px) saturate(1.25);
-    -webkit-backdrop-filter: blur(18px) saturate(1.25);
-}
-
-.yt-direct-card {
-    width: min(720px, 100%);
-    min-height: 260px;
-    border-radius: 26px;
-    padding: 28px 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 16px;
-    color: #4a4038;
-    background:
-        radial-gradient(circle at top left, rgba(255,255,255,.72), transparent 38%),
-        linear-gradient(145deg, rgba(255,255,255,.78), rgba(255,255,255,.42));
-    border: 1px solid rgba(255,255,255,.68);
-    box-shadow: 0 18px 42px rgba(0,0,0,.10), inset 0 1px 0 rgba(255,255,255,.88);
-}
-
-.yt-direct-icon {
-    width: 76px;
-    height: 76px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background: linear-gradient(145deg, #fff, #f1dfcf);
-    color: var(--accent-gold);
-    box-shadow: 0 14px 28px rgba(185,146,114,.22);
-    font-size: 1.55rem;
-}
-
-.yt-direct-title {
-    font-family: var(--serif);
-    font-size: clamp(1.2rem, 3vw, 1.65rem);
-    font-style: italic;
-    line-height: 1.35;
-    color: #3d342e;
-}
-
-.yt-direct-note {
-    max-width: 560px;
-    font-size: 12px;
-    line-height: 1.7;
-    color: #8e7f71;
-}
-
-.yt-direct-actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 4px;
-}
-
-.yt-direct-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: 1px solid rgba(185,146,114,.42);
+/* ===== 🎬 YouTube Preview Card · Custom 3 + Auto Original Title ===== */
+.yt-open-fallback {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    z-index: 6;
+    padding: 8px 14px;
     border-radius: 999px;
-    padding: 11px 18px;
-    font-size: 12px;
+    background: rgba(255,255,255,.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #4a4038;
+    font-size: 11px;
     font-weight: 800;
-    letter-spacing: .5px;
-    cursor: pointer;
+    letter-spacing: .4px;
     text-decoration: none;
-    color: #fff;
-    background: var(--accent-color);
-    box-shadow: 0 12px 24px rgba(142,127,113,.18);
-    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    box-shadow: 0 8px 18px rgba(0,0,0,.16);
 }
-
-.yt-direct-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 16px 28px rgba(142,127,113,.24);
-}
-
-.yt-direct-btn.secondary {
-    color: var(--accent-color);
-    background: rgba(255,255,255,.72);
-}
-
-
-
-.yt-preview-thumb {
+.yt-open-fallback:hover { background: rgba(255,255,255,.98); }
+.yt-loading {
     position: absolute;
     inset: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: .92;
-    transform: scale(1.01);
+    z-index: 4;
+    display: grid;
+    place-items: center;
+    background: #000;
+    color: rgba(255,255,255,.82);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
-
-.yt-preview-thumb::after {
+.yt-preview-card {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    cursor: pointer;
+    background: #111;
+    color: #fff;
+    text-align: left;
+    font-family: var(--sans);
+}
+.yt-preview-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.01);
+    transition: transform .35s ease, filter .35s ease;
+}
+.yt-preview-card::after {
     content: "";
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(to bottom, rgba(0,0,0,.10), rgba(0,0,0,.22) 42%, rgba(0,0,0,.58)),
-        radial-gradient(circle at center, rgba(255,255,255,.08), transparent 36%);
+    background: linear-gradient(180deg, rgba(0,0,0,.58), rgba(0,0,0,.08) 42%, rgba(0,0,0,.50));
+    pointer-events: none;
 }
-
-.yt-preview-card {
-    position: relative;
-    width: min(960px, 100%);
-    aspect-ratio: 16 / 9;
-    border-radius: 18px;
-    overflow: hidden;
-    display: block;
-    text-decoration: none;
-    color: #fff;
-    box-shadow: var(--shadow-medium);
-    background: #151515;
+.yt-preview-card:hover img {
+    transform: scale(1.045);
+    filter: brightness(1.04) saturate(1.04);
 }
-
-.yt-preview-fallback-bg {
+.yt-preview-title {
     position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 28% 22%, rgba(255,255,255,.18), transparent 26%),
-        radial-gradient(circle at 78% 18%, rgba(200,170,143,.24), transparent 28%),
-        linear-gradient(135deg, #1e1b19, #4b4038 58%, #8e7f71);
-}
-
-.yt-preview-top-title {
-    position: absolute;
-    top: 16px;
-    left: 18px;
-    right: 18px;
+    left: 22px;
+    top: 18px;
+    right: 22px;
     z-index: 2;
-    font-size: clamp(12px, 2vw, 17px);
-    font-weight: 800;
-    line-height: 1.35;
-    text-shadow: 0 2px 8px rgba(0,0,0,.45);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    color: #fff;
+    font-size: clamp(15px, 2.4vw, 22px);
+    font-weight: 900;
+    line-height: 1.25;
+    letter-spacing: .2px;
+    text-shadow: 0 2px 10px rgba(0,0,0,.56);
 }
-
 .yt-preview-play {
     position: absolute;
     left: 50%;
     top: 50%;
-    z-index: 3;
+    z-index: 2;
     transform: translate(-50%, -50%);
-    width: clamp(58px, 8vw, 78px);
-    height: clamp(42px, 6vw, 56px);
+    width: 76px;
+    height: 54px;
     border-radius: 16px;
     display: grid;
     place-items: center;
-    background: #ff0033;
+    background: #ff2b22;
     color: #fff;
-    box-shadow: 0 14px 34px rgba(0,0,0,.28);
-    font-size: clamp(22px, 3vw, 31px);
-    transition: transform .2s ease;
+    box-shadow: 0 12px 30px rgba(0,0,0,.30);
+    font-size: 28px;
+    padding-left: 3px;
 }
-
-.yt-preview-bottom {
+.yt-preview-hint {
     position: absolute;
     left: 18px;
-    right: 18px;
     bottom: 16px;
     z-index: 2;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 12px;
-}
-
-.yt-preview-label {
-    width: fit-content;
-    padding: 5px 11px;
-    border-radius: 999px;
-    background: rgba(255,255,255,.18);
-    border: 1px solid rgba(255,255,255,.22);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: .8px;
-}
-
-.yt-preview-open {
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    padding: 9px 13px;
+    padding: 7px 12px;
     border-radius: 999px;
-    background: rgba(255,255,255,.82);
-    color: #4a4038;
+    background: rgba(0,0,0,.48);
+    color: rgba(255,255,255,.92);
     font-size: 11px;
-    font-weight: 900;
-    white-space: nowrap;
+    font-weight: 800;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
-
-.yt-preview-card:hover .yt-preview-play {
-    transform: translate(-50%, -50%) scale(1.06);
+.yt-preview-card + iframe,
+.full-vbox iframe.yt-hidden-before-play {
+    opacity: 0;
+    pointer-events: none;
 }
-
-.yt-direct-card { display: none; }
-
+.full-vbox iframe.yt-playing {
+    opacity: 1;
+    pointer-events: auto;
+}
 @media (max-width: 600px) {
-    .yt-direct-player {
-        min-height: 330px;
-        padding: 16px;
-        border-radius: 16px;
-    }
-    .yt-direct-card {
-        min-height: 250px;
-        padding: 22px 16px;
-        border-radius: 22px;
-    }
-    .yt-direct-icon {
-        width: 64px;
-        height: 64px;
-        font-size: 1.3rem;
-    }
+    .yt-preview-title { left: 16px; top: 14px; right: 16px; font-size: 14px; }
+    .yt-preview-play { width: 62px; height: 44px; border-radius: 13px; font-size: 22px; }
+    .yt-preview-hint { left: 13px; bottom: 12px; font-size: 10px; padding: 6px 10px; }
 }
 
 </style>
@@ -2309,12 +2174,14 @@
                 </div>
             </div>
 
-            <div
-                id="musicPlayer"
-                class="yt-direct-player"
-                data-url="https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQFm0v9Z_VLxKLtst70K0cYs"
-                data-label="JANJINGJING"
-                data-icon="fas fa-star">
+            <div class="full-vbox">
+                <iframe
+                    id="musicPlayer"
+                    src="https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQFm0v9Z_VLxKLtst70K0cYs"
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
             </div>
         </div>
     </section>
@@ -2326,29 +2193,6 @@
             <button type="button" class="schedule-add-btn" onclick="toggleScheduleCMS()">
                 <i class="fas fa-plus"></i> 一鍵新增行程
             </button>
-            <button type="button" class="schedule-add-btn" onclick="toggleGitHubSyncPanel()">
-                <i class="fab fa-github"></i> GitHub 同步設定
-            </button>
-            <button type="button" class="schedule-add-btn" onclick="loadScheduleFromGitHub()">
-                <i class="fas fa-cloud-arrow-down"></i> 讀取 GitHub 行程
-            </button>
-            <button type="button" class="schedule-add-btn" onclick="syncScheduleToGitHub()">
-                <i class="fas fa-cloud-arrow-up"></i> 同步到 GitHub
-            </button>
-        </div>
-
-        <div id="githubSyncPanel" class="github-sync-panel" aria-label="GitHub 行程同步設定">
-            <div class="github-sync-title">GitHub Schedule Sync</div>
-            <div class="github-sync-row">
-                <input id="githubTokenInput" type="password" placeholder="貼上新的 GitHub Fine-grained Token（只存在這台瀏覽器）" autocomplete="off" />
-                <button type="button" class="primary" onclick="saveGitHubTokenFromInput()">儲存 Token</button>
-            </div>
-            <div class="github-sync-actions">
-                <button type="button" onclick="clearGitHubToken()">清除 Token</button>
-                <button type="button" onclick="loadScheduleFromGitHub()">讀取 GitHub</button>
-                <button type="button" class="primary" onclick="syncScheduleToGitHub()">同步到 GitHub</button>
-            </div>
-            <div class="github-sync-note" id="githubSyncNote">Token 不會寫進網站原始碼，只會存在你目前這台瀏覽器。行程會同步到 website-assets / schedule.json。</div>
         </div>
 
         <div id="scheduleCmsPanel" class="schedule-cms-panel" aria-label="新增行程">
@@ -2467,12 +2311,14 @@
                 </div>
             </div>
 
-            <div
-                id="showPlayer"
-                class="yt-direct-player"
-                data-url="https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQH9G4iN9M5Tc1AaJ95OUSYW"
-                data-label="LANEIGE Let it go Season 2（全集）"
-                data-icon="fas fa-tv">
+            <div class="full-vbox">
+                <iframe
+                    id="showPlayer"
+                   src="https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQH9G4iN9M5Tc1AaJ95OUSYW"
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
             </div>
         </div>
     </section>
@@ -2552,12 +2398,14 @@
     </div>
 </div>
 
-        <div
-            id="jjjPlayer"
-            class="yt-direct-player"
-            data-url="https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQH4jHJNA84ujR25HcOfeuea"
-            data-label="ลัลล์ไม่ชอบไวน์ (Enemies with Benefits)"
-            data-icon="fas fa-heart">
+        <div class="full-vbox">
+            <iframe
+                id="jjjPlayer"
+                src="https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQH4jHJNA84ujR25HcOfeuea"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
         </div>
 
         <div class="category-header">
@@ -2775,8 +2623,6 @@
     ];
 
     const CUSTOM_EVENTS_KEY = "janjingjing_custom_schedule_events_v1";
-    const GITHUB_SCHEDULE_FILENAME = "schedule.json";
-    const GITHUB_SYNC_TOKEN_KEY = "janjingjing_github_schedule_token_v1";
 
     function getWeekdayAbbr(dateStr) {
         const d = parseLocalDate(dateStr);
@@ -2814,170 +2660,6 @@
         });
     }
 
-
-    function getGitHubSyncNote() {
-        return document.getElementById("githubSyncNote");
-    }
-
-    function setGitHubSyncNote(message) {
-        const note = getGitHubSyncNote();
-        if (note) note.textContent = message;
-    }
-
-    function toggleGitHubSyncPanel() {
-        const panel = document.getElementById("githubSyncPanel");
-        if (panel) panel.classList.toggle("show");
-    }
-
-    function getGitHubToken() {
-        return localStorage.getItem(GITHUB_SYNC_TOKEN_KEY) || "";
-    }
-
-    function saveGitHubTokenFromInput() {
-        const input = document.getElementById("githubTokenInput");
-        const token = input ? input.value.trim() : "";
-        if (!token) {
-            setGitHubSyncNote("請先貼上 GitHub Token。");
-            return;
-        }
-        localStorage.setItem(GITHUB_SYNC_TOKEN_KEY, token);
-        if (input) input.value = "";
-        setGitHubSyncNote("Token 已儲存在這台瀏覽器。新增行程後會嘗試自動同步到 GitHub。");
-    }
-
-    function clearGitHubToken() {
-        localStorage.removeItem(GITHUB_SYNC_TOKEN_KEY);
-        setGitHubSyncNote("已清除這台瀏覽器保存的 Token。");
-    }
-
-    function base64EncodeUnicode(str) {
-        const bytes = new TextEncoder().encode(str);
-        let binary = "";
-        bytes.forEach(byte => binary += String.fromCharCode(byte));
-        return btoa(binary);
-    }
-
-    function base64DecodeUnicode(base64) {
-        const binary = atob(String(base64 || "").replace(/\n/g, ""));
-        const bytes = Uint8Array.from(binary, ch => ch.charCodeAt(0));
-        return new TextDecoder().decode(bytes);
-    }
-
-    function uniqueScheduleKey(event) {
-        return `${event.date}||${event.label}||${event.detail}`;
-    }
-
-    function dedupeScheduleEvents(events) {
-        const map = new Map();
-        (events || []).forEach(event => {
-            if (!event || !event.date || !event.detail) return;
-            map.set(uniqueScheduleKey(event), event);
-        });
-        return Array.from(map.values());
-    }
-
-    function mergeScheduleEvents(events) {
-        let added = 0;
-        dedupeScheduleEvents(events).forEach(event => {
-            const exists = calendarEvents.some(item => uniqueScheduleKey(item) === uniqueScheduleKey(event));
-            if (!exists) {
-                calendarEvents.push(event);
-                added++;
-            }
-        });
-        return added;
-    }
-
-    async function getGitHubScheduleFile() {
-        const token = getGitHubToken();
-        const headers = {
-            "Accept": "application/vnd.github+json",
-            "X-GitHub-Api-Version": "2022-11-28"
-        };
-        if (token) headers.Authorization = `Bearer ${token}`;
-
-        const url = `https://api.github.com/repos/${YOUR_GITHUB_USERNAME}/${REPO_NAME}/contents/${GITHUB_SCHEDULE_FILENAME}?ref=${REPO_BRANCH}`;
-        const response = await fetch(url, { headers, cache: "no-store" });
-
-        if (response.status === 404) return { sha: null, events: [] };
-        if (!response.ok) throw new Error(`讀取 GitHub schedule.json 失敗：${response.status}`);
-
-        const data = await response.json();
-        const text = base64DecodeUnicode(data.content || "");
-        const parsed = JSON.parse(text || "{}");
-        const events = Array.isArray(parsed) ? parsed : (Array.isArray(parsed.events) ? parsed.events : []);
-        return { sha: data.sha, events };
-    }
-
-    async function loadScheduleFromGitHub(options = {}) {
-        try {
-            if (!options.silent) setGitHubSyncNote("正在讀取 GitHub schedule.json...");
-            const remote = await getGitHubScheduleFile();
-            const added = mergeScheduleEvents(remote.events);
-            renderNextEventCountdown();
-            renderAutoCalendar();
-            if (!options.silent) setGitHubSyncNote(`已讀取 GitHub 行程，新增 ${added} 筆到目前頁面。`);
-            return true;
-        } catch (error) {
-            console.warn(error);
-            if (!options.silent) setGitHubSyncNote(error.message || "讀取 GitHub 失敗。請確認 Token / repo 權限。");
-            return false;
-        }
-    }
-
-    async function syncScheduleToGitHub(silent = false) {
-        const token = getGitHubToken();
-        if (!token) {
-            const panel = document.getElementById("githubSyncPanel");
-            if (panel) panel.classList.add("show");
-            setGitHubSyncNote("請先貼上並儲存 GitHub Token，才可以同步到 GitHub。");
-            return false;
-        }
-
-        try {
-            if (!silent) setGitHubSyncNote("正在同步 schedule.json 到 GitHub...");
-            const remote = await getGitHubScheduleFile();
-            mergeScheduleEvents(remote.events);
-            const allEvents = dedupeScheduleEvents(calendarEvents).sort((a, b) => getEventDateObject(a) - getEventDateObject(b));
-            const payload = {
-                updatedAt: new Date().toISOString(),
-                events: allEvents
-            };
-
-            const body = {
-                message: `Update JanJingJing schedule ${new Date().toLocaleString("zh-TW")}`,
-                content: base64EncodeUnicode(JSON.stringify(payload, null, 2)),
-                branch: REPO_BRANCH
-            };
-            if (remote.sha) body.sha = remote.sha;
-
-            const response = await fetch(`https://api.github.com/repos/${YOUR_GITHUB_USERNAME}/${REPO_NAME}/contents/${GITHUB_SCHEDULE_FILENAME}`, {
-                method: "PUT",
-                headers: {
-                    "Accept": "application/vnd.github+json",
-                    "Content-Type": "application/json",
-                    "X-GitHub-Api-Version": "2022-11-28",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify(body)
-            });
-
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`同步失敗：${response.status} ${errorText.slice(0, 160)}`);
-            }
-
-            renderNextEventCountdown();
-            renderAutoCalendar();
-            setGitHubSyncNote(`同步完成：已更新 ${allEvents.length} 筆行程到 website-assets/${GITHUB_SCHEDULE_FILENAME}。`);
-            return true;
-        } catch (error) {
-            console.warn(error);
-            setGitHubSyncNote(error.message || "同步 GitHub 失敗。請確認 Token 權限是 Contents Read and write。");
-            return false;
-        }
-    }
-
     function toggleScheduleCMS() {
         const panel = document.getElementById("scheduleCmsPanel");
         if (panel) panel.classList.toggle("show");
@@ -2994,7 +2676,7 @@
         if (note) note.textContent = "已清空。";
     }
 
-    async function addScheduleFromCMS() {
+    function addScheduleFromCMS() {
         const date = document.getElementById("cmsEventDate")?.value;
         const time = document.getElementById("cmsEventTime")?.value;
         const label = document.getElementById("cmsEventLabel")?.value || "janjingjing";
@@ -3027,13 +2709,6 @@
 
         if (note) note.textContent = "已加入行程並自動儲存；同一天多筆行程也會一起顯示。";
         clearScheduleCMS();
-
-        if (getGitHubToken()) {
-            const ok = await syncScheduleToGitHub(true);
-            if (note) note.textContent = ok
-                ? "已加入行程，並同步到 GitHub schedule.json。"
-                : "已加入本機行程，但 GitHub 同步失敗，請檢查同步設定。";
-        }
     }
 
     applyCustomScheduleEvents();
@@ -3342,125 +3017,260 @@
         }
     }
 
-
-    function getYouTubeOpenUrl(url) {
-        const raw = String(url || "");
-        let playlistId = "";
-        let videoId = "";
-
-        if (raw.includes("list=")) {
-            playlistId = raw.split("list=")[1].split("&")[0];
-        }
-
-        const embedMatch = raw.match(/youtube\.com\/embed\/([^?&]+)/) || raw.match(/youtube-nocookie\.com\/embed\/([^?&]+)/);
-        if (embedMatch && embedMatch[1] && embedMatch[1] !== "videoseries") {
-            videoId = embedMatch[1];
-        }
-
-        if (playlistId && videoId) return `https://www.youtube.com/watch?v=${videoId}&list=${playlistId}`;
-        if (playlistId) return `https://www.youtube.com/playlist?list=${playlistId}`;
-        if (videoId) return `https://www.youtube.com/watch?v=${videoId}`;
-        return raw;
+    function extractYouTubeListId(url) {
+        const text = String(url || "");
+        const match = text.match(/[?&]list=([^&]+)/) || text.match(/videoseries\?list=([^&]+)/);
+        return match ? decodeURIComponent(match[1]) : "";
     }
 
-    function getYouTubeVideoIdFromUrl(raw) {
-        const text = String(raw || "");
-        const embedMatch = text.match(/youtube\.com\/embed\/([^?&/]+)/);
-        if (embedMatch && embedMatch[1] !== "videoseries") return embedMatch[1];
+    function extractYouTubeVideoId(url) {
+        const text = String(url || "");
         const watchMatch = text.match(/[?&]v=([^&]+)/);
-        if (watchMatch) return watchMatch[1];
+        if (watchMatch) return decodeURIComponent(watchMatch[1]);
+
+        const embedMatch = text.match(/youtube(?:-nocookie)?\.com\/embed\/([^?&/]+)/);
+        if (embedMatch && embedMatch[1] !== "videoseries") return decodeURIComponent(embedMatch[1]);
+
         const shortMatch = text.match(/youtu\.be\/([^?&/]+)/);
-        if (shortMatch) return shortMatch[1];
+        if (shortMatch) return decodeURIComponent(shortMatch[1]);
+
         return "";
     }
 
-    function getYouTubeThumbUrl(url, fallbackThumb = "") {
-        const videoId = getYouTubeVideoIdFromUrl(url);
-        if (videoId) return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-        return fallbackThumb || "";
-    }
+    const playlistFirstVideoMap = {
+        "PLcOf7aGFMWQFm0v9Z_VLxKLtst70K0cYs": "xWvhq6bsde8",
+        "PLcOf7aGFMWQH4jHJNA84ujR25HcOfeuea": "Jwv6V3Oo9P4",
+        "PLcOf7aGFMWQEB3SumKkyDRddq267qLYni": "0EPN_IlU2gU"
+    };
 
-    async function hydrateYouTubeOEmbed(target, openUrl) {
-        try {
-            const response = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(openUrl)}&format=json`, { cache: "force-cache" });
-            if (!response.ok) return;
-            const data = await response.json();
-            const titleEl = target.querySelector(".yt-preview-top-title");
-            const thumbEl = target.querySelector(".yt-preview-thumb");
-            if (data.title && titleEl) titleEl.textContent = data.title;
-            if (data.thumbnail_url && thumbEl && !thumbEl.dataset.locked) {
-                thumbEl.style.backgroundImage = `url('${data.thumbnail_url}')`;
-                thumbEl.classList.remove("yt-preview-fallback-bg");
-            }
-        } catch (error) {
-            // oEmbed 只是用來補預覽圖，失敗也不影響觀看按鈕
-        }
-    }
+    // 只有這三個固定使用你指定的自訂標題；其他影片 / 播放清單會自動抓 YouTube 原標題。
+    const playlistPreviewTitleMap = {
+        "PLcOf7aGFMWQFm0v9Z_VLxKLtst70K0cYs": "งั้นรักละ (Don’t wanna, But I Do) Ost.ลัลล์ไม่ชอบไวน์ Enemies With Benefits - Jan, Jingjing",
+        "PLcOf7aGFMWQH4jHJNA84ujR25HcOfeuea": "ลัลล์ไม่ชอบไวน์ ENEMIES WITH BENEFITS | GMMTV 2026",
+        "PLcOf7aGFMWQEB3SumKkyDRddq267qLYni": "[Eng Sub] ลัลล์ไม่ชอบไวน์ Enemies With Benefits | EP.1"
+    };
 
-    function renderYTDirectCard(target, url, label, iconHTML = "") {
-        if (!target) return;
-        const openUrl = getYouTubeOpenUrl(url);
-        const title = label || target.dataset.label || "YouTube Playlist";
-        const thumbUrl = getYouTubeThumbUrl(url, target.dataset.thumb || "");
-        const hasThumb = Boolean(thumbUrl);
-        target.dataset.url = url;
-        target.dataset.label = title;
+    const videoPreviewTitleMap = {
+        "xWvhq6bsde8": "งั้นรักละ (Don’t wanna, But I Do) Ost.ลัลล์ไม่ชอบไวน์ Enemies With Benefits - Jan, Jingjing",
+        "Jwv6V3Oo9P4": "ลัลล์ไม่ชอบไวน์ ENEMIES WITH BENEFITS | GMMTV 2026",
+        "0EPN_IlU2gU": "[Eng Sub] ลัลล์ไม่ชอบไวน์ Enemies With Benefits | EP.1"
+    };
 
-        target.innerHTML = `
-            <a class="yt-preview-card" href="${openUrl}" target="_blank" rel="noopener" aria-label="${title}">
-                ${hasThumb
-                    ? `<div class="yt-preview-thumb" style="background-image:url('${thumbUrl}')" data-locked="1"></div>`
-                    : `<div class="yt-preview-thumb yt-preview-fallback-bg"></div>`
+    const youtubeTitleCache = new Map();
+
+    async function resolvePlaylistFirstVideoId(listId, sourceUrl = "") {
+        const directVideoId = extractYouTubeVideoId(sourceUrl);
+        if (directVideoId) return directVideoId;
+        if (playlistFirstVideoMap[listId]) return playlistFirstVideoMap[listId];
+
+        const cacheKey = `yt_playlist_first_video_${listId}`;
+        const cached = sessionStorage.getItem(cacheKey) || localStorage.getItem(cacheKey);
+        if (cached) return cached;
+
+        const playlistUrl = `https://www.youtube.com/playlist?list=${encodeURIComponent(listId)}`;
+        const endpoints = [
+            `https://noembed.com/embed?url=${encodeURIComponent(playlistUrl)}`,
+            `https://www.youtube.com/oembed?format=json&url=${encodeURIComponent(playlistUrl)}`
+        ];
+
+        for (const endpoint of endpoints) {
+            try {
+                const res = await fetch(endpoint, { cache: "no-store" });
+                if (!res.ok) continue;
+                const data = await res.json();
+                const thumb = data.thumbnail_url || data.thumbnail || "";
+                const match = String(thumb).match(/\/vi\/([^/]+)/);
+                if (match && match[1]) {
+                    const videoId = decodeURIComponent(match[1]);
+                    sessionStorage.setItem(cacheKey, videoId);
+                    localStorage.setItem(cacheKey, videoId);
+                    return videoId;
                 }
-                <div class="yt-preview-top-title">${title}</div>
-                <div class="yt-preview-play"><i class="fas fa-play"></i></div>
-                <div class="yt-preview-bottom">
-                    <span class="yt-preview-label">Playlist Preview</span>
-                    <span class="yt-preview-open"><i class="fab fa-youtube"></i> YouTube</span>
-                </div>
-            </a>
+            } catch (error) {
+                console.warn("自動抓 playlist 第一支影片失敗，嘗試下一個來源：", error);
+            }
+        }
+        return "";
+    }
+
+    async function fetchYouTubeOriginalTitle(videoId, fallbackLabel = "") {
+        if (!videoId) return fallbackLabel || "Click to Play";
+        if (videoPreviewTitleMap[videoId]) return videoPreviewTitleMap[videoId];
+        if (youtubeTitleCache.has(videoId)) return youtubeTitleCache.get(videoId);
+
+        const storageKey = `yt_original_title_${videoId}`;
+        const cached = sessionStorage.getItem(storageKey) || localStorage.getItem(storageKey);
+        if (cached) {
+            youtubeTitleCache.set(videoId, cached);
+            return cached;
+        }
+
+        const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+        const endpoints = [
+            `https://noembed.com/embed?url=${encodeURIComponent(videoUrl)}`,
+            `https://www.youtube.com/oembed?format=json&url=${encodeURIComponent(videoUrl)}`
+        ];
+
+        for (const endpoint of endpoints) {
+            try {
+                const res = await fetch(endpoint, { cache: "no-store" });
+                if (!res.ok) continue;
+                const data = await res.json();
+                const title = (data.title || "").trim();
+                if (title) {
+                    youtubeTitleCache.set(videoId, title);
+                    sessionStorage.setItem(storageKey, title);
+                    localStorage.setItem(storageKey, title);
+                    return title;
+                }
+            } catch (error) {
+                console.warn("自動抓 YouTube 原標題失敗，嘗試下一個來源：", error);
+            }
+        }
+
+        return fallbackLabel || "Click to Play";
+    }
+
+    async function getPreviewTitle(url, fallbackLabel = "") {
+        const listId = extractYouTubeListId(url);
+        const videoId = extractYouTubeVideoId(url) || (listId ? await resolvePlaylistFirstVideoId(listId, url) : "");
+
+        if (listId && playlistPreviewTitleMap[listId]) return playlistPreviewTitleMap[listId];
+        if (videoId && videoPreviewTitleMap[videoId]) return videoPreviewTitleMap[videoId];
+
+        return await fetchYouTubeOriginalTitle(videoId, fallbackLabel);
+    }
+
+    async function buildPlayableYouTubeUrl(url, autoplay = false) {
+        const text = String(url || "").trim();
+        const listId = extractYouTubeListId(text);
+        const videoIdFromUrl = extractYouTubeVideoId(text);
+
+        if (listId) {
+            const videoId = await resolvePlaylistFirstVideoId(listId, text);
+            if (videoId) {
+                return `https://www.youtube-nocookie.com/embed/${videoId}?list=${listId}${autoplay ? "&autoplay=1" : ""}&rel=0&modestbranding=1`;
+            }
+            return `https://www.youtube-nocookie.com/embed/videoseries?list=${listId}${autoplay ? "&autoplay=1" : ""}&rel=0&modestbranding=1`;
+        }
+
+        if (videoIdFromUrl) {
+            return `https://www.youtube-nocookie.com/embed/${videoIdFromUrl}${autoplay ? "?autoplay=1&rel=0&modestbranding=1" : "?rel=0&modestbranding=1"}`;
+        }
+
+        return text;
+    }
+
+    function buildYouTubeFallbackUrl(originalUrl, playableUrl) {
+        const listId = extractYouTubeListId(originalUrl) || extractYouTubeListId(playableUrl);
+        const videoId = extractYouTubeVideoId(originalUrl) || extractYouTubeVideoId(playableUrl);
+        if (videoId && listId) return `https://www.youtube.com/watch?v=${videoId}&list=${listId}`;
+        if (videoId) return `https://www.youtube.com/watch?v=${videoId}`;
+        if (listId) return `https://www.youtube.com/playlist?list=${listId}`;
+        return originalUrl;
+    }
+
+    function escapeHTML(value) {
+        return String(value || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function getPreviewThumb(videoId) {
+        if (!videoId) return "";
+        return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    }
+
+    async function renderYouTubePreview(playerId, url, titleOverride = "") {
+        const oldIframe = document.getElementById(playerId);
+        if (!oldIframe) return;
+        const wrap = oldIframe.closest(".full-vbox");
+        if (!wrap) return;
+
+        const listId = extractYouTubeListId(url);
+        const videoId = extractYouTubeVideoId(url) || (listId ? await resolvePlaylistFirstVideoId(listId, url) : "");
+        const title = await getPreviewTitle(url, titleOverride);
+        const playableUrl = await buildPlayableYouTubeUrl(url, false);
+        const fallbackUrl = buildYouTubeFallbackUrl(url, playableUrl);
+        const thumb = getPreviewThumb(videoId);
+
+        wrap.innerHTML = `
+            <iframe
+                id="${playerId}"
+                class="yt-hidden-before-play"
+                src="about:blank"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            <button type="button" class="yt-preview-card" aria-label="播放 ${escapeHTML(title)}">
+                ${thumb ? `<img src="${thumb}" alt="${escapeHTML(title)}" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg';">` : ""}
+                <span class="yt-preview-title">${escapeHTML(title)}</span>
+                <span class="yt-preview-play"><i class="fas fa-play"></i></span>
+                <span class="yt-preview-hint"><i class="fab fa-youtube"></i> Click to Play</span>
+            </button>
+            ${/^https?:\/\//.test(fallbackUrl) ? `<a class="yt-open-fallback" href="${fallbackUrl}" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> YouTube</a>` : ""}
         `;
 
-        hydrateYouTubeOEmbed(target, openUrl);
-    }
-
-    function copyYouTubeLink(url) {
-        navigator.clipboard?.writeText(url).then(() => {
-            alert("已複製 YouTube 連結");
-        }).catch(() => {
-            prompt("複製這個連結：", url);
+        const preview = wrap.querySelector(".yt-preview-card");
+        preview.addEventListener("click", async () => {
+            await playYouTubeInPlace(playerId, url);
         });
     }
 
-    function renderAllYTDirectPlayers() {
-        document.querySelectorAll(".yt-direct-player").forEach(player => {
-            const iconClass = player.dataset.icon || "fab fa-youtube";
-            renderYTDirectCard(
-                player,
-                player.dataset.url || "",
-                player.dataset.label || "YouTube Playlist",
-                `<i class="${iconClass}"></i>`
-            );
+    async function playYouTubeInPlace(playerId, url) {
+        const iframe = document.getElementById(playerId);
+        if (!iframe) return;
+        const wrap = iframe.closest(".full-vbox");
+        if (wrap) wrap.querySelectorAll(".yt-preview-card, .yt-loading").forEach(el => el.remove());
+        iframe.classList.remove("yt-hidden-before-play");
+        iframe.classList.add("yt-playing");
+        iframe.src = await buildPlayableYouTubeUrl(url, true);
+    }
+
+    async function setYouTubePlayerSrc(playerId, url, autoplay = false, titleOverride = "") {
+        if (autoplay) {
+            await renderYouTubePreview(playerId, url, titleOverride);
+            await playYouTubeInPlace(playerId, url);
+            return;
+        }
+        await renderYouTubePreview(playerId, url, titleOverride);
+    }
+
+    function findInitialDropdownLabel(iframe) {
+        const wrap = iframe.closest(".full-vbox");
+        let header = wrap ? wrap.previousElementSibling : null;
+        while (header && !header.classList?.contains("category-header")) header = header.previousElementSibling;
+        const src = iframe.getAttribute("src") || "";
+        const srcList = extractYouTubeListId(src);
+        const srcVideo = extractYouTubeVideoId(src);
+        if (header) {
+            const items = header.querySelectorAll(".dropdown-content div");
+            for (const item of items) {
+                const onclick = item.getAttribute("onclick") || "";
+                const itemList = extractYouTubeListId(onclick);
+                const itemVideo = extractYouTubeVideoId(onclick);
+                if ((srcList && itemList === srcList) || (srcVideo && itemVideo === srcVideo)) {
+                    return item.querySelector("span")?.textContent.trim() || item.textContent.trim();
+                }
+            }
+        }
+        return "";
+    }
+
+    function initAutoPlaylistPlayers() {
+        document.querySelectorAll(".full-vbox iframe[id]").forEach(iframe => {
+            const src = iframe.getAttribute("src") || "";
+            if (/youtube(?:-nocookie)?\.com/.test(src)) {
+                renderYouTubePreview(iframe.id, src, findInitialDropdownLabel(iframe));
+            }
         });
     }
 
-    function swV(id, url, el) {
-        // 自動修正常見錯誤：一般 playlist 網址不能直接放進 iframe
-        if (url.includes('youtube.com/playlist?list=')) {
-            const playlistId = url.split('list=')[1].split('&')[0];
-            url = `https://www.youtube.com/embed/videoseries?list=${playlistId}`;
-        }
-
-        const target = document.getElementById(id);
-        const clickedLabel = el && el.querySelector("span") ? el.querySelector("span").textContent.trim() : "YouTube Playlist";
-        const clickedIcon = el && el.querySelector("i") ? el.querySelector("i").outerHTML : '<i class="fab fa-youtube"></i>';
-
-        if (target && target.classList.contains("yt-direct-player")) {
-            renderYTDirectCard(target, url, clickedLabel, clickedIcon);
-        } else if (target) {
-            target.src = url;
-        }
-
+    async function swV(id, url, el) {
         const menu = el.parentElement;
         const dropdown = menu.parentElement;
         const button = dropdown.querySelector(".dropbtn");
@@ -3482,6 +3292,8 @@
 
         menu.classList.remove("show");
         dropdown.classList.remove("open");
+
+        await setYouTubePlayerSrc(id, url, false, label);
     }
 
     window.addEventListener("click", (e) => {
@@ -4160,16 +3972,11 @@
         }
     }, { passive: true });
 
-    async function initializeScheduleAndPage() {
-        await loadScheduleFromGitHub({ silent: true });
-        renderNextEventCountdown();
-        setInterval(renderNextEventCountdown, 1000);
-        renderAutoCalendar();
-        renderAllYTDirectPlayers();
-        renderPhotos();
-    }
-
-    initializeScheduleAndPage();
+    initAutoPlaylistPlayers();
+    renderNextEventCountdown();
+    setInterval(renderNextEventCountdown, 1000);
+    renderAutoCalendar();
+    renderPhotos();
 </script>
 
 </body>
