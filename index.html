@@ -2017,6 +2017,44 @@
 .schedule-manager-actions button.danger { color: #c76485; border-color: rgba(199,100,133,.34); }
 @media (max-width: 600px) { .schedule-manager-item { grid-template-columns: 1fr; } .schedule-manager-actions { justify-content: flex-start; } }
 
+
+/* ===== 🔐 Admin Only · Token Device Gate ===== */
+.admin-only { display: none !important; }
+body.admin-mode .calendar-tools.admin-only { display: flex !important; }
+body.admin-mode #scheduleCmsPanel.admin-only.show { display: block !important; }
+body:not(.admin-mode) #scheduleCmsPanel { display: none !important; }
+body:not(.admin-mode) .schedule-manager-actions { display: none !important; }
+
+/* ===== 🔐 Admin Visibility · Hide schedule management from visitors ===== */
+.admin-only,
+#scheduleAdminPanel {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+body.admin-mode #scheduleAdminPanel {
+    display: block !important;
+    visibility: visible !important;
+}
+
+body.admin-mode #scheduleAdminPanel .calendar-tools {
+    display: flex !important;
+    visibility: visible !important;
+}
+
+body.admin-mode #scheduleAdminPanel #scheduleCmsPanel.show {
+    display: block !important;
+    visibility: visible !important;
+}
+
+body:not(.admin-mode) #scheduleAdminPanel,
+body:not(.admin-mode) #scheduleAdminPanel *,
+body:not(.admin-mode) .schedule-manager-actions {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
 </style>
 
 </head>
@@ -2203,13 +2241,14 @@
     <section id="calendar" class="reveal">
         <h2 class="section-title">Calendar</h2>
 
-        <div class="calendar-tools">
-            <button type="button" class="schedule-add-btn" onclick="toggleScheduleCMS()">
-                <i class="fas fa-plus"></i> 一鍵新增行程
-            </button>
-        </div>
+        <div id="scheduleAdminPanel" class="admin-only" aria-hidden="true">
+            <div class="calendar-tools">
+                <button type="button" class="schedule-add-btn" onclick="toggleScheduleCMS()">
+                    <i class="fas fa-plus"></i> 一鍵新增行程
+                </button>
+            </div>
 
-        <div id="scheduleCmsPanel" class="schedule-cms-panel" aria-label="新增行程">
+            <div id="scheduleCmsPanel" class="schedule-cms-panel" aria-label="新增行程">
             <div class="schedule-cms-grid">
                 <label class="schedule-cms-field">日期
                     <input id="cmsEventDate" type="date" />
@@ -2264,6 +2303,7 @@
             <div class="schedule-manager-box">
                 <div class="schedule-manager-title">行程管理</div>
                 <div id="scheduleManagerList" class="schedule-manager-list">Loading schedules...</div>
+            </div>
             </div>
         </div>
 
@@ -2724,12 +2764,36 @@
 
     function getGithubToken() { return localStorage.getItem(GITHUB_TOKEN_KEY) || ""; }
 
+    function isScheduleAdminMode() {
+        const params = new URLSearchParams(window.location.search);
+        return Boolean(getGithubToken()) || params.get("admin") === "1";
+    }
+
+    function applyScheduleAdminVisibility() {
+        const isAdmin = isScheduleAdminMode();
+        document.body.classList.toggle("admin-mode", isAdmin);
+
+        const adminPanel = document.getElementById("scheduleAdminPanel");
+        const cmsPanel = document.getElementById("scheduleCmsPanel");
+
+        if (adminPanel) {
+            adminPanel.setAttribute("aria-hidden", isAdmin ? "false" : "true");
+            adminPanel.style.display = isAdmin ? "block" : "none";
+            adminPanel.style.visibility = isAdmin ? "visible" : "hidden";
+        }
+
+        if (!isAdmin && cmsPanel) {
+            cmsPanel.classList.remove("show");
+        }
+    }
+
     function saveGithubTokenFromCMS() {
         const input = document.getElementById("cmsGithubToken");
         const token = input?.value.trim() || "";
-        if (!token) { localStorage.removeItem(GITHUB_TOKEN_KEY); setScheduleNote("GitHub Token 已清除；之後新增只會暫存在本機。"); return; }
+        if (!token) { localStorage.removeItem(GITHUB_TOKEN_KEY); applyScheduleAdminVisibility(); setScheduleNote("GitHub Token 已清除；管理區會在重新整理後隱藏。"); return; }
         localStorage.setItem(GITHUB_TOKEN_KEY, token);
         if (input) input.value = "";
+        applyScheduleAdminVisibility();
         setScheduleNote("GitHub Token 已儲存在此瀏覽器；之後新增 / 編輯 / 刪除會同步到 GitHub data/events.json，不用每次重填。");
     }
 
@@ -2790,6 +2854,7 @@
     }
 
     function toggleScheduleCMS() {
+        if (!isScheduleAdminMode()) return;
         const panel = document.getElementById("scheduleCmsPanel");
         if (panel) { panel.classList.toggle("show"); if (panel.classList.contains("show")) renderScheduleManagerList(); }
     }
@@ -2816,6 +2881,7 @@
     }
 
     async function addScheduleFromCMS() {
+        if (!isScheduleAdminMode()) return;
         const event = buildScheduleEventFromCMS();
         if (!event) { setScheduleNote("請至少填日期、時間、行程內容。"); return; }
         const existingIndex = cloudScheduleEvents.findIndex(item => item.id === event.id);
@@ -2841,6 +2907,7 @@
     }
 
     function editScheduleEvent(eventId) {
+        if (!isScheduleAdminMode()) return;
         const event = cloudScheduleEvents.find(item => item.id === eventId);
         if (!event) return;
         const normalized = normalizeScheduleEvent(event);
@@ -2856,6 +2923,7 @@
     }
 
     async function deleteScheduleEvent(eventId) {
+        if (!isScheduleAdminMode()) return;
         const event = cloudScheduleEvents.find(item => item.id === eventId);
         if (!event) return;
         if (!confirm(`確定刪除這筆行程？
@@ -2883,10 +2951,10 @@ ${event.date} ${event.time || ""} ${event.title || event.shortLabel || ""}`)) re
                     <strong>${escapeHTML(event.date)} ${escapeHTML(event.time || "")}</strong><br>
                     ${formatEventTag(event.label)} ${escapeHTML(event.shortLabel || "EVENT")}｜${escapeHTML(event.title || parseEventTitle(event.detail))}
                 </div>
-                <div class="schedule-manager-actions">
+                ${isScheduleAdminMode() ? `<div class="schedule-manager-actions">
                     <button type="button" onclick="editScheduleEvent('${escapeHTML(event.id)}')">編輯</button>
                     <button type="button" class="danger" onclick="deleteScheduleEvent('${escapeHTML(event.id)}')">刪除</button>
-                </div>
+                </div>` : ""}
             </div>
         `).join("");
     }
@@ -2903,6 +2971,7 @@ ${event.date} ${event.time || ""} ${event.title || event.shortLabel || ""}`)) re
     }
 
     async function initScheduleSystem() {
+        applyScheduleAdminVisibility();
         const tokenInput = document.getElementById("cmsGithubToken");
         if (tokenInput && getGithubToken()) {
             tokenInput.placeholder = "Token 已儲存；不用重填，重新貼上可更新";
