@@ -3803,7 +3803,7 @@ ${event.date} ${event.time || ""} ${event.title || event.shortLabel || ""}`)) re
         `;
         card.appendChild(header);
 
-        const grid = document.createElement("div");
+const grid = document.createElement("div");
         grid.className = "calendar-grid";
 
         weekdayNames.forEach(day => {
@@ -3825,6 +3825,7 @@ ${event.date} ${event.time || ""} ${event.title || event.shortLabel || ""}`)) re
             const cell = document.createElement("div");
             const dateStr = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
             cell.className = "calendar-day";
+cell.dataset.date = day;
             cell.dataset.date = dateStr;
 
             if (isTodayCalendarDate(year, month, day)) {
@@ -3859,15 +3860,28 @@ ${event.date} ${event.time || ""} ${event.title || event.shortLabel || ""}`)) re
         detailBox.className = `calendar-detail-box${featuredMonth ? " featured" : ""}${todayInMonth ? " today-featured" : ""}`;
 
         const detailTitle = document.createElement("div");
+        const todayForDetail = new Date();
+        const isCurrentMonth = year === todayForDetail.getFullYear() && month === todayForDetail.getMonth() + 1;
+        const todayEventsInThisMonth = isCurrentMonth
+            ? events.filter(event => event.day === todayForDetail.getDate())
+            : [];
+
         detailTitle.className = `calendar-detail-title${featuredMonth ? " featured-title" : ""}`;
-        detailTitle.textContent = featuredMonth ? "Featured Event" : "本月首個活動";
+        detailTitle.textContent = isCurrentMonth ? "Today Event" : (featuredMonth ? "Featured Event" : "本月首個活動");
 
         const detailContent = document.createElement("div");
         detailContent.className = "calendar-detail-content";
         detailContent.id = `calendar-detail-${monthKey}`;
-        detailContent.innerHTML = firstEvent
-            ? enrichEventList(events.filter(item => item.day === firstEvent.day))
-            : "本月暫無活動";
+
+        if (isCurrentMonth) {
+            detailContent.innerHTML = todayEventsInThisMonth.length
+                ? enrichEventList(todayEventsInThisMonth)
+                : "今天目前沒有行程";
+        } else {
+            detailContent.innerHTML = firstEvent
+                ? enrichEventList(events.filter(item => item.day === firstEvent.day))
+                : "本月暫無活動";
+        }
 
         detailBox.appendChild(detailTitle);
         detailBox.appendChild(detailContent);
@@ -3909,8 +3923,6 @@ ${event.date} ${event.time || ""} ${event.title || event.shortLabel || ""}`)) re
                 }
             });
         });
-
-        if (shouldScrollToToday) scrollToTodayDate();
     }
 
     const stage = document.getElementById("slideshowStage");
