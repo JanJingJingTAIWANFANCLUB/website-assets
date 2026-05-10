@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-06T15:39:18.636Z",
+  "updatedAt": "2026-05-10T05:18:14.997Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -10,6 +10,17 @@
       "label": "janjingjing",
       "shortLabel": "ON AIR",
       "detail": "05/05 (TUE.) 泰國時間 21:30｜GMMTV LIVE HOUSE",
+      "featured": false
+    },
+    {
+      "id": "7b21c0ad-12c7-4cbb-b6c8-760aaba89ac2",
+      "date": "2026-05-10",
+      "time": "20:30",
+      "timezone": "泰國時間",
+      "title": "GMMTV Instagram LIVE",
+      "label": "janjingjing",
+      "shortLabel": "ON AIR",
+      "detail": "05/10 (SUN.) 泰國時間 20:30｜GMMTV Instagram LIVE",
       "featured": false
     },
     {
