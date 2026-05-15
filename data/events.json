@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-15T03:00:20.196Z",
+  "updatedAt": "2026-05-15T06:18:18.345Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -54,6 +54,17 @@
       "label": "janjingjing",
       "shortLabel": "ONAIR",
       "detail": "05/17 (SUN.) 泰國時間 14:00｜sายกาsnา..ลuWerewolf",
+      "featured": false
+    },
+    {
+      "id": "903e8168-ef0f-4bd0-b9e8-093ec7b553b4",
+      "date": "2026-05-17",
+      "time": "19:30",
+      "timezone": "泰國時間",
+      "title": "EWB EP3 LIVE TALK",
+      "label": "janjingjing",
+      "shortLabel": "EVENT",
+      "detail": "05/17 (SUN.) 泰國時間 19:30｜EWB EP3 LIVE TALK",
       "featured": false
     }
   ]
