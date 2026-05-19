@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-16T01:19:04.352Z",
+  "updatedAt": "2026-05-19T18:45:10.607Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -65,6 +65,28 @@
       "label": "janjingjing",
       "shortLabel": "EVENT",
       "detail": "05/17 (SUN.) 泰國時間 18:30｜EWB EP3 LIVE TALK",
+      "featured": false
+    },
+    {
+      "id": "903e8168-ef0f-4bd0-b9e8-093ec7b553b4",
+      "date": "2026-05-17",
+      "time": "19:30",
+      "timezone": "泰國時間",
+      "title": "EWB EP3 LIVE TALK",
+      "label": "janjingjing",
+      "shortLabel": "EVENT",
+      "detail": "05/17 (SUN.) 泰國時間 19:30｜EWB EP3 LIVE TALK",
+      "featured": false
+    },
+    {
+      "id": "def48157-5d8d-4ae4-bf8c-f65b0edf16c9",
+      "date": "2026-05-20",
+      "time": "18:00",
+      "timezone": "泰國時間",
+      "title": "ARMSHARE EP204",
+      "label": "janjingjing",
+      "shortLabel": "EVENT",
+      "detail": "05/20 (WED.) 泰國時間 18:00｜ARMSHARE EP204",
       "featured": false
     }
   ]
