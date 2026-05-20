@@ -1,3 +1,4 @@
+
 <!DOCTYPE html><html lang="zh-Hant">
 <head>
     <meta charset="UTF-8" />
@@ -1692,6 +1693,58 @@
 @media (max-width: 600px) { .schedule-cms-grid { grid-template-columns: 1fr; } .schedule-line, .calendar-detail-content .schedule-line, #nextEventCountdown .countdown-title .schedule-line { grid-template-columns: 1fr !important; gap: 2px !important; margin-bottom: 11px !important; } }
 
 
+/* ===== 🎬 Auto Playlist Dropdown ===== */
+.auto-playlist-loading {
+    padding: 14px 16px;
+    font-size: 12px;
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.auto-playlist-dropdown .yt-pl-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    border-bottom: 1px solid #f0efe9;
+    cursor: pointer;
+    transition: background .2s ease, padding-left .2s ease;
+    overflow: hidden;
+}
+.auto-playlist-dropdown .yt-pl-item:hover { background: #f7f4ef; }
+.auto-playlist-dropdown .yt-pl-item.active { background: #f2efe9; font-weight: 600; }
+.yt-pl-thumb {
+    width: 72px;
+    height: 48px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #eee;
+}
+.yt-pl-thumb-wrap {
+    position: relative;
+    width: 72px;
+    height: 48px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+.yt-pl-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.yt-pl-thumb-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity .2s;
+}
+.yt-pl-item:hover .yt-pl-thumb-overlay { opacity: 1; }
+.yt-pl-thumb-overlay i { color: #fff; font-size: 14px; }
+.yt-pl-info { padding: 8px 12px 8px 4px; flex: 1; min-width: 0; }
+.yt-pl-title { font-size: 12px; line-height: 1.35; color: var(--text-color); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.yt-pl-meta { font-size: 10px; color: var(--accent-color); margin-top: 3px; letter-spacing: .5px; }
+
 /* ===== 🛠 Calendar Detail One-Row Schedule Fix ===== */
 .calendar-detail-content .schedule-line {
     display: grid !important;
@@ -2192,36 +2245,8 @@ body:not(.admin-mode) .schedule-manager-actions {
                     <button onclick="toggleD('musicD')" class="dropbtn">
                         請選擇 <i class="fas fa-chevron-down"></i>
                     </button>
-                    <div id="musicD" class="dropdown-content">
-
-    <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQFm0v9Z_VLxKLtst70K0cYs', this)">
-        <i class="fas fa-star"></i><span>JANJINGJING</span>
-    </div>
-
-    <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQGTMcHUlbjQ8utnKUct25lI', this)">
-        <i class="fas fa-music"></i><span>SIZZY - JAN</span>
-    </div>
-
-    <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQET4OzcGXQO1QGjFhpmZdpD', this)">
-        <i class="fas fa-microphone"></i><span>SINGER - JAN</span>
-    </div>
-
-    <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQGyDfhI5EiCTopjMrIodkTr', this)">
-        <i class="fas fa-headphones"></i><span>JAN COVER</span>
-    </div>
-
-    <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQH46c3L7hZlMw0cf2XGwlaC', this)">
-        <i class="fas fa-film"></i><span>JAN 參與的 MV</span>
-    </div>
-
-    <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQEq80gULF36KRnzizz-thNn', this)">
-        <i class="fas fa-film"></i><span>JINGJING 參與的 MV</span>
-    </div>
-
-    <div onclick="swV('musicPlayer', 'https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQH7VZb5N6u5jFgf57BmWzRv', this)">
-        <i class="fas fa-drum"></i><span>JINGJING DANCE COVER</span>
-    </div>
-
+                    <div id="musicD" class="dropdown-content auto-playlist-dropdown" data-player="musicPlayer">
+    <div class="auto-playlist-loading"><i class="fas fa-circle-notch fa-spin"></i> 載入中…</div>
 </div>
                 </div>
             </div>
@@ -2365,18 +2390,8 @@ body:not(.admin-mode) .schedule-manager-actions {
                     <button onclick="toggleD('showD')" class="dropbtn">
                         請選擇 <i class="fas fa-chevron-down"></i>
                     </button>
-                    <div id="showD" class="dropdown-content">
-
-    <div onclick="swV('showPlayer', 'https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQH9G4iN9M5Tc1AaJ95OUSYW', this)">
-        <i class="fas fa-tv"></i>
-        <span>LANEIGE Let it go Season 2（全集）</span>
-    </div>
-
-    <div onclick="swV('showPlayer', 'https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQEB3SumKkyDRddq267qLYni', this)">
-        <i class="fas fa-star"></i>
-        <span>ลัลล์ไม่ชอบไวน์ (Enemies with Benefits)</span>
-    </div>
-
+                    <div id="showD" class="dropdown-content auto-playlist-dropdown" data-player="showPlayer">
+    <div class="auto-playlist-loading"><i class="fas fa-circle-notch fa-spin"></i> 載入中…</div>
 </div>
                 </div>
             </div>
@@ -2438,33 +2453,9 @@ body:not(.admin-mode) .schedule-manager-actions {
         <button onclick="toggleD('jjjD')" class="dropbtn">
             請選擇 <i class="fas fa-chevron-down"></i>
         </button>
-        <div id="jjjD" class="dropdown-content">
-
-        <!-- Enemies With Benefits -->
-<div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/videoseries?list=PLcOf7aGFMWQFGL4UK-o4JMjTiiUI73AGg&rel=0', this)">
-    <i class="fas fa-heart"></i>
-    <span>ลัลล์ไม่ชอบไวน์ (Enemies with Benefits)</span>
+        <div id="jjjD" class="dropdown-content auto-playlist-dropdown" data-player="jjjPlayer">
+    <div class="auto-playlist-loading"><i class="fas fa-circle-notch fa-spin"></i> 載入中…</div>
 </div>
-
-            <!-- MuTeLuv -->
-            <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/videoseries?list=PL_vCrT8PKfW0THj0b21-tIMFAP_3yaWxU', this)">
-                <i class="fas fa-sparkles"></i>
-                <span>โปรดใช้วิจารณญาณในการรักเธอ (MuTeLuv)</span>
-            </div>
-
-            <!-- Hide & Sis -->
-            <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/videoseries?list=PLszepnkojZI4CnmrCJmqIjjhotPTH3GHL', this)">
-                <i class="fas fa-mask"></i>
-                <span>น้องสาวหายนะ (Hide & Sis)</span>
-            </div>
-
-            <!-- Bake Love -->
-            <div onclick="swV('jjjPlayer', 'https://www.youtube.com/embed/NFFWV0X4i_c', this)">
-                <i class="fas fa-cookie-bite"></i>
-                <span>ขนมปังชีสเนย (Bake Love Feeling)</span>
-            </div>
-
-        </div>
     </div>
 </div>
 
@@ -3313,7 +3304,8 @@ ${event.date} ${event.time || ""} ${event.title || event.shortLabel || ""}`)) re
 
     const playlistFirstVideoMap = {
         "PLcOf7aGFMWQFm0v9Z_VLxKLtst70K0cYs": "xWvhq6bsde8",
-        "PLcOf7aGFMWQEB3SumKkyDRddq267qLYni": "0EPN_IlU2gU"
+        "PLcOf7aGFMWQEB3SumKkyDRddq267qLYni": "0EPN_IlU2gU",
+        "PLcOf7aGFMWQFGL4UK-o4JMjTiiUI73AGg": "4K__c9385LE"
     };
 
     // 只有這三個固定使用你指定的自訂標題；其他影片 / 播放清單會自動抓 YouTube 原標題。
@@ -3412,6 +3404,11 @@ ${event.date} ${event.time || ""} ${event.title || event.shortLabel || ""}`)) re
         return await fetchYouTubeOriginalTitle(videoId, fallbackLabel);
     }
 
+    // 禁止嵌入的影片 ID（封面可用，但播放要改用 videoseries）
+    const nonEmbeddableVideoIds = new Set([
+        "4K__c9385LE"  // EWB Official Trailer - 禁止嵌入
+    ]);
+
     async function buildPlayableYouTubeUrl(url, autoplay = false) {
         const text = String(url || "").trim();
         const listId = extractYouTubeListId(text);
@@ -3419,14 +3416,15 @@ ${event.date} ${event.time || ""} ${event.title || event.shortLabel || ""}`)) re
 
         if (listId) {
             const videoId = await resolvePlaylistFirstVideoId(listId, text);
-            if (videoId) {
-                return `https://www.youtube-nocookie.com/embed/${videoId}?list=${listId}${autoplay ? "&autoplay=1" : ""}&rel=0&modestbranding=1`;
+            // 如果第一支影片禁止嵌入，改用 videoseries 讓 YouTube 自己決定從哪開始
+            if (videoId && !nonEmbeddableVideoIds.has(videoId)) {
+                return `https://www.youtube.com/embed/${videoId}?list=${listId}${autoplay ? "&autoplay=1" : ""}&rel=0&modestbranding=1`;
             }
-            return `https://www.youtube-nocookie.com/embed/videoseries?list=${listId}${autoplay ? "&autoplay=1" : ""}&rel=0&modestbranding=1`;
+            return `https://www.youtube.com/embed/videoseries?list=${listId}${autoplay ? "&autoplay=1" : ""}&rel=0&modestbranding=1`;
         }
 
         if (videoIdFromUrl) {
-            return `https://www.youtube-nocookie.com/embed/${videoIdFromUrl}${autoplay ? "?autoplay=1&rel=0&modestbranding=1" : "?rel=0&modestbranding=1"}`;
+            return `https://www.youtube.com/embed/${videoIdFromUrl}${autoplay ? "?autoplay=1&rel=0&modestbranding=1" : "?rel=0&modestbranding=1"}`;
         }
 
         return text;
@@ -3530,6 +3528,159 @@ ${event.date} ${event.time || ""} ${event.title || event.shortLabel || ""}`)) re
             }
         }
         return "";
+    }
+
+    // =====================================================================
+    // 🎬 AUTO PLAYLIST DROPDOWNS
+    // 只需在這裡維護清單，網站會自動抓封面 + 標題，不用改 HTML
+    // icon 可用任何 FontAwesome class，留空則用預設 fa-play-circle
+    // =====================================================================
+    const AUTO_PLAYLIST_DROPDOWNS = {
+        musicD: {
+            player: "musicPlayer",
+            defaultIndex: 0,
+            items: [
+                { listId: "PLcOf7aGFMWQFm0v9Z_VLxKLtst70K0cYs", label: "JANJINGJING",            icon: "fas fa-star" },
+                { listId: "PLcOf7aGFMWQGTMcHUlbjQ8utnKUct25lI", label: "SIZZY - JAN",            icon: "fas fa-music" },
+                { listId: "PLcOf7aGFMWQET4OzcGXQO1QGjFhpmZdpD", label: "SINGER - JAN",           icon: "fas fa-microphone" },
+                { listId: "PLcOf7aGFMWQGyDfhI5EiCTopjMrIodkTr", label: "JAN COVER",              icon: "fas fa-headphones" },
+                { listId: "PLcOf7aGFMWQH46c3L7hZlMw0cf2XGwlaC", label: "JAN 參與的 MV",          icon: "fas fa-film" },
+                { listId: "PLcOf7aGFMWQEq80gULF36KRnzizz-thNn", label: "JINGJING 參與的 MV",     icon: "fas fa-film" },
+                { listId: "PLcOf7aGFMWQH7VZb5N6u5jFgf57BmWzRv", label: "JINGJING DANCE COVER",  icon: "fas fa-drum" }
+            ]
+        },
+        showD: {
+            player: "showPlayer",
+            defaultIndex: 0,
+            items: [
+                { listId: "PLcOf7aGFMWQH9G4iN9M5Tc1AaJ95OUSYW", label: "LANEIGE Let it go Season 2（全集）",     icon: "fas fa-tv" },
+                { listId: "PLcOf7aGFMWQEB3SumKkyDRddq267qLYni", label: "ลัลล์ไม่ชอบไวน์ (Enemies with Benefits)", icon: "fas fa-star" }
+            ]
+        },
+        jjjD: {
+            player: "jjjPlayer",
+            defaultIndex: 0,
+            items: [
+                { listId: "PLcOf7aGFMWQFGL4UK-o4JMjTiiUI73AGg", label: "ลัลล์ไม่ชอบไวน์ (Enemies with Benefits)", icon: "fas fa-heart" },
+                { listId: "PL_vCrT8PKfW0THj0b21-tIMFAP_3yaWxU",  label: "โปรดใช้วิจารณญาณในการรักเธอ (MuTeLuv)",  icon: "fas fa-sparkles" },
+                { listId: "PLszepnkojZI4CnmrCJmqIjjhotPTH3GHL",  label: "น้องสาวหายนะ (Hide & Sis)",              icon: "fas fa-mask" },
+                { videoId: "NFFWV0X4i_c",                          label: "ขนมปังชีสเนย (Bake Love Feeling)",      icon: "fas fa-cookie-bite" }
+            ]
+        }
+    };
+
+    // ── 取得 Playlist 封面 (用第一支影片 thumbnail) ──────────────────────
+    async function getPlaylistThumb(listId, videoId) {
+        const vid = videoId || (listId ? await resolvePlaylistFirstVideoId(listId) : "");
+        if (!vid) return "";
+        return `https://img.youtube.com/vi/${vid}/mqdefault.jpg`;
+    }
+
+    // ── 取得 Playlist 在 YouTube 上的真實標題（fallback 到設定裡的 label）─
+    async function getPlaylistYTTitle(listId, videoId, fallback) {
+        // playlist title
+        if (listId) {
+            const cacheKey = `yt_pl_title_${listId}`;
+            const cached = sessionStorage.getItem(cacheKey);
+            if (cached) return cached;
+            const plUrl = `https://www.youtube.com/playlist?list=${encodeURIComponent(listId)}`;
+            for (const ep of [
+                `https://noembed.com/embed?url=${encodeURIComponent(plUrl)}`,
+                `https://www.youtube.com/oembed?format=json&url=${encodeURIComponent(plUrl)}`
+            ]) {
+                try {
+                    const r = await fetch(ep, { cache: "no-store" });
+                    if (!r.ok) continue;
+                    const d = await r.json();
+                    const t = (d.title || "").trim();
+                    if (t) { sessionStorage.setItem(cacheKey, t); return t; }
+                } catch (_) {}
+            }
+        }
+        // single video title
+        if (videoId) return await fetchYouTubeOriginalTitle(videoId, fallback);
+        return fallback;
+    }
+
+    // ── 建立並填充 auto-playlist dropdown ────────────────────────────────
+    async function buildAutoPlaylistDropdown(dropdownId, config) {
+        const container = document.getElementById(dropdownId);
+        if (!container) return;
+
+        // 先用固定 label + loading 封面快速渲染骨架，讓 UI 立刻可點
+        container.innerHTML = config.items.map((item, idx) => {
+            const url = item.listId
+                ? `https://www.youtube.com/embed/videoseries?list=${item.listId}&rel=0`
+                : `https://www.youtube.com/embed/${item.videoId}`;
+            const icon = item.icon || "fas fa-play-circle";
+            return `
+                <div class="yt-pl-item${idx === config.defaultIndex ? " active" : ""}"
+                     data-url="${escapeHTML(url)}"
+                     data-player="${escapeHTML(config.player)}"
+                     data-label="${escapeHTML(item.label)}"
+                     data-icon="${escapeHTML(icon)}"
+                     data-idx="${idx}">
+                    <div class="yt-pl-thumb-wrap">
+                        <img class="yt-pl-thumb" src="" alt="" loading="lazy" data-listid="${item.listId || ""}" data-videoid="${item.videoId || ""}">
+                        <div class="yt-pl-thumb-overlay"><i class="fas fa-play"></i></div>
+                    </div>
+                    <div class="yt-pl-info">
+                        <div class="yt-pl-title">${escapeHTML(item.label)}</div>
+                        <div class="yt-pl-meta"><i class="${icon}"></i> YouTube Playlist</div>
+                    </div>
+                </div>
+            `;
+        }).join("");
+
+        // 綁定點擊事件
+        container.querySelectorAll(".yt-pl-item").forEach(el => {
+            el.addEventListener("click", async () => {
+                container.querySelectorAll(".yt-pl-item").forEach(x => x.classList.remove("active"));
+                el.classList.add("active");
+
+                // 更新 dropbtn 顯示
+                const dropdown = container.closest(".dropdown");
+                if (dropdown) {
+                    const btn = dropdown.querySelector(".dropbtn");
+                    const icon = el.dataset.icon || "fas fa-play-circle";
+                    const label = el.dataset.label || "";
+                    if (btn) btn.innerHTML = `<i class="${icon}"></i> ${escapeHTML(label)} <i class="fas fa-chevron-down"></i>`;
+                    dropdown.classList.remove("open");
+                }
+                container.classList.remove("show");
+
+                await setYouTubePlayerSrc(el.dataset.player, el.dataset.url, false, el.dataset.label);
+            });
+        });
+
+        // 非同步補上封面 + 真實標題（背景執行，不阻擋 UI）
+        const thumbEls = container.querySelectorAll(".yt-pl-thumb");
+        thumbEls.forEach(async (img, idx) => {
+            const item = config.items[idx];
+            const listId = item.listId || "";
+            const videoId = item.videoId || "";
+
+            // 封面
+            const thumb = await getPlaylistThumb(listId, videoId);
+            if (thumb) {
+                img.src = thumb;
+                img.onerror = () => { img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`; };
+            }
+
+            // 真實標題（只有在 label 看起來像自訂短碼時才更新）
+            const titleEl = img.closest(".yt-pl-item")?.querySelector(".yt-pl-title");
+            if (titleEl) {
+                const ytTitle = await getPlaylistYTTitle(listId, videoId, item.label);
+                if (ytTitle && ytTitle !== item.label) titleEl.textContent = ytTitle;
+            }
+        });
+    }
+
+    // ── 初始化所有 auto-playlist dropdown ───────────────────────────────
+    async function initAutoPlaylistDropdowns() {
+        for (const [dropdownId, config] of Object.entries(AUTO_PLAYLIST_DROPDOWNS)) {
+            buildAutoPlaylistDropdown(dropdownId, config);
+        }
     }
 
     function initAutoPlaylistPlayers() {
@@ -4263,6 +4414,7 @@ cell.dataset.date = day;
         }
     }, { passive: true });
 
+    initAutoPlaylistDropdowns();
     initAutoPlaylistPlayers();
     initScheduleSystem();
     setInterval(renderNextEventCountdown, 1000);
