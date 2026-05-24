@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-24T09:48:03.807Z",
+  "updatedAt": "2026-05-24T09:48:20.980Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -76,17 +76,6 @@
       "label": "janjingjing",
       "shortLabel": "EVENT",
       "detail": "05/20 (WED.) 泰國時間 18:00｜ARMSHARE EP204",
-      "featured": false
-    },
-    {
-      "id": "183f48f6-a664-487f-9133-0192be09d155",
-      "date": "2026-05-24",
-      "time": "22:30",
-      "timezone": "泰國時間",
-      "title": "Enemies With Benefits X Spaces",
-      "label": "janjingjing",
-      "shortLabel": "ON AIR",
-      "detail": "05/24 (SUN.) 泰國時間 22:30｜Enemies With Benefits X Spaces",
       "featured": false
     },
     {
