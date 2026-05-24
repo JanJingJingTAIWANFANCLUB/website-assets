@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-24T09:47:22.282Z",
+  "updatedAt": "2026-05-24T09:48:03.807Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -87,6 +87,17 @@
       "label": "janjingjing",
       "shortLabel": "ON AIR",
       "detail": "05/24 (SUN.) 泰國時間 22:30｜Enemies With Benefits X Spaces",
+      "featured": false
+    },
+    {
+      "id": "b63f5d5b-834b-4ea8-ada4-b94a5a8af7d8",
+      "date": "2026-05-24",
+      "time": "22:45",
+      "timezone": "泰國時間",
+      "title": "Enemies With Benefits EP.4 X Spaces",
+      "label": "janjingjing",
+      "shortLabel": "ONAIR",
+      "detail": "05/24 (SUN.) 泰國時間 22:45｜Enemies With Benefits EP.4 X Spaces",
       "featured": false
     },
     {
