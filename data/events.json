@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-01T10:21:35.729Z",
+  "updatedAt": "2026-06-01T12:23:02.440Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -98,6 +98,17 @@
       "label": "jj",
       "shortLabel": "EVENT",
       "detail": "05/26 (TUE.) 泰國時間 18:30｜Jimmy Choo Summer Party (非公開活動）",
+      "featured": false
+    },
+    {
+      "id": "bd16be69-3450-4094-9ced-d58b0935ae78",
+      "date": "2026-06-04",
+      "time": "21:45",
+      "timezone": "泰國時間",
+      "title": "รายการ T-POP STAGE(ช่อง Workpoint23)",
+      "label": "janjingjing",
+      "shortLabel": "ON AIR",
+      "detail": "06/04 (THU.) 泰國時間 21:45｜รายการ T-POP STAGE(ช่อง Workpoint23)",
       "featured": false
     },
     {
