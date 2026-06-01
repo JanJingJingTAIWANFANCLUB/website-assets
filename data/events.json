@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-01T10:15:34.680Z",
+  "updatedAt": "2026-06-01T10:21:35.729Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -98,6 +98,17 @@
       "label": "jj",
       "shortLabel": "EVENT",
       "detail": "05/26 (TUE.) 泰國時間 18:30｜Jimmy Choo Summer Party (非公開活動）",
+      "featured": false
+    },
+    {
+      "id": "dcc5b583-ed08-4108-8127-34172220d514",
+      "date": "2026-06-24",
+      "time": "18:00",
+      "timezone": "泰國時間",
+      "title": "TOY STORY5觀影活動",
+      "label": "janjingjingjewel",
+      "shortLabel": "EVENT",
+      "detail": "06/24 (WED.) 泰國時間 18:00｜TOY STORY5觀影活動",
       "featured": false
     }
   ]
