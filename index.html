@@ -1,4 +1,3 @@
-
 <!DOCTYPE html><html lang="zh-Hant">
 <head>
     <meta charset="UTF-8" />
@@ -629,41 +628,46 @@
     }
 
     .event-tag.jan {
-        background: #f3ecff;
-        color: #7b5cff;
-    }
+    background: #eef0ff;
+    color: #5c63d8;
+}
+.event-tag.jan::before {
+    content: "💜 ";
+}
 
-    .event-tag.jj {
-        background: #ffeaf3;
-        color: #e26a9b;
-    }
+.event-tag.jingjing,
+.event-tag.jj {
+    background: #ffeaf3;
+    color: #e26a9b;
+}
+.event-tag.jingjing::before,
+.event-tag.jj::before {
+    content: "🎀 ";
+}
 
-    .event-tag.janjingjing {
-        background: linear-gradient(90deg, #f3ecff, #ffeaf3);
-        color: #8e5aa8;
-    }
+.event-tag.janjingjing {
+    background: linear-gradient(90deg, #eef0ff, #ffeaf3);
+    color: #8e5aa8;
+}
+.event-tag.janjingjing::before {
+    content: "💜🎀 ";
+}
 
-    .event-tag.jan::before {
-        content: "💜";
-        margin-right: 2px;
-    }
+.event-tag.janjingjingjewel {
+    background: linear-gradient(90deg, #eef0ff, #ffeaf3, #fff0d9);
+    color: #8e5aa8;
+}
+.event-tag.janjingjingjewel::before {
+    content: "💜🎀 🦊";
+}
 
-    .event-tag.jingjing::before {
-        content: "🎀";
-        margin-right: 2px;
-    }
-
-    .event-tag.janjingjing::before {
-        content: "💜🎀 ";
-    }
-
-     .event-tag.janjingJingjewel::before {
-        content: "💜🎀🦊 ";
-    }
-
-    .event-tag.jewel::before {
-        content: "🦊 ";
-    }
+.event-tag.jewel {
+    background: #fff0d9;
+    color: #c58a2c;
+}
+.event-tag.jewel::before {
+    content: "🦊 ";
+}
 
     .calendar-detail-box.featured {
         background: linear-gradient(180deg, #f9f3ec, #fbf7f2);
