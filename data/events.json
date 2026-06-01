@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-01T12:23:02.440Z",
+  "updatedAt": "2026-06-01T16:05:02.970Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -109,6 +109,17 @@
       "label": "janjingjing",
       "shortLabel": "ON AIR",
       "detail": "06/04 (THU.) 泰國時間 21:45｜รายการ T-POP STAGE(ช่อง Workpoint23)",
+      "featured": false
+    },
+    {
+      "id": "cfcd785f-42d2-4683-a90b-5df60b169712",
+      "date": "2026-06-05",
+      "time": "17:00",
+      "timezone": "泰國時間",
+      "title": "THAILAND INTERNATIONAL LGBTQ+ FILM & TV FESTIVAL 2026",
+      "label": "janjingjing",
+      "shortLabel": "EVENT",
+      "detail": "06/05 (FRI.) 泰國時間 17:00｜THAILAND INTERNATIONAL LGBTQ+ FILM & TV FESTIVAL 2026",
       "featured": false
     },
     {
