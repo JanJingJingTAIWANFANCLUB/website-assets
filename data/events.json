@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-01T16:05:02.970Z",
+  "updatedAt": "2026-06-03T11:56:06.409Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -120,6 +120,17 @@
       "label": "janjingjing",
       "shortLabel": "EVENT",
       "detail": "06/05 (FRI.) 泰國時間 17:00｜THAILAND INTERNATIONAL LGBTQ+ FILM & TV FESTIVAL 2026",
+      "featured": false
+    },
+    {
+      "id": "8e5485ea-02e7-4aa8-9c0b-e7b82dac51fc",
+      "date": "2026-06-07",
+      "time": "18:00",
+      "timezone": "泰國時間",
+      "title": "ลัลล์ไม่ชอบไวน์ OUTING",
+      "label": "janjingjing",
+      "shortLabel": "EVENT",
+      "detail": "06/07 (SUN.) 泰國時間 18:00｜ลัลล์ไม่ชอบไวน์ OUTING",
       "featured": false
     },
     {
