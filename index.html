@@ -2763,11 +2763,12 @@ body:not(.admin-mode) .schedule-manager-actions {
   <div class="jewel-messages" id="jewel-messages">
     <div class="jewel-msg ai">
       <div class="jewel-bubble">
-        你好！我是 JEWEL 🦊<br>Jan媽咪和JingJing媽媽的可愛小寶貝，有什麼我可以幫你的嗎？
+        你好！我是 JEWEL 🦊<br>有什麼我可以幫你的嗎？
         <div class="jewel-suggestions" id="jewel-suggestions">
           <span class="jewel-pill">JanJingJing 是誰？</span>
           <span class="jewel-pill">最新行程在哪看？</span>
           <span class="jewel-pill">如何加入粉絲團？</span>
+          <span class="jewel-pill">Who's JEWEL？</span>
         </div>
       </div>
     </div>
@@ -4684,15 +4685,32 @@ cell.dataset.date = day;
   if (suggestionsEl) {
     suggestionsEl.addEventListener('click', e => {
       if (e.target.classList.contains('jewel-pill')) {
-        jewelInput.value = e.target.textContent;
-        jewelSendMessage();
-      }
+  const text = e.target.textContent;
+
+  // 🟡 Who's JEWEL 特殊回覆
+  if (text.includes("Who's JEWEL")) {
+    jewelAppendMsg('user', text);
+
+    setTimeout(() => {
+      jewelAppendMsg(
+        'ai',
+        "嗨～我是 JEWEL 🦊 我是Jan媽咪和JingJing媽媽的可愛小寶貝！"
+      );
+    }, 400);
+
+    return;
+  }
+
+  // 其他正常走 input 流程
+  jewelInput.value = text;
+  jewelSendMessage();
+}
     });
   }
 
   const jewelHistory = [];
 
-  const JEWEL_SYSTEM = `你是 JanJingJing TAIWAN FAN CLUB 的 AI 助理，名字叫 JEWEL（吉祥物是白色小狐狸）。
+  const JEWEL_SYSTEM = `你是 JanJingJing TAIWAN FAN CLUB 的 小可愛 助理，名字叫 JEWEL（吉祥物是白色小狐狸）。
 風格親切、活潑，帶點粉絲團的熱情氛圍。用繁體中文回答，語氣自然友善。
 回答盡量簡潔（3-5句為主）。這是一個支持 GMMTV 旗下藝人 Jan（Janhae Ployshompoo）和 JingJing（Prariyapit Yu）的台灣粉絲團，
 目前正在追劇《Enemies With Benefits（ลัลล์ไม่ชอบไวน์）》。`;
@@ -4712,26 +4730,18 @@ cell.dataset.date = day;
 
     const typingEl = jewelAppendTyping();
 
-    try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          system: JEWEL_SYSTEM,
-          messages: jewelHistory
-        })
-      });
-      const data = await response.json();
-      typingEl.remove();
-      const reply = data.content?.find(b => b.type === 'text')?.text || '抱歉，我暫時無法回應，請稍後再試。';
-      jewelHistory.push({ role: 'assistant', content: reply });
-      jewelAppendMsg('ai', reply);
-    } catch (err) {
-      typingEl.remove();
-      jewelAppendMsg('ai', '連線發生問題，請稍後再試 🙏');
-    }
+   setTimeout(() => {
+  typingEl.remove();
+
+  const reply = jewelLocalReply(text);
+  jewelAppendMsg('ai', reply);
+
+  jewelHistory.push({ role: 'assistant', content: reply });
+
+  jewelSend.disabled = false;
+  jewelInput.focus();
+  jewelScrollBottom();
+}, 500);
 
     jewelSend.disabled = false;
     jewelInput.focus();
@@ -4761,6 +4771,31 @@ cell.dataset.date = day;
   function jewelScrollBottom() {
     requestAnimationFrame(() => { jewelMessages.scrollTop = jewelMessages.scrollHeight; });
   }
+function jewelLocalReply(text) {
+  const q = text.toLowerCase();
+
+  if (q.includes("粉絲團") || q.includes("加入")) {
+    return "點擊https://linktr.ee/janjingjingtaiwanfanclub，就可以加入 JanJingJing TAIWAN FANCLUB喔 💖";
+  }
+
+  if (q.includes("行程")) {
+    return "最新行程可以在「Calendar」查看，目前都有持續更新中 ✨";
+  }
+
+  if (q.includes("janjingjing")) {
+    return "JanJingJing是GMMTV旗下的藝人Janhae和JingJingYu 目前ลัลล์ไม่ชอบไวน์(EnemiesWithBenefits) 每週日泰國時間晚上20:30在GMMTV 25頻道 播出中 💫";
+  }
+
+  if (q.includes("你好") || q.includes("嗨")) {
+    return "嗨嗨～我是 JEWEL 🦊 有什麼想知道的都可以問我喔！";
+  }
+
+     if (q.includes("我是誰?") || q.includes("Who?")) {
+    return "嗨～我是 JEWEL 🦊 我是可愛的小白狐 我有滿滿的能量 但,安靜三秒後我會馬上入睡喔！";
+  }
+
+  return "我目前還在學習中，可以換個方式問我嗎？😊";
+}
 })();
 
 </script>
