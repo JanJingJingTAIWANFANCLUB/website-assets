@@ -4691,12 +4691,14 @@ cell.dataset.date = day;
   if (text.includes("Who's JEWEL")) {
     jewelAppendMsg('user', text);
 
-    setTimeout(() => {
-      jewelAppendMsg(
-        'ai',
-        "嗨～我是 JEWEL 🦊 我是Jan媽咪和JingJing媽媽的可愛小寶貝！"
-      );
-    }, 400);
+   setTimeout(() => {
+  jewelAppendMsg(
+    'ai',
+    "嗨～我是 JEWEL 🦊 我是Jan媽咪和JingJing媽媽的可愛小寶貝！"
+  );
+
+  showSuggestions();
+}, 400);
 
     return;
   }
@@ -4719,8 +4721,10 @@ cell.dataset.date = day;
     const text = jewelInput.value.trim();
     if (!text || jewelSend.disabled) return;
 
-    const sugEl = document.getElementById('jewel-suggestions');
-    if (sugEl) sugEl.remove();
+   const sugEl = document.getElementById('jewel-suggestions');
+if (sugEl) {
+  sugEl.style.display = 'none';
+}
 
     jewelAppendMsg('user', text);
     jewelHistory.push({ role: 'user', content: text });
@@ -4736,9 +4740,11 @@ cell.dataset.date = day;
   const reply = jewelLocalReply(text);
   jewelAppendMsg('ai', reply);
 
-  jewelHistory.push({ role: 'assistant', content: reply });
+ jewelHistory.push({ role: 'assistant', content: reply });
 
-  jewelSend.disabled = false;
+showSuggestions();
+
+jewelSend.disabled = false;
   jewelInput.focus();
   jewelScrollBottom();
 }, 500);
@@ -4771,6 +4777,23 @@ cell.dataset.date = day;
   function jewelScrollBottom() {
     requestAnimationFrame(() => { jewelMessages.scrollTop = jewelMessages.scrollHeight; });
   }
+    function showSuggestions() {
+  const container = document.getElementById('jewel-suggestions');
+
+  if (!container) return;
+
+  container.innerHTML = `
+    <span class="jewel-pill">Who's JEWEL？</span>
+    <span class="jewel-pill">如何加入粉絲團？</span>
+    <span class="jewel-pill">最新行程在哪看？</span>
+    <span class="jewel-pill">JanJingJing 是誰？</span>
+    <span class="jewel-pill">Jan 是誰？</span>
+    <span class="jewel-pill">JingJing 是誰？</span>
+    <span class="jewel-pill">JEWEL的特點</span>
+  `;
+
+  container.style.display = 'flex';
+}
 function jewelLocalReply(text) {
   const q = text
     .toLowerCase()
