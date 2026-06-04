@@ -4752,7 +4752,7 @@ cell.dataset.date = day;
     div.className = 'jewel-msg ' + role;
     const bubble = document.createElement('div');
     bubble.className = 'jewel-bubble';
-    bubble.textContent = text;
+ bubble.innerHTML = text;
     div.appendChild(bubble);
     jewelMessages.appendChild(div);
     jewelScrollBottom();
@@ -4772,26 +4772,53 @@ cell.dataset.date = day;
     requestAnimationFrame(() => { jewelMessages.scrollTop = jewelMessages.scrollHeight; });
   }
 function jewelLocalReply(text) {
-  const q = text.toLowerCase();
+  const q = text
+    .toLowerCase()
+    .trim()
+    .replace(/？/g, '?')
+    .replace(/\s+/g, '');
 
-  if (q.includes("粉絲團") || q.includes("加入")) {
-    return "點擊https://linktr.ee/janjingjingtaiwanfanclub，就可以加入 JanJingJing TAIWAN FANCLUB喔 💖";
-  }
+  const knowledge = [
+    {
+      keywords: ["粉絲團", "加入粉絲團", "加入"],
+      reply: "點擊 https://linktr.ee/janjingjingtaiwanfanclub 就可以加入 JanJingJing TAIWAN FANCLUB 喔 💖"
+    },
 
-  if (q.includes("行程")) {
-    return "最新行程可以在「Calendar」查看，目前都有持續更新中 ✨";
-  }
+    {
+      keywords: ["行程", "最新行程", "活動"],
+      reply: "最新行程可以在 Calendar 頁面查看，目前都有持續更新中 ✨"
+    },
 
-  if (q.includes("janjingjing")) {
-    return "JanJingJing是GMMTV旗下的藝人Janhae和JingJingYu 目前ลัลล์ไม่ชอบไวน์(EnemiesWithBenefits) 每週日泰國時間晚上20:30在GMMTV 25頻道 播出中 💫";
-  }
+    {
+      keywords: ["janjingjing", "janjingjing是誰"],
+      reply: "JanJingJing是GMMTV旗下的藝人Janhae和JingJingYu 目前ลัลล์ไม่ชอบไวน์(EnemiesWithBenefits) 每週日泰國時間晚上20:30在GMMTV 25頻道 播出中💫"
+    },
 
-  if (q.includes("你好") || q.includes("嗨")) {
-    return "嗨嗨～我是 JEWEL 🦊 有什麼想知道的都可以問我喔！";
-  }
+    {
+      keywords: ["JEWEL的特點", "可愛的JEWEL"],
+      reply: "我很聰明又可愛又性感又漂亮 還很有神祕感喔 🦊💖"
+    },
 
-     if (q.includes("我是誰") || q.includes("Who")) {
-    return "嗨～我是 JEWEL 🦊 我是可愛的小白狐 我有滿滿的能量 但,安靜三秒後我會馬上入睡喔！";
+    {
+      keywords: ["jewel", "jewel是誰", "WHO JEWEL"],
+      reply: "嗨～我是 JEWEL 🦊 生日是5月25日 我是一隻可愛的小白狐，我有滿滿的能量，但安靜三秒後我會馬上入睡喔！"
+    },
+
+    {
+      keywords: ["jan是誰", "janhae"],
+      reply: "Jan（Janhae Ployshompoo）是 GMMTV 旗下藝人，也是JEWEL的媽咪喔 💖"
+    },
+
+    {
+      keywords: ["jingjing是誰", "jingjing"],
+      reply: "JingJing（Prariyapit Yu）是 GMMTV 旗下藝人，也是JEWEL的媽媽喔 ✨"
+    }
+  ];
+
+  for (const item of knowledge) {
+    if (item.keywords.some(keyword => q.includes(keyword.toLowerCase()))) {
+      return item.reply;
+    }
   }
 
   return "我目前還在學習中，可以換個方式問我嗎？😊";
