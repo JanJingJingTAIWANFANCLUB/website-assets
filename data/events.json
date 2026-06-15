@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-11T10:15:23.639Z",
+  "updatedAt": "2026-06-15T13:18:47.833Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -153,6 +153,17 @@
       "label": "janjingjing",
       "shortLabel": "EVENT",
       "detail": "06/11 (THU.) 泰國時間 18:00｜PODKAZZxJanJingJing Meeting",
+      "featured": false
+    },
+    {
+      "id": "0b557fd2-3549-45b8-bfd7-2cc64c935d41",
+      "date": "2026-06-19",
+      "time": "20:05",
+      "timezone": "泰國時間",
+      "title": "รายการโต๊ะนี้มีจอง (WHO IS MY CHEF)",
+      "label": "janjingjing",
+      "shortLabel": "ON AIR",
+      "detail": "06/19 (FRI.) 泰國時間 20:05｜รายการโต๊ะนี้มีจอง (WHO IS MY CHEF)",
       "featured": false
     },
     {
