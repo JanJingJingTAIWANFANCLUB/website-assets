@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-21T02:14:50.366Z",
+  "updatedAt": "2026-06-21T02:15:59.164Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -164,6 +164,17 @@
       "label": "janjingjing",
       "shortLabel": "ON AIR",
       "detail": "06/19 (FRI.) 泰國時間 20:05｜รายการโต๊ะนี้มีจอง (WHO IS MY CHEF)",
+      "featured": false
+    },
+    {
+      "id": "1e4a2db8-1440-43ee-9371-78ccb9e114cc",
+      "date": "2026-06-20",
+      "time": "13:00",
+      "timezone": "泰國時間",
+      "title": "What If Deep Talk",
+      "label": "jan",
+      "shortLabel": "EVENT",
+      "detail": "06/20 (SAT.) 泰國時間 13:00｜What If Deep Talk",
       "featured": false
     },
     {
