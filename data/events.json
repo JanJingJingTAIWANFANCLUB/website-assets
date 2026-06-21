@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-21T02:18:10.200Z",
+  "updatedAt": "2026-06-21T19:58:05.113Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -175,6 +175,17 @@
       "label": "jan",
       "shortLabel": "EVENT",
       "detail": "06/20 (SAT.) 泰國時間 13:00｜What If Deep Talk",
+      "featured": false
+    },
+    {
+      "id": "a5cfbce1-46a0-4169-a989-a75eedd6704b",
+      "date": "2026-06-22",
+      "time": "13:30",
+      "timezone": "泰國時間",
+      "title": "PraewLivexEnemiesWithBenefits",
+      "label": "janjingjing",
+      "shortLabel": "ON AIR",
+      "detail": "06/22 (MON.) 泰國時間 13:30｜PraewLivexEnemiesWithBenefits",
       "featured": false
     },
     {
