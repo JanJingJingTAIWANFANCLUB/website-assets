@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-15T13:18:47.833Z",
+  "updatedAt": "2026-06-21T02:14:50.366Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -164,6 +164,17 @@
       "label": "janjingjing",
       "shortLabel": "ON AIR",
       "detail": "06/19 (FRI.) 泰國時間 20:05｜รายการโต๊ะนี้มีจอง (WHO IS MY CHEF)",
+      "featured": false
+    },
+    {
+      "id": "ca041238-b0bf-4ef6-9e3e-3aa3e68df766",
+      "date": "2026-06-22",
+      "time": "17:00",
+      "timezone": "泰國時間",
+      "title": "Column A  CONVERSTAION WITH",
+      "label": "jan",
+      "shortLabel": "EVENT",
+      "detail": "06/22 (MON.) 泰國時間 17:00｜Column A  CONVERSTAION WITH",
       "featured": false
     },
     {
