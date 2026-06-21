@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-21T19:58:05.113Z",
+  "updatedAt": "2026-06-21T20:00:04.715Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -219,6 +219,17 @@
       "label": "janjingjingjewel",
       "shortLabel": "EVENT",
       "detail": "06/24 (WED.) 泰國時間 18:00｜TOY STORY5觀影活動",
+      "featured": false
+    },
+    {
+      "id": "256d29d1-05cd-47ad-87d3-74c5ca2f9d4d",
+      "date": "2026-07-05",
+      "time": "18:30",
+      "timezone": "泰國時間",
+      "title": "ลัลล์ไม่ชอบไวน์ Enemies With Benefits Final EP. Fan Meeting",
+      "label": "janjingjing",
+      "shortLabel": "EVENT",
+      "detail": "07/05 (SUN.) 泰國時間 18:30｜ลัลล์ไม่ชอบไวน์ Enemies With Benefits Final EP. Fan Meeting",
       "featured": false
     }
   ]
