@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-21T20:00:04.715Z",
+  "updatedAt": "2026-06-22T13:33:02.551Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -197,6 +197,17 @@
       "label": "jan",
       "shortLabel": "EVENT",
       "detail": "06/22 (MON.) 泰國時間 17:00｜Column A  CONVERSTAION WITH",
+      "featured": false
+    },
+    {
+      "id": "5f4365c7-6784-4c7f-93a2-9409af23881e",
+      "date": "2026-06-23",
+      "time": "11:00",
+      "timezone": "泰國時間",
+      "title": "Sายnาs ARMCHAIR",
+      "label": "janjingjing",
+      "shortLabel": "EVENT",
+      "detail": "06/23 (TUE.) 泰國時間 11:00｜Sายnาs ARMCHAIR",
       "featured": false
     },
     {
