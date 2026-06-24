@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-23T13:21:04.710Z",
+  "updatedAt": "2026-06-24T13:28:49.089Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -241,6 +241,17 @@
       "label": "janjingjingjewel",
       "shortLabel": "EVENT",
       "detail": "06/24 (WED.) 泰國時間 18:00｜TOY STORY5觀影活動",
+      "featured": false
+    },
+    {
+      "id": "d55e2581-65cc-4548-b705-f8ad5e5b570b",
+      "date": "2026-06-28",
+      "time": "18:00",
+      "timezone": "泰國時間",
+      "title": "LANEIGE \"TURN UP THE TINT\"",
+      "label": "janjingjingjewel",
+      "shortLabel": "ON AIR",
+      "detail": "06/28 (SUN.) 泰國時間 18:00｜LANEIGE \"TURN UP THE TINT\"",
       "featured": false
     },
     {
