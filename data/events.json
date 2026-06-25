@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-25T09:16:45.867Z",
+  "updatedAt": "2026-06-25T09:18:31.000Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -153,6 +153,17 @@
       "label": "janjingjing",
       "shortLabel": "EVENT",
       "detail": "06/11 (THU.) 泰國時間 18:00｜PODKAZZxJanJingJing Meeting",
+      "featured": false
+    },
+    {
+      "id": "36eb2a25-ca88-4f62-8d5a-683679f8304e",
+      "date": "2026-06-18",
+      "time": "20:15",
+      "timezone": "泰國時間",
+      "title": "THE WALL SONG",
+      "label": "jan",
+      "shortLabel": "EVENT",
+      "detail": "06/18 (THU.) 泰國時間 20:15｜THE WALL SONG",
       "featured": false
     },
     {
