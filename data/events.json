@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-25T09:18:31.000Z",
+  "updatedAt": "2026-06-27T17:47:56.757Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -307,6 +307,17 @@
       "label": "janjingjing",
       "shortLabel": "EVENT",
       "detail": "07/05 (SUN.) 泰國時間 18:30｜ลัลล์ไม่ชอบไวน์ Enemies With Benefits Final EP. Fan Meeting",
+      "featured": false
+    },
+    {
+      "id": "256db3c7-66e0-4dca-9096-17fd7dbf96c8",
+      "date": "2026-07-11",
+      "time": "18:00",
+      "timezone": "泰國時間",
+      "title": "Book Fair 11 I Fan Sign GMMTV OFFICIAL MERCHANDISE",
+      "label": "janjingjingjewel",
+      "shortLabel": "EVENT",
+      "detail": "07/11 (SAT.) 泰國時間 18:00｜Book Fair 11 I Fan Sign GMMTV OFFICIAL MERCHANDISE",
       "featured": false
     }
   ]
