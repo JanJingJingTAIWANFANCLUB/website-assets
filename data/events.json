@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-29T13:34:21.845Z",
+  "updatedAt": "2026-06-29T13:35:32.654Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -307,6 +307,17 @@
       "label": "janjingjing",
       "shortLabel": "LIVE",
       "detail": "07/01 (WED.) 泰國時間 20:00｜Brighten Up Your Day, Glow Up with You",
+      "featured": false
+    },
+    {
+      "id": "6b274c50-c8f5-444c-ad41-c2e2c09475e9",
+      "date": "2026-07-02",
+      "time": "21:00",
+      "timezone": "泰國時間",
+      "title": "EFM FANDOM LIVE",
+      "label": "janjingjing",
+      "shortLabel": "LIVE",
+      "detail": "07/02 (THU.) 泰國時間 21:00｜EFM FANDOM LIVE",
       "featured": false
     },
     {
