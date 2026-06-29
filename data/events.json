@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-27T17:47:56.757Z",
+  "updatedAt": "2026-06-29T13:34:21.845Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -299,6 +299,17 @@
       "featured": false
     },
     {
+      "id": "53b906c8-f557-4efb-bffc-a1789a463b89",
+      "date": "2026-07-01",
+      "time": "20:00",
+      "timezone": "泰國時間",
+      "title": "Brighten Up Your Day, Glow Up with You",
+      "label": "janjingjing",
+      "shortLabel": "LIVE",
+      "detail": "07/01 (WED.) 泰國時間 20:00｜Brighten Up Your Day, Glow Up with You",
+      "featured": false
+    },
+    {
       "id": "256d29d1-05cd-47ad-87d3-74c5ca2f9d4d",
       "date": "2026-07-05",
       "time": "18:30",
@@ -307,6 +318,17 @@
       "label": "janjingjing",
       "shortLabel": "EVENT",
       "detail": "07/05 (SUN.) 泰國時間 18:30｜ลัลล์ไม่ชอบไวน์ Enemies With Benefits Final EP. Fan Meeting",
+      "featured": false
+    },
+    {
+      "id": "939191be-bfef-4235-9df2-2d5e139cfa05",
+      "date": "2026-07-10",
+      "time": "12:30",
+      "timezone": "泰國時間",
+      "title": "Thailand Character & Content Expo (TCEX) 2026",
+      "label": "jewel",
+      "shortLabel": "EVENT",
+      "detail": "07/10 (FRI.) 泰國時間 12:30｜Thailand Character & Content Expo (TCEX) 2026",
       "featured": false
     },
     {
