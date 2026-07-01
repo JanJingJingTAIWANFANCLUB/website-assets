@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-29T13:35:32.654Z",
+  "updatedAt": "2026-07-01T02:03:51.208Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -307,6 +307,17 @@
       "label": "janjingjing",
       "shortLabel": "LIVE",
       "detail": "07/01 (WED.) 泰國時間 20:00｜Brighten Up Your Day, Glow Up with You",
+      "featured": false
+    },
+    {
+      "id": "b6420276-2b8b-476b-ad3e-8162ed030b9d",
+      "date": "2026-07-02",
+      "time": "19:00",
+      "timezone": "泰國時間",
+      "title": "Hotwave KRUB 'Artist DJ'",
+      "label": "janjingjing",
+      "shortLabel": "LIVE",
+      "detail": "07/02 (THU.) 泰國時間 19:00｜Hotwave KRUB 'Artist DJ'",
       "featured": false
     },
     {
