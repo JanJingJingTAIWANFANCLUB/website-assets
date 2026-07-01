@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-01T02:06:52.246Z",
+  "updatedAt": "2026-07-01T02:07:59.724Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -384,6 +384,17 @@
       "label": "janjingjingjewel",
       "shortLabel": "EVENT",
       "detail": "07/15 (WED.) 泰國時間 18:00｜Moana SF Friends Screening",
+      "featured": false
+    },
+    {
+      "id": "0d313605-9575-47b3-a83d-870b6109d397",
+      "date": "2026-07-25",
+      "time": "13:30",
+      "timezone": "泰國時間",
+      "title": "EnemiescWith Benefits Fan meeting in Mmacau",
+      "label": "janjingjing",
+      "shortLabel": "EVENT",
+      "detail": "07/25 (SAT.) 泰國時間 13:30｜EnemiescWith Benefits Fan meeting in Mmacau",
       "featured": false
     }
   ]
