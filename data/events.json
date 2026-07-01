@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-01T02:05:29.557Z",
+  "updatedAt": "2026-07-01T02:06:52.246Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -373,6 +373,17 @@
       "label": "janjingjingjewel",
       "shortLabel": "EVENT",
       "detail": "07/11 (SAT.) 泰國時間 18:00｜Y BOOK Fair 11 | Fan Sign",
+      "featured": false
+    },
+    {
+      "id": "0ac504ef-2255-4cc4-b898-6bc4ed2ab921",
+      "date": "2026-07-15",
+      "time": "18:00",
+      "timezone": "泰國時間",
+      "title": "Moana SF Friends Screening",
+      "label": "janjingjingjewel",
+      "shortLabel": "EVENT",
+      "detail": "07/15 (WED.) 泰國時間 18:00｜Moana SF Friends Screening",
       "featured": false
     }
   ]
