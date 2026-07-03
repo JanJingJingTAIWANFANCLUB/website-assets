@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-01T02:09:05.180Z",
+  "updatedAt": "2026-07-03T03:21:58.958Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -332,6 +332,17 @@
       "featured": false
     },
     {
+      "id": "de729db9-3f16-41c8-9708-e852bce17812",
+      "date": "2026-07-03",
+      "time": "18:00",
+      "timezone": "泰國時間",
+      "title": "GrabFood Payweek ถูกกว่าชัวร์",
+      "label": "janjingjingjewel",
+      "shortLabel": "LIVE",
+      "detail": "07/03 (FRI.) 泰國時間 18:00｜GrabFood Payweek ถูกกว่าชัวร์",
+      "featured": false
+    },
+    {
       "id": "256d29d1-05cd-47ad-87d3-74c5ca2f9d4d",
       "date": "2026-07-05",
       "time": "19:30",
@@ -354,17 +365,6 @@
       "featured": false
     },
     {
-      "id": "256db3c7-66e0-4dca-9096-17fd7dbf96c8",
-      "date": "2026-07-11",
-      "time": "18:00",
-      "timezone": "泰國時間",
-      "title": "Book Fair 11 I Fan Sign GMMTV OFFICIAL MERCHANDISE",
-      "label": "janjingjingjewel",
-      "shortLabel": "EVENT",
-      "detail": "07/11 (SAT.) 泰國時間 18:00｜Book Fair 11 I Fan Sign GMMTV OFFICIAL MERCHANDISE",
-      "featured": false
-    },
-    {
       "id": "78b8f5fb-8efc-4095-a766-92dbab6fcf15",
       "date": "2026-07-11",
       "time": "18:00",
@@ -373,6 +373,17 @@
       "label": "janjingjingjewel",
       "shortLabel": "EVENT",
       "detail": "07/11 (SAT.) 泰國時間 18:00｜Y BOOK Fair 11 | Fan Sign",
+      "featured": false
+    },
+    {
+      "id": "256db3c7-66e0-4dca-9096-17fd7dbf96c8",
+      "date": "2026-07-11",
+      "time": "18:00",
+      "timezone": "泰國時間",
+      "title": "Book Fair 11 I Fan Sign GMMTV OFFICIAL MERCHANDISE",
+      "label": "janjingjingjewel",
+      "shortLabel": "EVENT",
+      "detail": "07/11 (SAT.) 泰國時間 18:00｜Book Fair 11 I Fan Sign GMMTV OFFICIAL MERCHANDISE",
       "featured": false
     },
     {
