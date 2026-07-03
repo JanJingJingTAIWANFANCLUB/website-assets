@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T03:21:58.958Z",
+  "updatedAt": "2026-07-03T15:40:12.902Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -340,6 +340,17 @@
       "label": "janjingjingjewel",
       "shortLabel": "LIVE",
       "detail": "07/03 (FRI.) 泰國時間 18:00｜GrabFood Payweek ถูกกว่าชัวร์",
+      "featured": false
+    },
+    {
+      "id": "c1b86a8e-56f7-4b0d-801e-c7c59458a389",
+      "date": "2026-07-04",
+      "time": "10:00",
+      "timezone": "泰國時間",
+      "title": "SERIES SOClETY",
+      "label": "janjingjing",
+      "shortLabel": "LIVE",
+      "detail": "07/04 (SAT.) 泰國時間 10:00｜SERIES SOClETY",
       "featured": false
     },
     {
