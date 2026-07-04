@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-04T06:14:08.430Z",
+  "updatedAt": "2026-07-04T10:15:07.837Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -483,6 +483,17 @@
       "label": "janjingjing",
       "shortLabel": "EVENT",
       "detail": "07/25 (SAT.) 泰國時間 13:30｜EnemiescWith Benefits Fan meeting in Mmacau",
+      "featured": false
+    },
+    {
+      "id": "87e32728-592f-44f0-bfb5-cdc3cc4ac25e",
+      "date": "2026-07-31",
+      "time": "17:00",
+      "timezone": "泰國時間",
+      "title": "Fan Sign GMMTV OFFICIAL MERCHANDISE",
+      "label": "janjingjingjewel",
+      "shortLabel": "EVENT",
+      "detail": "07/31 (FRI.) 泰國時間 17:00｜Fan Sign GMMTV OFFICIAL MERCHANDISE",
       "featured": false
     }
   ]
