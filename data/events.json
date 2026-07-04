@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-04T02:39:52.376Z",
+  "updatedAt": "2026-07-04T06:14:08.430Z",
   "events": [
     {
       "id": "d0bfaefa-5ad8-4ede-8c95-886ee3ee1ff3",
@@ -456,11 +456,11 @@
       "id": "b5def9b4-8ca2-4937-bdc9-5d0a4f5a5816",
       "date": "2026-07-16",
       "time": "21:30",
-      "timezone": "台灣時間",
+      "timezone": "泰國時間",
       "title": "GMMTV LIVE HOUSE",
       "label": "jan",
       "shortLabel": "ON AIR",
-      "detail": "07/16 (THU.) 台灣時間 21:30｜GMMTV LIVE HOUSE",
+      "detail": "07/16 (THU.) 泰國時間 21:30｜GMMTV LIVE HOUSE",
       "featured": false
     },
     {
